@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+// import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import Loading from './Loading'
 
 const Home = () => {
@@ -9,17 +11,7 @@ const Home = () => {
   const [headShot, setHeadShot] = useState(null);
   const [loading, setLoading] = useState(false);
   const [companyInfo, setCompanyInfo] = useState([{ name: '', position: '' }]);
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    console.log({
-      fullName,
-      currentPosition,
-      currentLength,
-      currentTechnologies,
-      headShot
-    });
-    setLoading(true);
-  }
+  // const navigate = useNavigate();
   /** Updates the state with user's input */
   const handleAddCompany = () => 
     setCompanyInfo([ ...companyInfo, { name: '', position: '' }]);
@@ -35,6 +27,38 @@ const Home = () => {
     const list = [...companyInfo];
     list[index][name] = value;
     setCompanyInfo(list);
+  }
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append('heaadshotImage', headShot, headShot.name);
+    formData.append('fullName', fullName);
+    // console.log(formData);
+    formData.append('currentPosition', currentPosition);
+    formData.append('currentLength', currentLength);
+    formData.append('currentTechnologies', currentTechnologies);
+    formData.append('workHistory', JSON.stringify(companyInfo));
+    formData.forEach(e => console.log(e));
+    axios
+      .post('http://localhost:4000/cv/create', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      })
+      .then(res => {
+        console.log('res.data =', res.data);
+        if (res.data.message) {
+          console.log(res.data.data);
+          // navigate('/cv');
+        }
+      })
+      .catch(err => console.log(err));
+    console.log({
+      fullName,
+      currentPosition,
+      currentLength,
+      currentTechnologies,
+      headShot
+    });
+    setLoading(true);
   }
   /** Renders the loading component you submit the form */
   if (loading) {

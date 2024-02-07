@@ -16,9 +16,6 @@ app.get('/api', (req, res) => {
     message: 'Hello world!'
   });
 });
-app.listen(PORT, () => {
-  console.log(`Server listening on ${PORT}`);
-});
 
 app.use('/uploads', express.static('uploads'));
 
@@ -33,4 +30,23 @@ const storage = multer.diskStorage({
 const upload = multer({
   storage: storage,
   limits: { filesize: 1024 * 1024 * 5 }
+});
+
+app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
+  const {
+    fullNammme,
+    currentPosition,
+    currentLength,
+    currentTechnologies,
+    workHistory
+  } = req.body;
+  console.log(req.body);
+  res.json({
+    message: 'Request successful!',
+    data: {},
+  });
+});
+
+app.listen(PORT, () => {
+  console.log(`Server listening on ${PORT}`);
 });

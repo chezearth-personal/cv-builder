@@ -15,3 +15,4 @@ const Cv = ({ result }) => {
     </>
   );
 };
+export default Cv;
