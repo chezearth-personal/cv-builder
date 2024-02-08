@@ -45,9 +45,11 @@ const Home = () => {
         }
       })
       .catch(err => {
-        console.log(err);
+        // console.log(err);
         if (/<pre>MulterError: File too large<br>/.test(err.response.data.toString())) {
-          console.log('navigate to \'ErrorPage/\'');
+          console.error('navigate to \'ErrorPage/\'');
+        } else {
+          console.error(err);
         }
       });
     setLoading(true);
