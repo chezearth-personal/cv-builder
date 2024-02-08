@@ -1,15 +1,16 @@
-const express = require('express');
-const OpenAi = require('openai');
-require('dotenv').config();
-
-// const { Configuration, OpenAIApi } = require("openai");
-const cors = require('cors');
-const multer = require('multer');
-const path = require('path');
+import 'dotenv/config'
+import express from 'express';
+import cors from 'cors';
+import multer from 'multer';
+import path from 'path';
+import OpenAI from 'openai';
+import { randomUUID } from 'crypto';
 
 const app = express();
-const PORT = 4000;
-const openAi = new OpenAi({
+const host = process.env.HOST;
+const port = process.env.PORT;
+// console.log(host, ':', port, randomUUID());
+const openAi = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
 });
 
@@ -61,7 +62,7 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
     const workArray = JSON.parse(workHistory); /** an array */
     /** Group the values into an object */
     const newEntry = {
-      id: generateId(),
+      id: randomUUID(),
       fullName,
       image_url: `http://localhost:4000/uploads/${req.file.filename}`,
       currentPosition,
@@ -72,13 +73,24 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
     /** Reduces the items in the workArray and convert them to a string */
     const remainderText = workArray.reduce((res, e) => res + `  ${e.name} as a ${e.position}.`, '');
     /** The job description prompt */
-    const prompt1 = `I am writing a CV, my details are \n name: ${fullName} \n role: ${currentPosition} (${currentLength} years). \n I write in the technologies: ${currentTechnologies}. Can you write a 100 words description for the top of the CV (first person writing)?`;
+    const prompt1 = `I am writing a CV, my details are `
+      + `\n name: ${fullName} `
+      + `\n role: ${currentPosition} (${currentLength} years). `
+      + `\n I write in the technologies: ${currentTechnologies}. `
+      + `Can you write a 100 words description for the top of the CV (first person writing)?`;
     /** The job responsibilities prompt */
-    const prompt2 = `I am writing a CV, my details are \n name: ${fullName} \n role: ${currentPosition} (${currentLength} years). \n I write in the technologies: ${currentTechnologies}. Can you write 10 points for a CV on what I am good at?`;
+    const prompt2 = `I am writing a CV, my details are `
+      + `\n name: ${fullName} `
+      + `\n role: ${currentPosition} (${currentLength} years). `
+      + `\n I write in the technologies: ${currentTechnologies}. `
+      + `Can you write 10 points for a CV on what I am good at?`;
     /** The job achievements prompt */
-    const prompt3 = `I am writing a CV, my details are \n name: ${fullName} \n role: ${currentPosition} (${currentLength} years). \n During my years I worked at ${
-    workArray.length
-} companies. ${remainderText()} \n Can you write me 50 words for each company seperated in numbers of my succession in the company (in first person)?`;
+    const prompt3 = `I am writing a CV, my details are `
+      + `\n name: ${fullName} `
+      + `\n role: ${currentPosition} (${currentLength} years). `
+      + `\n During my years I worked at ${workArray.length} companies. ${remainderText()} `
+      + `\n Can you write me 50 words for each company seperated in numbers of my succession `
+      + `in the company (in first person)?`;
     /** Generate a GPT-3 result */
     const objective = await GPTFunction(prompt1);
     const keypoints = await GPTFunction(prompt2);
@@ -93,6 +105,6 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
     });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server listening on ${PORT}`);
+app.listen(port, host, () => {
+  console.log(`Server listening on ${host}:${port}`);
 });

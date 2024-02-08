@@ -46,7 +46,7 @@ const Home = () => {
         }
       })
       .catch(err => {
-        if (/<pre>MulterError: File too large<br>/.test(err.response.data.toString())) {
+        if (err && err.response && /<pre>MulterError: File too large<br>/.test(err.response.data.toString())) {
           console.error('navigate to \'ErrorPage/\'');
         } else {
           console.error(err);
