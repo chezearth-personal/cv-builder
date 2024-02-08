@@ -7,11 +7,11 @@ import OpenAI from 'openai';
 import { randomUUID } from 'crypto';
 
 const app = express();
-const host = process.env.HOST;
-const port = process.env.PORT;
+const host = process.env.HOST_KEY;
+const port = process.env.PORT_KEY;
 // console.log(host, ':', port, randomUUID());
-const openAi = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY
+const openAI = new OpenAI({
+  apiKey: process.env.OPENAI_API_SECRET_KEY
 });
 
 app.use(express.urlencoded({ extended: true }));
@@ -26,7 +26,7 @@ app.get('/api', (req, res) => {
 });
 
 const GPTFunction = async (text) => {
-  const response = await openAi.createCompletion({
+  const response = await openAI.createCompletion({
     model: 'text-davinci-003',
     propmt: text,
     temperature: 0.6,
