@@ -8,7 +8,7 @@ const Cv = ({ result }) => {
   const handlePrint = () => alert('Print successful!');
   return (
     <>
-      <button onClick={handlePrint}>Pront page</button>
+      <button onClick={handlePrint}>Print page</button>
       <main className='container'>
         <p>Hello!</p>
       </main>

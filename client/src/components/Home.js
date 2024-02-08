@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Loading from './Loading'
 
@@ -11,7 +11,7 @@ const Home = () => {
   const [headShot, setHeadShot] = useState(null);
   const [loading, setLoading] = useState(false);
   const [companyInfo, setCompanyInfo] = useState([{ name: '', position: '' }]);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   /** Updates the state with user's input */
   const handleAddCompany = () => 
     setCompanyInfo([ ...companyInfo, { name: '', position: '' }]);
@@ -31,33 +31,25 @@ const Home = () => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append('heaadshotImage', headShot, headShot.name);
+    formData.append('headshotImage', headShot, headShot.name);
     formData.append('fullName', fullName);
-    // console.log(formData);
     formData.append('currentPosition', currentPosition);
     formData.append('currentLength', currentLength);
     formData.append('currentTechnologies', currentTechnologies);
     formData.append('workHistory', JSON.stringify(companyInfo));
-    formData.forEach(e => console.log(e));
     axios
-      .post('http://localhost:4000/cv/create', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      })
+      .post('http://localhost:4000/cv/create', formData, {})
       .then(res => {
-        console.log('res.data =', res.data);
         if (res.data.message) {
-          console.log(res.data.data);
-          // navigate('/cv');
+          navigate('/cv');
         }
       })
-      .catch(err => console.log(err));
-    console.log({
-      fullName,
-      currentPosition,
-      currentLength,
-      currentTechnologies,
-      headShot
-    });
+      .catch(err => {
+        console.log(err);
+        if (/<pre>MulterError: File too large<br>/.test(err.response.data.toString())) {
+          console.log('navigate to \'ErrorPage/\'');
+        }
+      });
     setLoading(true);
   }
   /** Renders the loading component you submit the form */
@@ -71,7 +63,7 @@ const Home = () => {
       <form
         onSubmit={handleFormSubmit}
         method='POST'
-        encType='multipart/form-data'
+        enctype='multipart/form-data'
       >
         <label htmlFor='fullName'>Enter you full name</label>
         <input
@@ -89,6 +81,7 @@ const Home = () => {
               type='text'
               required
               name='currentPosition'
+              id='currentPosition'
               className='currentInput'
               value={currentPosition}
               onChange={e => setCurrentPosition(e.target.value)}
@@ -100,6 +93,7 @@ const Home = () => {
               type='number'
               required
               name='currentLength'
+              id='currentLength'
               className='currentInput'
               value={currentLength}
               onChange={e => setCurrentLength(e.target.value)}

@@ -1,7 +1,5 @@
 const express = require('express');
-// import * as express from 'express';
 const cors = require('cors');
-// import * as cors from 'cors';
 const multer = require('multer');
 const path = require('path');
 
@@ -9,42 +7,46 @@ const app = express();
 const PORT = 4000;
 
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json);
+app.use(express.json());
 app.use(cors());
+app.use('/uploads', express.static('uploads'));
+
 app.get('/api', (req, res) => {
   res.json({
     message: 'Hello world!'
   });
 });
 
-app.use('/uploads', express.static('uploads'));
-
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
+    // try {
     cb(null, 'uploads');
+    // } catch(e) {
+      // console.log(e);
+    // }
   },
   filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalName));
+    cb(null, Date.now() + path.extname(file.originalname));
   }
 });
 const upload = multer({
   storage: storage,
-  limits: { filesize: 1024 * 1024 * 5 }
+  limits: { fileSize: 1024 * 1024 * 5 }
 });
 
 app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
-  const {
-    fullNammme,
-    currentPosition,
-    currentLength,
-    currentTechnologies,
-    workHistory
-  } = req.body;
-  console.log(req.body);
-  res.json({
-    message: 'Request successful!',
-    data: {},
-  });
+    // console.log('POST Request to /cv/create');
+    const {
+      fullName,
+      currentPosition,
+      currentLength,
+      currentTechnologies,
+      workHistory
+    } = req.body;
+    res.json({
+      message: 'Request successful!',
+      data: {},
+    });
 });
 
 app.listen(PORT, () => {
