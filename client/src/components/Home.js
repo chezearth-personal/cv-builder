@@ -28,6 +28,7 @@ const Home = () => {
     list[index][name] = value;
     setCompanyInfo(list);
   }
+  /** Submit the form */
   const handleFormSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -45,7 +46,6 @@ const Home = () => {
         }
       })
       .catch(err => {
-        // console.log(err);
         if (/<pre>MulterError: File too large<br>/.test(err.response.data.toString())) {
           console.error('navigate to \'ErrorPage/\'');
         } else {
