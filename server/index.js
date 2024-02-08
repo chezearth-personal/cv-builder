@@ -19,11 +19,7 @@ app.get('/api', (req, res) => {
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    // try {
     cb(null, 'uploads');
-    // } catch(e) {
-      // console.log(e);
-    // }
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + path.extname(file.originalname));
@@ -35,7 +31,6 @@ const upload = multer({
 });
 
 app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
-    // console.log('POST Request to /cv/create');
     const {
       fullName,
       currentPosition,
