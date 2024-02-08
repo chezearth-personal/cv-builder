@@ -1,10 +1,17 @@
 const express = require('express');
+const OpenAi = require('openai');
+require('dotenv').config();
+
+// const { Configuration, OpenAIApi } = require("openai");
 const cors = require('cors');
 const multer = require('multer');
 const path = require('path');
 
 const app = express();
 const PORT = 4000;
+const openAi = new OpenAi({
+  apiKey: process.env.OPENAI_API_KEY
+});
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -16,6 +23,19 @@ app.get('/api', (req, res) => {
     message: 'Hello world!'
   });
 });
+
+const GPTFunction = async (text) => {
+  const response = await openAi.createCompletion({
+    model: 'text-davinci-003',
+    propmt: text,
+    temperature: 0.6,
+    max_tokens: 250,
+    top_p: 1,
+    frequency_penalty: 1,
+    presence_penatly: 1
+  });
+  return response.data.choices[0].text;
+}
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -36,8 +56,37 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
       currentPosition,
       currentLength,
       currentTechnologies,
-      workHistory
+      workHistory /** JSON format*/
     } = req.body;
+    const workArray = JSON.parse(workHistory); /** an array */
+    /** Group the values into an object */
+    const newEntry = {
+      id: generateId(),
+      fullName,
+      image_url: `http://localhost:4000/uploads/${req.file.filename}`,
+      currentPosition,
+      currentLength,
+      currentTechnologies,
+      workHistory: workArray
+    };
+    /** Reduces the items in the workArray and convert them to a string */
+    const remainderText = workArray.reduce((res, e) => res + `  ${e.name} as a ${e.position}.`, '');
+    /** The job description prompt */
+    const prompt1 = `I am writing a CV, my details are \n name: ${fullName} \n role: ${currentPosition} (${currentLength} years). \n I write in the technologies: ${currentTechnologies}. Can you write a 100 words description for the top of the CV (first person writing)?`;
+    /** The job responsibilities prompt */
+    const prompt2 = `I am writing a CV, my details are \n name: ${fullName} \n role: ${currentPosition} (${currentLength} years). \n I write in the technologies: ${currentTechnologies}. Can you write 10 points for a CV on what I am good at?`;
+    /** The job achievements prompt */
+    const prompt3 = `I am writing a CV, my details are \n name: ${fullName} \n role: ${currentPosition} (${currentLength} years). \n During my years I worked at ${
+    workArray.length
+} companies. ${remainderText()} \n Can you write me 50 words for each company seperated in numbers of my succession in the company (in first person)?`;
+    /** Generate a GPT-3 result */
+    const objective = await GPTFunction(prompt1);
+    const keypoints = await GPTFunction(prompt2);
+    const jobResponsibilities = await GPTFunction(prompt3);
+    /** Put them into an object */
+    const chatGptData = { objective, keypoints, jobResponsibilities };
+    /** Log the result */
+    console.log(chatGptData);
     res.json({
       message: 'Request successful!',
       data: {},
