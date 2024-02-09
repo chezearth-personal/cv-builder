@@ -28,6 +28,7 @@ const Home = () => {
     list[index][name] = value;
     setCompanyInfo(list);
   }
+  // const handleNewSubmitTime = (newTime) => [newTime, ...submitTime];
   /** Submit the form */
   const handleFormSubmit = (e) => {
     e.preventDefault();
