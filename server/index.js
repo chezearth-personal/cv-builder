@@ -5,15 +5,21 @@ import multer from 'multer';
 import path from 'path';
 import OpenAI from 'openai';
 import { randomUUID } from 'crypto';
+import { exit } from 'process';
 
-const app = express();
+/** OpenAI won't work without a secret key */
+if (!process.env.OPENAI_API_SECRET_KEY) {
+  exit(1);
+}
+
 /** Environment: host and port have defaults */
-const host = process.env.HOST_KEY || 4000;
-const port = process.env.PORT_KEY || 'Localhost';
+const host = process.env.HOST || 4000;
+const port = process.env.PORT || 'localhost';
 const openAI = new OpenAI({
   apiKey: process.env.OPENAI_API_SECRET_KEY
 });
 
+const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
