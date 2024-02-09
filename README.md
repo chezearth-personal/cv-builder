@@ -13,8 +13,7 @@ You enter some basic info on a web form and ChatGPT (OpenAI) creates your CV for
   HOST=localhost
   PORT=4000
   ```
-  If you do not add these `HOST` and `PORT` keys the code will default to `localhost` and `4000`, respectively.
-  If you do not add the OpenAI API secret key Nodemon, which runs the server, will fail to start properly but will not exit. If you put the key into the `.env` file and save the `index.js` file, Nodemon will restart successfully.
+  If you do not add these `HOST` and `PORT` keys the code will default to `localhost` and `4000`, respectively. If you do not add the OpenAI API secret key then Nodemon, which runs the server, will fail to start properly but will not exit. If you put the key into the `.env` file and save the `index.js` file, Nodemon will restart successfully.
 - `npm start` will create a new, empty `./server/uploads/` directory where your pictures will be uploaded.
 
  ### Running the app
