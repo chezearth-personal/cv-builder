@@ -64,7 +64,7 @@ const upload = multer({
   limits: { fileSize: 1024 * 1024 * 5 }
 });
 
-const waitForMin = async () => new Promise(resolve => setTimeout(resolve, 1000 * 70));
+const waitForMinute = async () => new Promise(resolve => setTimeout(resolve, 1000 * 61));
 
 app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
     const {
