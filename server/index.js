@@ -19,6 +19,9 @@ const openAI = new OpenAI({
   apiKey: process.env.OPENAI_API_SECRET_KEY
 });
 
+/** Database. For now, just an array*/
+let database = [];
+
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -123,9 +126,11 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
     const chatGptData = { objective } ///, keypoints, jobResponsibilities };
     /** Log the result */
     console.log(chatGptData);
+    const data = { ...newEntry, ...chatGptData };
+    database.push(data);
     res.json({
       message: 'Request successful!',
-      data: chatGptData,
+      data: data,
     });
 });
 
