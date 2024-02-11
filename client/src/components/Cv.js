@@ -2,14 +2,50 @@ import React from 'react';
 import ErrorPage from './ErrorPage';
 
 const Cv = ({ result }) => {
+  /** Function that replaces the new line with a break tag */
+  const replaceWithBr = (string) => string.replace(/\n/g, '<br />');
+  /** Returns an error page if the result object is empty */
   if (JSON.stringify(result) === '{}') {
     return <ErrorPage />;
   }
-  const handlePrint = () => alert('Print successful!');
+  const handlePrint = () => alert('Printing');
   return (
     <>
       <button onClick={handlePrint}>Print page</button>
-      <main className='container'>
+      <main className='container' /*ref={componentRef}*/>
+        <header className='header'>
+          <div>
+            <h1>{result.fullName}</h1>
+            <p className='cvTitle headerTitle'>
+              {result.currentPosition} ({result.currentTechnologies})
+            </p>
+            <p className='cvTitle'>
+              {result.currentLength}year(s) work experience
+            </p>
+          </div>
+          <div>
+            <img
+              src={result.img_url}
+              alt={result.fullName}
+              className='cvImage'
+            />
+          </div>
+        </header>
+        <div className='cvBody'>
+          <h2 className='cvBodyTitle'>PROFILE SUMMARY</h2>
+          <p
+            dangerouslySetInnerHTML={{
+              __html: replaceWithBr(result.objective),
+            }}
+            className='cvBodyContent'
+          />
+          <h2 className='cvBodyTitle'>WORK HISTORY</h2>
+          {result.workHistory.map(work => (
+            <p className='cvBodyContent' key={work.name}>
+              <span style={{ fontWeight: "bold" }}>{work.name}</span> -{" "}{work.position}
+            </p>
+          ))}
+        </div>
         <p>Hello!</p>
       </main>
     </>

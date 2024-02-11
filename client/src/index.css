@@ -98,7 +98,7 @@ button {
   justify-content: space-between;
 }
 
-.resumeTitle {
+.cvTitle {
   opacity: 0.6;
 }
 
@@ -106,14 +106,14 @@ button {
   margin-bottom: 15px;
 }
 
-.resumeImage {
+.cvImage {
   vertical-align: middle;
   width: 150px;
   height: 150px;
   border-radius: 50%;
 }
 
-.resumeBody {
+.cvBody {
   width: 80%;
   margin: 0 auto;
   padding: 30px;
@@ -121,11 +121,11 @@ button {
   border: 1px solid #e0e0ea;
 }
 
-.resumeBodyTitle {
+.cvBodyTitle {
   margin-bottom: 5px;
 }
 
-.resumeBodyContent {
+.cvBodyContent {
   text-align: justify;
   margin-bottom: 30px;
 }

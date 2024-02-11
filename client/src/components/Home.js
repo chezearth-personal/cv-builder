@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Loading from './Loading'
 
-const Home = () => {
+const Home = ({ setResult }) => {
   const [fullName, setFullName] = useState('');
   const [currentPosition, setCurrentPosition] = useState('');
   const [currentLength, setCurrentLength] = useState(1);
@@ -43,6 +43,8 @@ const Home = () => {
       .post('http://localhost:4000/cv/create', formData, {})
       .then(res => {
         if (res.data.message) {
+          /** Update the result object */
+          setResult(res.data.data);
           navigate('/cv');
         }
       })
