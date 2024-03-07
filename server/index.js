@@ -35,19 +35,18 @@ app.get('/api', (req, res) => {
   });
 });
 
-const GPTFunction = async (messagesArr) => {
+const gptFunction = async (text) => {
   try {
-    const response = await openAI.chat.completions.create({
-      model: 'gpt-3.5-turbo',
-      // model: 'gpt-3.5-turbo-instruct',
+    const response = await openAI.completions.create({
+      model: 'gpt-3.5-turbo-instruct',
+      prompt: text,
       // response_format: { type: "json_object" },
-      messages: messagesArr,
+      // messages: messagesArr,
       temperature: 0.6,
       // max_tokens: 250,
       top_p: 1,
-      // frequency_penalty: 1,
+      frequency_penalty: 1,
       // presence_penatly: 1
-      stream: false
     });
     // let response;
     // for await (const chunk of stream) {
@@ -103,47 +102,48 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
       .reduce((res, e) => res + ` ${e.name} as a ${e.position}.`, '');
     console.log('remainderText =', remainderText);
     /** The job description message */
-    const message0 = { role: 'system', content: 'You are a helpful assistant'};
-    const message1 = { role: 'user', content: `I am writing a CV, my details are `
-      + `name: ${fullName} `
-      + `role: ${currentPosition} (${currentLength} years). `
-      + `I write in the technologies: ${currentTechnologies}. `
-      + `Can you write a 100 words description for the top of the CV (first person writing)?`
-    };
-    console.log('Sending OpenAI request message0...', message0);
-    console.log('Sending OpenAI request message1...', message1);
+    // const message0 = { role: 'system', content: 'You are a helpful assistant'};
+    const prompt1 = `I am writing a CV, my details are name: ${
+        fullName
+      } role: ${currentPosition} (${currentLength} years). I write in the technologies: ${
+        currentTechnologies
+      }. Can you write a 100 words description for the top of the CV (first person writing)?`;
+    // console.log('Sending OpenAI request message0...', message0);
+    // console.log('Sending OpenAI request message1...', message1);
     /** The job responsibilities message */
-    const message2 = { role: 'user', content: `I am writing a CV, my details are `
-      + `name: ${fullName} `
-      + `role: ${currentPosition} (${currentLength} years). `
-      + `I write in the technologies: ${currentTechnologies}. `
-      + `Can you write 10 points for a CV on what I am good at?`
-    };
+    const prompt2 = `I am writing a CV, my details are name: ${
+        fullName
+      } role: ${currentPosition} (${currentLength} years). I write in the technologies: ${
+        currentTechnologies
+      }. Can you write 10 points for a CV on what I am good at?`;
     /** The job achievements message */
-    const message3 = { role: 'user', content: `I am writing a CV, my details are `
-      + `name: ${fullName} `
-      + `role: ${currentPosition} (${currentLength} years). `
-      + `During my years I worked at ${workArray.length} companies.${remainderText}`
-      + `Can you write me 50 words for each company seperated in numbers of my succession `
-      + `in the company (in first person)?`
-    };
-    console.log('Sending OpenAI request message2...', message2);
-    console.log('Sending OpenAI request message3...', message3);
+    const prompt3 = `I am writing a CV, my details are name: ${
+        fullName
+      } role: ${currentPosition} (${currentLength} years). During my years I worked at ${
+        workArray.length
+      } companies.${
+        remainderText
+      }. Can you write me 50 words for each company seperated in numbers of my succession in the company (in first person)?`;
+    // console.log('Sending OpenAI request message2...', message2);
+    // console.log('Sending OpenAI request message3...', message3);
     /** Generate a GPT-3 result */
-    const messages = [message0, message1, message2, message3];
-    console.log('Sending messages: ', messages);
-    const objective = await GPTFunction(messages);
+    // const prompts = [prompt1, prompt2, prompt3];
+    console.log('Getting OpenAI objective: ', prompt1);
+    const objective = await gptFunction(prompt1);
     // await waitForMin();
-    // console.log('Sending OpenAI request message2...')
-    // const keypoints = await GPTFunction(message2);
+    console.log('Getting OpenAI key points:', prompt2);
+    const keyPoints = await gptFunction(prompt2);
     // await waitForMin();
-    // console.log('Sending OpenAI request message3...')
-    // const jobResponsibilities = await GPTFunction(message3);
+    console.log('Gending OpenAI job Responsibilities:', prompt3);
+    const jobResponsibilities = await gptFunction(prompt3);
     /** Put them into an object */
-    const chatGptData = { objective } ///, keypoints, jobResponsibilities };
+    const chatGptData = { objective , keyPoints, jobResponsibilities };
     /** Log the result */
     console.log('chatGptData =', chatGptData);
     const data = { ...newEntry, ...chatGptData };
+    // const data = await messages
+      // .map(gptFunction)
+      // .reduce((r, e) => Object.assign(r, chatGptData: ), newEntry); //{ ...newEntry, ...chatGptData };
     console.log('data =', data);
     database.push(data);
     res.json({
