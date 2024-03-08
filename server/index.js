@@ -40,21 +40,12 @@ const gptFunction = async (text) => {
     const response = await openAI.completions.create({
       model: 'gpt-3.5-turbo-instruct',
       prompt: text,
-      // response_format: { type: "json_object" },
-      // messages: messagesArr,
       temperature: 0.6,
-      // max_tokens: 250,
+      max_tokens: 250,
       top_p: 1,
       frequency_penalty: 1,
-      // presence_penatly: 1
     });
-    // let response;
-    // for await (const chunk of stream) {
-      // console.log('chunk =', chunk.choices[0]?.delta?.content || '');
-      // response = (response.length > 0 ? response + ' ' : response) + (chunk.choices[0]?.delta?.content || '');
-    // }
-    console.log('response.choices[0] =', response.choices.length > 0 ? response.choices[0]?.message?.content : 'No response from ChatGPT');
-    return response.choices.length > 0 ? response.choices[0]?.message?.content : 'No response from ChatGPT';
+    return response.choices && response.choices.length > 0 ? response.choices[0]?.text : 'No response from ChatGPT';
   } catch(err) {
     if (err) {console.log('err =\n', err.error)}
     return err && err.error && err.error.message
@@ -76,7 +67,6 @@ const upload = multer({
   limits: { fileSize: imageFileSize }
 });
 
-// const waitForMinute = async () => new Promise(resolve => setTimeout(resolve, 1000 * 61));
 
 app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
     const {
@@ -97,19 +87,16 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
       currentTechnologies,
       workHistory: workArray
     };
+    // console.log('newEntry.image_url =', newEntry.image_url);
     /** Reduces the items in the workArray and convert them to a string */
     const remainderText = workArray
       .reduce((res, e) => res + ` ${e.name} as a ${e.position}.`, '');
-    console.log('remainderText =', remainderText);
     /** The job description message */
-    // const message0 = { role: 'system', content: 'You are a helpful assistant'};
     const prompt1 = `I am writing a CV, my details are name: ${
         fullName
       } role: ${currentPosition} (${currentLength} years). I write in the technologies: ${
         currentTechnologies
       }. Can you write a 100 words description for the top of the CV (first person writing)?`;
-    // console.log('Sending OpenAI request message0...', message0);
-    // console.log('Sending OpenAI request message1...', message1);
     /** The job responsibilities message */
     const prompt2 = `I am writing a CV, my details are name: ${
         fullName
@@ -124,27 +111,15 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
       } companies.${
         remainderText
       }. Can you write me 50 words for each company seperated in numbers of my succession in the company (in first person)?`;
-    // console.log('Sending OpenAI request message2...', message2);
-    // console.log('Sending OpenAI request message3...', message3);
     /** Generate a GPT-3 result */
-    // const prompts = [prompt1, prompt2, prompt3];
-    console.log('Getting OpenAI objective: ', prompt1);
     const objective = await gptFunction(prompt1);
-    // await waitForMin();
-    console.log('Getting OpenAI key points:', prompt2);
     const keyPoints = await gptFunction(prompt2);
-    // await waitForMin();
-    console.log('Gending OpenAI job Responsibilities:', prompt3);
     const jobResponsibilities = await gptFunction(prompt3);
     /** Put them into an object */
     const chatGptData = { objective , keyPoints, jobResponsibilities };
     /** Log the result */
-    console.log('chatGptData =', chatGptData);
     const data = { ...newEntry, ...chatGptData };
-    // const data = await messages
-      // .map(gptFunction)
-      // .reduce((r, e) => Object.assign(r, chatGptData: ), newEntry); //{ ...newEntry, ...chatGptData };
-    console.log('data =', data);
+    // console.log('Response data =', data);
     database.push(data);
     res.json({
       message: 'Request successful!',

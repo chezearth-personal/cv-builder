@@ -69,7 +69,7 @@ const Home = ({ setResult }) => {
       <form
         onSubmit={handleFormSubmit}
         method='POST'
-        enctype='multipart/form-data'
+        encType='multipart/form-data'
       >
         <label htmlFor='fullName'>Enter you full name</label>
         <input

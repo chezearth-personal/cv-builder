@@ -3,6 +3,7 @@ import { useReactToPrint } from 'react-to-print';
 import ErrorPage from './ErrorPage';
 
 const Cv = ({ result }) => {
+  // console.log('result.image_url =', result.image_url);
   const componentRef = useRef();
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
@@ -31,28 +32,50 @@ const Cv = ({ result }) => {
           </div>
           <div>
             <img
-              src={result.img_url}
+              src={result.image_url}
               alt={result.fullName}
               className='cvImage'
             />
           </div>
         </header>
         <div className='cvBody'>
-          <h2 className='cvBodyTitle'>PROFILE SUMMARY</h2>
-          <p
-            dangerouslySetInnerHTML={{
-              __html: replaceWithBr(result.objective),
-            }}
-            className='cvBodyContent'
-          />
-          <h2 className='cvBodyTitle'>WORK HISTORY</h2>
-          {result.workHistory.map(work => (
-            <p className='cvBodyContent' key={work.name}>
-              <span style={{ fontWeight: "bold" }}>{work.name}</span> -{" "}{work.position}
-            </p>
-          ))}
+          <div>
+            <h2 className='cvBodyTitle'>PROFILE SUMMARY</h2>
+            <p
+              dangerouslySetInnerHTML={{
+                __html: replaceWithBr(result.objective),
+              }}
+              className='cvBodyContent'
+            />
+          </div>
+          <div>
+            <h2 className='cvBodyTitle'>WORK HISTORY</h2>
+            {result.workHistory.map(work => (
+              <p className='cvBodyContent' key={work.name}>
+                <span style={{ fontWeight: "bold" }}>{work.name}</span> -{" "}
+                {work.position}
+              </p>
+            ))}
+          </div>
+          <div>
+            <h2 className='cvBodyTitle'>JOB PROFILE</h2>
+            <p
+              dangerouslySetInnerHTML={{
+                __html: replaceWithBr(result.jobResponsibilities),
+              }}
+              className='cvBodyContent'
+            />
+          </div>
+          <div>
+            <h2 className='cvBodyTitle'>JOB RESPONSIBILITIES</h2>
+            <p
+              dangerouslySetInnerHTML={{
+                __html: replaceWithBr(result.keyPoints),
+              }}
+              className='cvBodyContent'
+            />
+          </div>
         </div>
-        <p>Hello!</p>
       </main>
     </>
   );
