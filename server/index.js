@@ -81,13 +81,12 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
     const newEntry = {
       id: randomUUID(),
       fullName,
-      image_url: `http://localhost:4000/uploads/${req.file.filename}`,
+      imageUrl: `http://localhost:4000/uploads/${req.file.filename}`,
       currentPosition,
       currentLength,
       currentTechnologies,
       workHistory: workArray
     };
-    // console.log('newEntry.image_url =', newEntry.image_url);
     /** Reduces the items in the workArray and convert them to a string */
     const remainderText = workArray
       .reduce((res, e) => res + ` ${e.name} as a ${e.position}.`, '');
@@ -119,7 +118,6 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
     const chatGptData = { objective , keyPoints, jobResponsibilities };
     /** Log the result */
     const data = { ...newEntry, ...chatGptData };
-    // console.log('Response data =', data);
     database.push(data);
     res.json({
       message: 'Request successful!',

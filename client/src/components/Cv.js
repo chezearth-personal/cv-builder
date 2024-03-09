@@ -3,12 +3,11 @@ import { useReactToPrint } from 'react-to-print';
 import ErrorPage from './ErrorPage';
 
 const Cv = ({ result }) => {
-  // console.log('result.image_url =', result.image_url);
   const componentRef = useRef();
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
     documentTitle: `${result.fullName} CV`,
-    onAfterPrint: () => console.log('Print successful!'),
+    onAfterPrint: () => alert('Print successful!')
   });
   /** Function that replaces the new line with a break tag */
   const replaceWithBr = (string) => string.replace(/\n/g, '<br />');
@@ -32,7 +31,7 @@ const Cv = ({ result }) => {
           </div>
           <div>
             <img
-              src={result.image_url}
+              src={result.imageUrl}
               alt={result.fullName}
               className='cvImage'
             />
