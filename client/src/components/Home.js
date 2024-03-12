@@ -93,6 +93,15 @@ const Home = ({ setResult }) => {
           value={fullName}
           onChange={(e) => setFullName(e.target.value)}
         />
+        <label htmlFor='photo'>Upload your headshot image</label>
+        <input
+          type='file'
+          required
+          name='photo'
+          id='photo'
+          accept='image/x-png, image/jpeg'
+          onChange={e => setHeadShot(e.target.files[0])}
+        />
         <h3>Contact Information</h3>
         <div className='contacts'>Enter your telephone numbers
           {tels.map((tel, index) => (
@@ -128,6 +137,7 @@ const Home = ({ setResult }) => {
             onChange={e => setEmail(e.target.value)}
           />
         </div>
+        <h3>Skills and technologies</h3>
         <div>
           <label htmlFor='technologies'>Technologies used?</label>
           <input
@@ -139,15 +149,6 @@ const Home = ({ setResult }) => {
             onChange={e => setTechnologies(e.target.value)}
           />
         </div>
-        <label htmlFor='photo'>Upload your headshot image</label>
-        <input
-          type='file'
-          required
-          name='photo'
-          id='photo'
-          accept='image/x-png, image/jpeg'
-          onChange={e => setHeadShot(e.target.files[0])}
-        />
         <h3>Companies you've worked at</h3>
           {companyInfo.map((company, index) => (
             <div className='nestedContainer' key={index}>
@@ -166,6 +167,33 @@ const Home = ({ setResult }) => {
                   type='text'
                   required
                   name='position'
+                  onChange={e => handleUpdateCompany(e, index)}
+                />
+              </div>
+              <div className='companies'>
+                <label htmlFor='startDate'>Start date</label>
+                <input
+                  type='date'
+                  required
+                  name='startDate'
+                  onChange={e => handleUpdateCompany(e, index)}
+                />
+              </div>
+              <div className='companies'>
+                <label htmlFor='isCurrent'>Current position?</label>
+                <input
+                  type='checkbox'
+                  required
+                  name='isCurrent'
+                  onChange={e => handleUpdateCompany(e, index)}
+                />
+              </div>
+              <div className='companies'>
+                <label htmlFor='endDate'>End date</label>
+                <input
+                  type='date'
+                  required
+                  name='endDate'
                   onChange={e => handleUpdateCompany(e, index)}
                 />
               </div>
