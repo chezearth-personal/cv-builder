@@ -5,13 +5,26 @@ import Loading from './Loading'
 
 const Home = ({ setResult }) => {
   const [fullName, setFullName] = useState('');
-  const [currentPosition, setCurrentPosition] = useState('');
-  const [currentLength, setCurrentLength] = useState(1);
-  const [currentTechnologies, setCurrentTechnologies] = useState('');
+  const [tels, setTels] = useState([{ telNumber: '', telType: '' }]);
+  // const [telType, setTelType] = useState('');
+  const [email, setEmail] = useState('');
+  // const [currentPosition, setCurrentPosition] = useState('');
+  // const [currentLength, setCurrentLength] = useState(1);
+  const [technologies, setTechnologies] = useState('');
   const [headShot, setHeadShot] = useState(null);
   const [loading, setLoading] = useState(false);
   const [companyInfo, setCompanyInfo] = useState([{ name: '', position: '' }]);
   const navigate = useNavigate();
+  /** Updates the state with user's input */
+  const handleAddTel = () =>
+    setTels([ ...tels, { telNumber: '', telType: '' }]);
+  /** Updates an item within the list */
+  const handleUpdateTels = (e, index) => {
+    const {telNumber, value } = e.target;
+    const list = [...tels];
+    list[index][telNumber] = value;
+    setTels(list);
+  }
   /** Updates the state with user's input */
   const handleAddCompany = () => 
     setCompanyInfo([ ...companyInfo, { name: '', position: '' }]);
@@ -35,9 +48,9 @@ const Home = ({ setResult }) => {
     const formData = new FormData();
     formData.append('headshotImage', headShot, headShot.name);
     formData.append('fullName', fullName);
-    formData.append('currentPosition', currentPosition);
-    formData.append('currentLength', currentLength);
-    formData.append('currentTechnologies', currentTechnologies);
+    formData.append('tels', tels);
+    formData.append('email', email);
+    formData.append('technologies', technologies);
     formData.append('workHistory', JSON.stringify(companyInfo));
     axios
       .post('http://localhost:4000/cv/create', formData, {})
@@ -80,42 +93,51 @@ const Home = ({ setResult }) => {
           value={fullName}
           onChange={(e) => setFullName(e.target.value)}
         />
-        <div className='nestedContainer'>
-          <div>
-            <label htmlFor='currentPosition'>Current position</label>
-            <input
-              type='text'
-              required
-              name='currentPosition'
-              id='currentPosition'
-              className='currentInput'
-              value={currentPosition}
-              onChange={e => setCurrentPosition(e.target.value)}
-            />
-          </div>
-          <div>
-            <label htmlFor='currentLength'>For how long?</label>
-            <input
-              type='number'
-              required
-              name='currentLength'
-              id='currentLength'
-              className='currentInput'
-              value={currentLength}
-              onChange={e => setCurrentLength(e.target.value)}
-            />
-          </div>
-          <div>
-            <label htmlFor='currentTechnologies'>Technologies used?</label>
-            <input
-              type='text'
-              required
-              name='currentTechnologies'
-              className='currentInput'
-              value={currentTechnologies}
-              onChange={e => setCurrentTechnologies(e.target.value)}
-            />
-          </div>
+        <h3>Contact Information</h3>
+        <div className='contacts'>Enter your telephone numbers
+          {tels.map((tel, index) => (
+            <div className='nestedContainer' key = {index}>
+              <div className='tels'>
+                <label htmlFor='telNumber'>tel</label>
+                <input
+                  type='text'
+                  required
+                  name='telNumber'
+                  onChange={e => handleUpdateTels(e, index)}
+                />
+              </div>
+              <div className='btn__group'>
+                {tels.length - 1 === index && tels.length < 4 && (
+                  <button id='addBtn' onClick={handleAddTel}>
+                    Add
+                  </button>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+        <div>
+          <label htmlFor='email'>Email address</label>
+          <input
+            type='number'
+            required
+            name='email'
+            id='email'
+            className='currentInput'
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+          />
+        </div>
+        <div>
+          <label htmlFor='technologies'>Technologies used?</label>
+          <input
+            type='text'
+            required
+            name='technologies'
+            className='currentInput'
+            value={technologies}
+            onChange={e => setTechnologies(e.target.value)}
+          />
         </div>
         <label htmlFor='photo'>Upload your headshot image</label>
         <input
