@@ -10,7 +10,8 @@ const Home = ({ setResult }) => {
   const [email, setEmail] = useState('');
   // const [currentPosition, setCurrentPosition] = useState('');
   // const [currentLength, setCurrentLength] = useState(1);
-  const [technologies, setTechnologies] = useState('');
+  const [technologies, setTechnologies] = useState([{ technology: '' }]);
+  const [skills, setSkills] = useState([{ skill: '' }]);
   const [headShot, setHeadShot] = useState(null);
   const [loading, setLoading] = useState(false);
   const [companyInfo, setCompanyInfo] = useState([{ name: '', position: '' }]);
@@ -18,12 +19,50 @@ const Home = ({ setResult }) => {
   /** Updates the state with user's input */
   const handleAddTel = () =>
     setTels([ ...tels, { telNumber: '', telType: '' }]);
+  /** Removes a selected item from the list */
+  const handleRemoveTel = (index) => {
+    const list = [...tels];
+    list.splice(index, 1);
+    setTels(list);
+  }
   /** Updates an item within the list */
-  const handleUpdateTels = (e, index) => {
+  const handleUpdateTel = (e, index) => {
     const {telNumber, value } = e.target;
     const list = [...tels];
     list[index][telNumber] = value;
     setTels(list);
+  }
+  /** Updates the state with user's input */
+  const handleAddTechnology = () =>
+    setTechnologies([ ...technologies, { technology: '' }]);
+  /** Removes a selected item from the list */
+  const handleRemoveTechnology = (index) => {
+    const list = [...technologies];
+    list.splice(index, 1);
+    setTechnologies(list);
+  }
+  /** Updates an item within the list */
+  const handleUpdateTechnology = (e, index) => {
+    const {technology, value } = e.target;
+    const list = [...technologies];
+    list[index][technology] = value;
+    setTechnologies(list);
+  }
+  /** Updates the state with user's input */
+  const handleAddSkill = () =>
+    setSkills([ ...skills, { skill: '' }]);
+  /** Removes a selected item from the list */
+  const handleRemoveSkill = (index) => {
+    const list = [...skills];
+    list.splice(index, 1);
+    setSkills(list);
+  }
+  /** Updates an item within the list */
+  const handleUpdateSkill = (e, index) => {
+    const {skill, value } = e.target;
+    const list = [...skills];
+    list[index][skill] = value;
+    setSkills(list);
   }
   /** Updates the state with user's input */
   const handleAddCompany = () => 
@@ -48,9 +87,10 @@ const Home = ({ setResult }) => {
     const formData = new FormData();
     formData.append('headshotImage', headShot, headShot.name);
     formData.append('fullName', fullName);
-    formData.append('tels', tels);
+    formData.append('tels', JSON.stringify(tels));
     formData.append('email', email);
-    formData.append('technologies', technologies);
+    formData.append('technologies', JSON.stringify(technologies));
+    formData.append('skills', JSON.stringify(skills));
     formData.append('workHistory', JSON.stringify(companyInfo));
     axios
       .post('http://localhost:4000/cv/create', formData, {})
@@ -103,22 +143,27 @@ const Home = ({ setResult }) => {
           onChange={e => setHeadShot(e.target.files[0])}
         />
         <h3>Contact Information</h3>
-        <div className='contacts'>Enter your telephone numbers
+        <div className='listItems'>Enter your telephone numbers
           {tels.map((tel, index) => (
             <div className='nestedContainer' key = {index}>
-              <div className='tels'>
+              <div className='listItem'>
                 <label htmlFor='telNumber'>tel</label>
                 <input
-                  type='text'
+                  type='tel'
                   required
                   name='telNumber'
-                  onChange={e => handleUpdateTels(e, index)}
+                  onChange={e => handleUpdateTel(e, index)}
                 />
               </div>
               <div className='btn__group'>
                 {tels.length - 1 === index && tels.length < 4 && (
                   <button id='addBtn' onClick={handleAddTel}>
                     Add
+                  </button>
+                )}
+                {tels.length > 1 && (
+                  <button id='deleteBtn' onClick={() => handleRemoveTel(index)}>
+                    Delete
                   </button>
                 )}
               </div>
@@ -128,7 +173,7 @@ const Home = ({ setResult }) => {
         <div>
           <label htmlFor='email'>Email address</label>
           <input
-            type='number'
+            type='email'
             required
             name='email'
             id='email'
@@ -137,17 +182,60 @@ const Home = ({ setResult }) => {
             onChange={e => setEmail(e.target.value)}
           />
         </div>
-        <h3>Skills and technologies</h3>
-        <div>
-          <label htmlFor='technologies'>Technologies used?</label>
-          <input
-            type='text'
-            required
-            name='technologies'
-            className='currentInput'
-            value={technologies}
-            onChange={e => setTechnologies(e.target.value)}
-          />
+        <h3>Technologies and Skills</h3>
+        <div className='listItems'>Enter the technologies you're familiar with
+          {technologies.map((technology, index) => (
+            <div className='nestedContainer' key={index}>
+              <div className='listItem'>
+                <label htmlFor='technology'>Technology</label>
+                <input
+                  type='text'
+                  required
+                  name='technology'
+                  onChange={e => handleUpdateTechnology(e, index)}
+                />
+              </div>
+              <div className='btn__group'>
+                {technologies.length - 1 === index && technologies.length < 4 && (
+                  <button id='addBtn' onClick={handleAddTechnology}>
+                    Add
+                  </button>
+                )}
+                {technologies.length > 1 && (
+                  <button id='deleteBtn' onClick={() => handleRemoveTechnology(index)}>
+                    Delete
+                  </button>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className='listItems'>Enter your skills
+          {skills.map((skill, index) => (
+            <div className='nestedContainer' key={index}>
+              <div className='listItem'>
+                <label htmlFor='skill'>Skill</label>
+                <input
+                  type='text'
+                  required
+                  name='skill'
+                  onChange={e => handleUpdateSkill(e, index)}
+                />
+              </div>
+              <div className='btn__group'>
+                {skills.length - 1 === index && skills.length < 4 && (
+                  <button id='addBtn' onClick={handleAddSkill}>
+                    Add
+                  </button>
+                )}
+                {skills.length > 1 && (
+                  <button id='deleteBtn' onClick={() => handleRemoveSkill(index)}>
+                    Delete
+                  </button>
+                )}
+              </div>
+            </div>
+          ))}
         </div>
         <h3>Companies you've worked at</h3>
           {companyInfo.map((company, index) => (
@@ -173,31 +261,34 @@ const Home = ({ setResult }) => {
               <div className='companies'>
                 <label htmlFor='startDate'>Start date</label>
                 <input
-                  type='date'
+                  type='month'
                   required
                   name='startDate'
                   onChange={e => handleUpdateCompany(e, index)}
                 />
               </div>
-              <div className='companies'>
-                <label htmlFor='isCurrent'>Current position?</label>
-                <input
-                  type='checkbox'
-                  required
-                  name='isCurrent'
-                  onChange={e => handleUpdateCompany(e, index)}
-                />
-              </div>
-              <div className='companies'>
-                <label htmlFor='endDate'>End date</label>
-                <input
-                  type='date'
-                  required
-                  name='endDate'
-                  onChange={e => handleUpdateCompany(e, index)}
-                />
-              </div>
-
+              {index < 1 && (
+                <div className='companies'>
+                  <label htmlFor='isCurrent'>Current position?</label>
+                  <input
+                    type='checkbox'
+                    // required
+                    name='isCurrent'
+                    onChange={e => handleUpdateCompany(e, index)}
+                  />
+                </div>
+              )}
+              {!company.isCurrent && (
+                <div className='companies'>
+                  <label htmlFor='endDate'>End date</label>
+                  <input
+                    type='month'
+                    required
+                    name='endDate'
+                    onChange={e => handleUpdateCompany(e, index)}
+                  />
+                </div>
+              )}
               <div className='btn__group'>
                 {companyInfo.length - 1 === index && companyInfo.length < 4 && (
                   <button id='addBtn' onClick={handleAddCompany}>

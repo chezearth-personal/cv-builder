@@ -72,6 +72,13 @@ button {
   width: 50%;
 }
 
+.btn__group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* margin-top: 20px; */
+}
+
 #addBtn {
   background-color: green;
   margin-right: 5px;
