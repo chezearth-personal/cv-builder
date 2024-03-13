@@ -81,43 +81,59 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
     const telsArray = JSON.parse(tels); /** an array */
     const technologiesArray = JSON.parse(technologies); /** an array */
     const skillsArray = JSON.parse(skills); /** an array */
+    // console.log('workArray =\n', workArray);
     /** Group the values into an object */
     const newEntry = {
       id: randomUUID(),
       fullName,
-      imageUrl: `http://localhost:4000/uploads/${req.file.filename}`,
+      imageUrl: req.file && `http://localhost:4000/uploads/${req.file.filename}`,
       tels: telsArray,
       email,
       technologies: technologiesArray,
       skills: skillsArray,
       workHistory: workArray
     };
+    console.log('newEntry =\n', newEntry);
     /** Reduces the items in the workArray and convert them to a string */
     const remainderText = workArray
-      .reduce((res, e) => res + ` ${e.name} as a ${e.position}, starting in ${
-        startDate
-      } until ${endDate}${
-        isCurrent ? ', which is my current job' : ''
-      }`, '');
-    // const technologiesString = technologiesArray.join(', ');
+      .reduce((res, e) => {
+        // const endDate = !e.isCurrent ? e.endDate : (new Date).toDateString();
+        // console.log('endDate =\n', endDate);
+        const elapsedMillis = Date.parse(!e.isCurrent
+          ? e.endDate 
+          : (new Date).toDateString()
+        ) - Date.parse(e.startDate);
+        // console.log('elapsedMillis =\n', elapsedMillis);
+        const elapsedMonths = Math.floor(elapsedMillis / 3600000 / 24 / 30.4375 + 1);
+        const elapsedYears = Math.floor(elapsedMonths / 12)
+        const remMonths = elapsedMonths % 12;
+        return res + ` ${e.name} as a ${e.position}, starting in ${
+          e.startDate
+        } until ${
+          !e.isCurrent ? e.endDate : 'now'
+        } (${elapsedYears} years ${remMonths} months).`
+        }, '').trim();
+    console.log('remainderText =\n', remainderText);
+    const technologiesString = technologiesArray.reduce((res, e) => res + ` ${e.technology},`, '').trim();
+    const skillsString = skillsArray.reduce((res, e) => res + ` ${e.skill},`, '').trim();
     /** The job description message */
     const prompt1 = `I am writing a CV, my name is: ${
         fullName
       }. I work with the technologies: ${
-        technologiesArray.join(', ')
+        technologiesString
       }, and I have the following skills: ${
-        skillsArray.join(', ')
+        skillsString
       }. Can you write a 100 words description of my skills and technology experience for the top of the CV (first person writing)?`;
     /** The job responsibilities message */
     const prompt2 = `I am writing a CV, my details are name: ${
         fullName
-      } role: ${currentPosition} (${currentLength} years). I write in the technologies: ${
-        currentTechnologies
+      } . I write in the technologies: ${
+        technologiesString
       }. Can you write 10 points for a CV on what I am good at?`;
     /** The job achievements message */
     const prompt3 = `I am writing a CV, my details are name: ${
         fullName
-      } role: ${currentPosition} (${currentLength} years). During my years I worked at ${
+      }. During my years I worked at ${
         workArray.length
       } companies.${
         remainderText

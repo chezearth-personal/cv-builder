@@ -14,7 +14,7 @@ const Home = ({ setResult }) => {
   const [skills, setSkills] = useState([{ skill: '' }]);
   const [headShot, setHeadShot] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [companyInfo, setCompanyInfo] = useState([{ name: '', position: '' }]);
+  const [companyInfo, setCompanyInfo] = useState([{ name: '', position: '', startDate: '', endDate: '', isCurrent: null}]);
   const navigate = useNavigate();
   /** Updates the state with user's input */
   const handleAddTel = () =>
@@ -27,9 +27,9 @@ const Home = ({ setResult }) => {
   }
   /** Updates an item within the list */
   const handleUpdateTel = (e, index) => {
-    const {telNumber, value } = e.target;
+    const {name, value } = e.target;
     const list = [...tels];
-    list[index][telNumber] = value;
+    list[index][name] = value;
     setTels(list);
   }
   /** Updates the state with user's input */
@@ -43,9 +43,11 @@ const Home = ({ setResult }) => {
   }
   /** Updates an item within the list */
   const handleUpdateTechnology = (e, index) => {
-    const {technology, value } = e.target;
+    const {name, value } = e.target;
     const list = [...technologies];
-    list[index][technology] = value;
+    console.log('list', list);
+    list[index][name] = value;
+    console.log('list', list);
     setTechnologies(list);
   }
   /** Updates the state with user's input */
@@ -59,14 +61,14 @@ const Home = ({ setResult }) => {
   }
   /** Updates an item within the list */
   const handleUpdateSkill = (e, index) => {
-    const {skill, value } = e.target;
+    const {name, value } = e.target;
     const list = [...skills];
-    list[index][skill] = value;
+    list[index][name] = value;
     setSkills(list);
   }
   /** Updates the state with user's input */
   const handleAddCompany = () => 
-    setCompanyInfo([ ...companyInfo, { name: '', position: '' }]);
+    setCompanyInfo([ ...companyInfo, { name: '', position: '', startDate: '', endDate: '', isCurrent: false}]);
   /** Removes a selected item from the list */
   const handleRemoveCompany = (index) => {
     const list = [...companyInfo];
@@ -75,9 +77,11 @@ const Home = ({ setResult }) => {
   }
   /** Updates an item within the list*/
   const handleUpdateCompany = (e, index) => {
-    const { name, value } = e.target;
+    const {name, value } = e.target;
     const list = [...companyInfo];
+    console.log('list', list);
     list[index][name] = value;
+    console.log('list', list);
     setCompanyInfo(list);
   }
   // const handleNewSubmitTime = (newTime) => [newTime, ...submitTime];
@@ -85,7 +89,7 @@ const Home = ({ setResult }) => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append('headshotImage', headShot, headShot.name);
+    headShot && formData.append('headshotImage', headShot, headShot.name);
     formData.append('fullName', fullName);
     formData.append('tels', JSON.stringify(tels));
     formData.append('email', email);
@@ -136,7 +140,6 @@ const Home = ({ setResult }) => {
         <label htmlFor='photo'>Upload your headshot image</label>
         <input
           type='file'
-          required
           name='photo'
           id='photo'
           accept='image/x-png, image/jpeg'
@@ -196,7 +199,7 @@ const Home = ({ setResult }) => {
                 />
               </div>
               <div className='btn__group'>
-                {technologies.length - 1 === index && technologies.length < 4 && (
+                {technologies.length - 1 === index && technologies.length < 20 && (
                   <button id='addBtn' onClick={handleAddTechnology}>
                     Add
                   </button>
@@ -223,7 +226,7 @@ const Home = ({ setResult }) => {
                 />
               </div>
               <div className='btn__group'>
-                {skills.length - 1 === index && skills.length < 4 && (
+                {skills.length - 1 === index && skills.length < 20 && (
                   <button id='addBtn' onClick={handleAddSkill}>
                     Add
                   </button>
