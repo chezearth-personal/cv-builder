@@ -20,6 +20,9 @@ const openAI = new OpenAI({
 });
 const imageFileSize = 1024 * 1024 * Number(process.env.IMAGE_FILE_SIZE_MB || 5);
 
+/** Useful text function */
+const plurals = (n, singular, plural) => n === 1 ? singular : plural;
+
 /** Database. For now, just an array*/
 let database = [];
 
@@ -81,7 +84,6 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
     const telsArray = JSON.parse(tels); /** an array */
     const technologiesArray = JSON.parse(technologies); /** an array */
     const skillsArray = JSON.parse(skills); /** an array */
-    // console.log('workArray =\n', workArray);
     /** Group the values into an object */
     const newEntry = {
       id: randomUUID(),
@@ -97,21 +99,22 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
     /** Reduces the items in the workArray and convert them to a string */
     const remainderText = workArray
       .reduce((res, e) => {
-        // const endDate = !e.isCurrent ? e.endDate : (new Date).toDateString();
-        // console.log('endDate =\n', endDate);
         const elapsedMillis = Date.parse(!e.isCurrent
           ? e.endDate 
           : (new Date).toDateString()
         ) - Date.parse(e.startDate);
-        // console.log('elapsedMillis =\n', elapsedMillis);
-        const elapsedMonths = Math.floor(elapsedMillis / 3600000 / 24 / 30.4375 + 1);
+        const elapsedMonths = Math.floor(elapsedMillis / (3600000 * 24 * 30.4375) + 1);
         const elapsedYears = Math.floor(elapsedMonths / 12)
         const remMonths = elapsedMonths % 12;
         return res + ` ${e.name} as a ${e.position}, starting in ${
           e.startDate
         } until ${
           !e.isCurrent ? e.endDate : 'now'
-        } (${elapsedYears} years ${remMonths} months).`
+        } (${
+          elapsedYears
+        } year${plurals(elapsedYears, '', 's')} ${
+          remMonths
+        } month${plurals(remMonths, '', 's')}).`
         }, '').trim();
     console.log('remainderText =\n', remainderText);
     const technologiesString = technologiesArray.reduce((res, e) => res + ` ${e.technology},`, '').trim();

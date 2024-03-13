@@ -6,10 +6,7 @@ import Loading from './Loading'
 const Home = ({ setResult }) => {
   const [fullName, setFullName] = useState('');
   const [tels, setTels] = useState([{ telNumber: '', telType: '' }]);
-  // const [telType, setTelType] = useState('');
   const [email, setEmail] = useState('');
-  // const [currentPosition, setCurrentPosition] = useState('');
-  // const [currentLength, setCurrentLength] = useState(1);
   const [technologies, setTechnologies] = useState([{ technology: '' }]);
   const [skills, setSkills] = useState([{ skill: '' }]);
   const [headShot, setHeadShot] = useState(null);
@@ -84,7 +81,6 @@ const Home = ({ setResult }) => {
     console.log('list', list);
     setCompanyInfo(list);
   }
-  // const handleNewSubmitTime = (newTime) => [newTime, ...submitTime];
   /** Submit the form */
   const handleFormSubmit = (e) => {
     e.preventDefault();
