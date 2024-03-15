@@ -16,7 +16,7 @@
 .App-header {
   /* background-color: #282c34; */
   background-color: white;
-  height: 8vh;
+  height: 25vh;
   min-height: 20vh;
   display: flex;
   flex-direction: row;
@@ -24,7 +24,7 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
-  /* padding: 80px 30px 30px 30px; */
+  padding: 80px 30px 80px 30px;
 }
 
 .App-link {

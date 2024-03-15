@@ -1,0 +1,79 @@
+/** Font faces, imported from Font Squirrel */
+@font-face {
+  font-family: 'hk_groteskbold';
+  src: url('fonts/hkgrotesk-bold-webfont.woff') format('woff'),
+       url('fonts/hkgrotesk-bold-webfont.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'hk_groteskbold_italic';
+  src: url('fonts/hkgrotesk-bolditalic-webfont.woff') format('woff'),
+       url('fonts/hkgrotesk-bolditalic-webfont.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+    font-family: 'hk_groteskitalic';
+    src: url('fonts/hkgrotesk-italic-webfont.woff') format('woff'),
+         url('fonts/hkgrotesk-italic-webfont.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+  font-family: "hk_groteskmedium";
+  src: url('fonts/hkgrotesk-medium-webfont.woff') format('woff'),
+       url('fonts/hkgrotesk-medium-webfont.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: expanded;
+}
+
+@font-face {
+  font-family: "hk_groteskregular";
+  src: url("fonts/hkgrotesk-regular-webfont.woff"),
+       url("fonts/hkgrotesk-bolditalic-webfont.woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+}
+
+/** Foprmatting */
+
+* {
+  font-family: "hk_groteskregular", sans-serif;
+}
+
+h1 {
+  font-family: "hk_groteskmedium", sans-serif;
+  font-weight: 500;
+  font-size: 42px;
+  letter-spacing: 18px;
+  text-align: center;
+  padding: 8px 0 8px 0;
+}
+
+h2 {
+  font-family: "hk_groteskmedium";
+  font-size: 21px;
+  letter-spacing: 8px;
+  text-align: center;
+}
+
+.header {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  border-bottom: 2px solid black;
+}
+
+.headingText {
+  text-align: center;
+  margin: 0;
+  padding: 0 0 8px 0;
+}

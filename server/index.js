@@ -95,7 +95,7 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
       skills: skillsArray,
       workHistory: workArray
     };
-    console.log('newEntry =\n', newEntry);
+    // console.log('newEntry =\n', newEntry);
     /** Reduces the items in the workArray and convert them to a string */
     const remainderText = workArray
       .reduce((res, e) => {
@@ -117,14 +117,18 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
         } month${plurals(remMonths, '', 's')}).`
         }, '').trim();
     console.log('remainderText =\n', remainderText);
-    const technologiesString = technologiesArray.reduce((res, e) => res + ` ${e.technology},`, '').trim();
-    const skillsString = skillsArray.reduce((res, e) => res + ` ${e.skill},`, '').trim();
+    console.log('technologiesArray =', technologiesArray);
+    const technologiesString = technologiesArray.reduce((res, e) => {
+      console.log('res =', res, '; !res.length? ', !res.length, '; e.technology = ', e.technology);
+      return res + (!res.length ? '' : ', ') + e.technology;
+    }, '');
+    const skillsString = skillsArray.reduce((res, e) => res + (!res.length ? '' : ', ') + e.skill, '');
     /** The job description message */
-    const prompt1 = `I am writing a CV, my name is: ${
+    const prompt1 = `I am writing a CV, my name is ${
         fullName
-      }. I work with the technologies: ${
+      }. I work with the following technologies: ${
         technologiesString
-      }, and I have the following skills: ${
+      }. I have the following skills: ${
         skillsString
       }. Can you write a 100 words description of my skills and technology experience for the top of the CV (first person writing)?`;
     /** The job responsibilities message */
@@ -138,12 +142,15 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
         fullName
       }. During my years I worked at ${
         workArray.length
-      } companies.${
+      } companiesr. ${
         remainderText
-      }. Can you write me 50 words for each company seperated in numbers of my succession in the company (in first person)?`;
+      } Can you write me 50 words for each company seperated in numbers of my succession in the company (in first person)?`;
     /** Generate a GPT-3 result */
+    console.log('prompt1 = ', prompt1);
     const objective = await gptFunction(prompt1);
+    console.log('prompt2 = ', prompt2);
     const keyPoints = await gptFunction(prompt2);
+    console.log('prompt3 = ', prompt3);
     const jobResponsibilities = await gptFunction(prompt3);
     /** Put them into an object */
     const chatGptData = { objective , keyPoints, jobResponsibilities };

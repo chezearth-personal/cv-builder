@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Loading from './Loading'
+import logo from '../logo.svg';
+import '../index.css';
 
 const Home = ({ setResult }) => {
   const [fullName, setFullName] = useState('');
@@ -76,9 +78,9 @@ const Home = ({ setResult }) => {
   const handleUpdateCompany = (e, index) => {
     const {name, value } = e.target;
     const list = [...companyInfo];
-    console.log('list', list);
+    // console.log('list', list);
     list[index][name] = value;
-    console.log('list', list);
+    // console.log('list', list);
     setCompanyInfo(list);
   }
   /** Submit the form */
@@ -117,6 +119,9 @@ const Home = ({ setResult }) => {
   }
   return (
     <div className='app'>
+      <div className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+      </div>
       <h1>CV Builder</h1>
       <p>Generate a CV with chatGPT in a few seconds</p>
       <form

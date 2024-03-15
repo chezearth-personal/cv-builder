@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { useReactToPrint } from 'react-to-print';
 import ErrorPage from './ErrorPage';
+import '../Cv.css';
 
 const Cv = ({ result }) => {
   const componentRef = useRef();
@@ -43,8 +44,9 @@ const Cv = ({ result }) => {
       <button onClick={handlePrint}>Print page</button>
       <main className='container' ref={componentRef}>
         <header className='header'>
-          <div>
-            <h1>{result.fullName}</h1>
+          <div className='headingText'>
+            <h1>{result.fullName.toUpperCase()}</h1>
+            <h2>SOFTWARE ENGINEER</h2>
             <p className='cvTitle'>
               {totalWorkYears} work experience
             </p>
