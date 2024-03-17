@@ -68,7 +68,7 @@ const Cv = ({ result }) => {
         </header>
         <div className='cvBody'>
           <div className='cvKeyPoints'>
-            <div>
+            <div className='cvPoint'>
               <h2 className='cvBodyTitle'>TECHNICAL SKILLS</h2>
               <div className='cvTechSkillGroup'>
                 <img src={tick} alt=' - ' className='cvBullet'/>
