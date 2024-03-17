@@ -86,7 +86,7 @@ const Cv = ({ result }) => {
           </div>
           <div className='cvStory'>
             <div>
-              <h4 className='cvBodyTitle'>PROFILE SUMMARY</h4>
+              <h4 className='cvBodyTitle cvHistoryTitle'>PROFILE SUMMARY</h4>
               <p
                 dangerouslySetInnerHTML={{
                   __html: replaceWithBr(result.objective),
@@ -95,7 +95,7 @@ const Cv = ({ result }) => {
               />
             </div>
             <div>
-              <h4 className='cvBodyTitle'>WORK HISTORY</h4>
+              <h4 className='cvBodyTitle cvHistoryTitle'>WORK HISTORY</h4>
               {result.workHistory.map(work => (
                 <p className='cvBodyContent' key={work.name}>
                   <span style={{ fontWeight: "bold" }}>{work.name}</span> -{" "}
@@ -104,7 +104,7 @@ const Cv = ({ result }) => {
               ))}
             </div>
             <div>
-              <h4 className='cvBodyTitle'>JOB PROFILE</h4>
+              <h4 className='cvBodyTitle cvHistoryTitle'>JOB PROFILE</h4>
               <p
                 dangerouslySetInnerHTML={{
                   __html: replaceWithBr(result.jobResponsibilities),
@@ -113,7 +113,7 @@ const Cv = ({ result }) => {
               />
             </div>
             <div>
-              <h4 className='cvBodyTitle'>JOB RESPONSIBILITIES</h4>
+              <h4 className='cvBodyTitle cvHistoryTitle'>JOB RESPONSIBILITIES</h4>
               <p
                 dangerouslySetInnerHTML={{
                   __html: replaceWithBr(result.keyPoints),
