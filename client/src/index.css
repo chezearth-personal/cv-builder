@@ -6,6 +6,10 @@
     margin: 0;
     padding: 0;
 }
+ main {
+   display: flex;
+   flex-direction: column;
+ }
 
 form {
   padding: 10px;
@@ -97,7 +101,6 @@ button {
   width: 80%;
   margin: 0 auto;
   min-height: 10vh;
-  background-color: #e8e2e2;
   padding: 30px;
   border-radius: 3px 3px 0 0;
   display: flex;
@@ -105,34 +108,3 @@ button {
   justify-content: space-between;
 }
 
-.cvTitle {
-  opacity: 0.6;
-}
-
-.headerTitle {
-  margin-bottom: 15px;
-}
-
-.cvImage {
-  vertical-align: middle;
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-}
-
-.cvBody {
-  width: 80%;
-  margin: 0 auto;
-  padding: 30px;
-  min-height: 80vh;
-  border: 1px solid #e0e0ea;
-}
-
-.cvBodyTitle {
-  margin-bottom: 5px;
-}
-
-.cvBodyContent {
-  text-align: justify;
-  margin-bottom: 30px;
-}

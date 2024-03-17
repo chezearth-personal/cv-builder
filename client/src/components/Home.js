@@ -44,9 +44,9 @@ const Home = ({ setResult }) => {
   const handleUpdateTechnology = (e, index) => {
     const {name, value } = e.target;
     const list = [...technologies];
-    console.log('list', list);
+    // console.log('list', list);
     list[index][name] = value;
-    console.log('list', list);
+    // console.log('list', list);
     setTechnologies(list);
   }
   /** Updates the state with user's input */
@@ -78,9 +78,7 @@ const Home = ({ setResult }) => {
   const handleUpdateCompany = (e, index) => {
     const {name, value } = e.target;
     const list = [...companyInfo];
-    // console.log('list', list);
     list[index][name] = value;
-    // console.log('list', list);
     setCompanyInfo(list);
   }
   /** Submit the form */

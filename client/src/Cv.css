@@ -63,6 +63,11 @@ h2 {
   text-align: center;
 }
 
+h4 {
+  font-family: hk_groteskbold;
+  font-size: 20px;
+}
+
 .header {
   width: 100%;
   margin: 0 auto;
@@ -76,4 +81,69 @@ h2 {
   text-align: center;
   margin: 0;
   padding: 0 0 8px 0;
+}
+
+.cvTitle {
+  opacity: 0.6;
+}
+
+.cvImage {
+  vertical-align: middle;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+}
+
+/* .headerTitle { */
+  /* margin-bottom: 15px; */
+/* } */
+
+.cvBody {
+  display: flex;
+  flex-flow: row nowrap;
+  flex-basis: auto;
+  justify-content: flex-start;
+  width: 100%;
+  margin: 0 auto;
+  padding: 25px 0 30px 0;
+  min-height: 80vh;
+  border: 1px solid #e0e0ea;
+}
+
+.cvKeyPoints {
+  background-color: #e8e2e2;
+  width: 30%;
+  padding: 10px;
+}
+
+.cvBodyTitle {
+  margin-bottom: 5px;
+  text-align: center;
+  text-wrap: nowrap;
+  border-bottom: 1px solid #e0e0ea;
+}
+
+.cvTechSkillGroup {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+}
+
+.cvBullet {
+  height: 20px;
+  width: 20px;
+  padding: 6px 2px 0px 2px;
+}
+
+.cvStory {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: left;
+  padding: 10px 0 10px 10px;
+}
+
+.cvBodyContent {
+  text-align: justify;
+  margin-bottom: 30px;
 }

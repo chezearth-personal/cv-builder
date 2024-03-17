@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { useReactToPrint } from 'react-to-print';
 import ErrorPage from './ErrorPage';
 import '../Cv.css';
+import tick from '../tick.png';
 
 const Cv = ({ result }) => {
   const componentRef = useRef();
@@ -39,6 +40,10 @@ const Cv = ({ result }) => {
     return <ErrorPage />;
   }
   console.log('result.imageUrl =\n', result && result.imageUrl);
+  console.log('result.objective =', result.objective);
+  console.log('replaceWithBr() = ', replaceWithBr(result.objective));
+  console.log('result.technologiesString =', result.technologies);
+  console.log('replaceWithBr() = ', replaceWithBr(result.technologies));
   return (
     <>
       <button onClick={handlePrint}>Print page</button>
@@ -62,41 +67,60 @@ const Cv = ({ result }) => {
           )}
         </header>
         <div className='cvBody'>
-          <div>
-            <h2 className='cvBodyTitle'>PROFILE SUMMARY</h2>
-            <p
-              dangerouslySetInnerHTML={{
-                __html: replaceWithBr(result.objective),
-              }}
-              className='cvBodyContent'
-            />
+          <div className='cvKeyPoints'>
+            <div>
+              <h2 className='cvBodyTitle'>TECHNICAL SKILLS</h2>
+              <div className='cvTechSkillGroup'>
+                <img src={tick} alt=' - ' className='cvBullet'/>
+                <div>
+                  <h4 className='cvGroupHeading'>Languages and Frameworks</h4>
+                  <p 
+                    dangerouslySetInnerHTML={{
+                      __html: replaceWithBr(result.technologies + '\n'),
+                    }}
+                    className='cvBodyContent'
+                  />
+                </div>
+              </div>
+            </div>
           </div>
-          <div>
-            <h2 className='cvBodyTitle'>WORK HISTORY</h2>
-            {result.workHistory.map(work => (
-              <p className='cvBodyContent' key={work.name}>
-                <span style={{ fontWeight: "bold" }}>{work.name}</span> -{" "}
-                {work.position}
-              </p>
-            ))}
-          </div>
-          <div>
-            <h2 className='cvBodyTitle'>JOB PROFILE</h2>
-            <p
-              dangerouslySetInnerHTML={{
-                __html: replaceWithBr(result.jobResponsibilities),
-              }}
-              className='cvBodyContent'
-            />
-          </div>
-          <div>
-            <h2 className='cvBodyTitle'>JOB RESPONSIBILITIES</h2>
-            <p
-              dangerouslySetInnerHTML={{
-                __html: replaceWithBr(result.keyPoints),
-              }}
-              className='cvBodyContent'
-            />
+          <div className='cvStory'>
+            <div>
+              <h2 className='cvBodyTitle'>PROFILE SUMMARY</h2>
+              <p
+                dangerouslySetInnerHTML={{
+                  __html: replaceWithBr(result.objective),
+                }}
+                className='cvBodyContent'
+              />
+            </div>
+            <div>
+              <h2 className='cvBodyTitle'>WORK HISTORY</h2>
+              {result.workHistory.map(work => (
+                <p className='cvBodyContent' key={work.name}>
+                  <span style={{ fontWeight: "bold" }}>{work.name}</span> -{" "}
+                  {work.position}
+                </p>
+              ))}
+            </div>
+            <div>
+              <h2 className='cvBodyTitle'>JOB PROFILE</h2>
+              <p
+                dangerouslySetInnerHTML={{
+                  __html: replaceWithBr(result.jobResponsibilities),
+                }}
+                className='cvBodyContent'
+              />
+            </div>
+            <div>
+              <h2 className='cvBodyTitle'>JOB RESPONSIBILITIES</h2>
+              <p
+                dangerouslySetInnerHTML={{
+                  __html: replaceWithBr(result.keyPoints),
+                }}
+                className='cvBodyContent'
+              />
+            </div>
           </div>
         </div>
       </main>

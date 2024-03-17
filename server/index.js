@@ -84,6 +84,9 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
     const telsArray = JSON.parse(tels); /** an array */
     const technologiesArray = JSON.parse(technologies); /** an array */
     const skillsArray = JSON.parse(skills); /** an array */
+    /** Create strings from arrays for returning as lists to document */
+    const technologiesString = technologiesArray.reduce((res, e) => res + (!res.length ? '' : ', ') + e.technology, '');
+    const skillsString = skillsArray.reduce((res, e) => res + (!res.length ? '' : ', ') + e.skill, '');
     /** Group the values into an object */
     const newEntry = {
       id: randomUUID(),
@@ -91,11 +94,11 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
       imageUrl: req.file && `http://localhost:4000/uploads/${req.file.filename}`,
       tels: telsArray,
       email,
-      technologies: technologiesArray,
-      skills: skillsArray,
+      technologies: technologiesString,
+      skills: skillsString,
       workHistory: workArray
     };
-    // console.log('newEntry =\n', newEntry);
+    console.log('newEntry =\n', newEntry);
     /** Reduces the items in the workArray and convert them to a string */
     const remainderText = workArray
       .reduce((res, e) => {
@@ -116,13 +119,6 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
           remMonths
         } month${plurals(remMonths, '', 's')}).`
         }, '').trim();
-    console.log('remainderText =\n', remainderText);
-    console.log('technologiesArray =', technologiesArray);
-    const technologiesString = technologiesArray.reduce((res, e) => {
-      console.log('res =', res, '; !res.length? ', !res.length, '; e.technology = ', e.technology);
-      return res + (!res.length ? '' : ', ') + e.technology;
-    }, '');
-    const skillsString = skillsArray.reduce((res, e) => res + (!res.length ? '' : ', ') + e.skill, '');
     /** The job description message */
     const prompt1 = `I am writing a CV, my name is ${
         fullName
@@ -156,6 +152,7 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
     const chatGptData = { objective , keyPoints, jobResponsibilities };
     /** Log the result */
     const data = { ...newEntry, ...chatGptData };
+    console.log('data =\n', data);
     database.push(data);
     res.json({
       message: 'Request successful!',
