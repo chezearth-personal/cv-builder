@@ -116,16 +116,16 @@ h4 {
 .cvKeyPoints {
   background-color: #e8e2e2;
   width: 30%;
-  padding: 3px 10px 10px 10px;
+  padding: 30px 10px 10px 10px;
 }
 
-.cvPoint {
-  padding: 20px 0 8px 0;
-}
+/* .cvPoint { */
+  /* padding: 20px 0 8px 0; */
+/* } */
 
 .cvBodyTitle {
   margin: 0 0 10px 0;
-  padding: 0 0 5px 0;
+  padding: 0 0 8px 0;
   text-align: center;
   text-wrap: nowrap;
   border-bottom: 1.5px solid black;
@@ -153,7 +153,7 @@ h4 {
   flex-direction: column;
   justify-content: flex-start;
   align-items: left;
-  padding: 10px 0 10px 10px;
+  padding: 0 0 10px 10px;
 }
 
 .cvBodyContent {
