@@ -69,7 +69,7 @@ const Cv = ({ result }) => {
         <div className='cvBody'>
           <div className='cvKeyPoints'>
             <div className='cvPoint'>
-              <h2 className='cvBodyTitle'>TECHNICAL SKILLS</h2>
+              <h4 className='cvBodyTitle'>TECHNICAL SKILLS</h4>
               <div className='cvTechSkillGroup'>
                 <img src={tick} alt=' - ' className='cvBullet'/>
                 <div className='cvBulletedItem'>
@@ -86,7 +86,7 @@ const Cv = ({ result }) => {
           </div>
           <div className='cvStory'>
             <div>
-              <h2 className='cvBodyTitle'>PROFILE SUMMARY</h2>
+              <h4 className='cvBodyTitle'>PROFILE SUMMARY</h4>
               <p
                 dangerouslySetInnerHTML={{
                   __html: replaceWithBr(result.objective),
@@ -95,7 +95,7 @@ const Cv = ({ result }) => {
               />
             </div>
             <div>
-              <h2 className='cvBodyTitle'>WORK HISTORY</h2>
+              <h4 className='cvBodyTitle'>WORK HISTORY</h4>
               {result.workHistory.map(work => (
                 <p className='cvBodyContent' key={work.name}>
                   <span style={{ fontWeight: "bold" }}>{work.name}</span> -{" "}
@@ -104,7 +104,7 @@ const Cv = ({ result }) => {
               ))}
             </div>
             <div>
-              <h2 className='cvBodyTitle'>JOB PROFILE</h2>
+              <h4 className='cvBodyTitle'>JOB PROFILE</h4>
               <p
                 dangerouslySetInnerHTML={{
                   __html: replaceWithBr(result.jobResponsibilities),
@@ -113,7 +113,7 @@ const Cv = ({ result }) => {
               />
             </div>
             <div>
-              <h2 className='cvBodyTitle'>JOB RESPONSIBILITIES</h2>
+              <h4 className='cvBodyTitle'>JOB RESPONSIBILITIES</h4>
               <p
                 dangerouslySetInnerHTML={{
                   __html: replaceWithBr(result.keyPoints),
