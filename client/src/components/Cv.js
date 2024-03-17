@@ -72,7 +72,7 @@ const Cv = ({ result }) => {
               <h2 className='cvBodyTitle'>TECHNICAL SKILLS</h2>
               <div className='cvTechSkillGroup'>
                 <img src={tick} alt=' - ' className='cvBullet'/>
-                <div>
+                <div className='cvBulletedItem'>
                   <h4 className='cvGroupHeading'>Languages and Frameworks</h4>
                   <p 
                     dangerouslySetInnerHTML={{

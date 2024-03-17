@@ -45,6 +45,7 @@
 
 * {
   font-family: "hk_groteskregular", sans-serif;
+  font-size: 20px;
 }
 
 h1 {
@@ -58,14 +59,15 @@ h1 {
 
 h2 {
   font-family: "hk_groteskmedium";
-  font-size: 21px;
+  font-size: 26px;
   letter-spacing: 8px;
   text-align: center;
+  padding: 5px 0 5px 0;
 }
 
 h4 {
   font-family: hk_groteskbold;
-  font-size: 20px;
+  font-size: 22px;
 }
 
 .header {
@@ -85,6 +87,7 @@ h4 {
 
 .cvTitle {
   opacity: 0.6;
+  margin: 10px 0 10px 0;
 }
 
 .cvImage {
@@ -117,10 +120,11 @@ h4 {
 }
 
 .cvBodyTitle {
-  margin-bottom: 5px;
+  margin: 0 0 5px 0;
+  padding: 0 0 5px 0;
   text-align: center;
   text-wrap: nowrap;
-  border-bottom: 1px solid #e0e0ea;
+  border-bottom: 1.5px solid black;
 }
 
 .cvTechSkillGroup {
@@ -130,9 +134,13 @@ h4 {
 }
 
 .cvBullet {
-  height: 20px;
-  width: 20px;
-  padding: 6px 2px 0px 2px;
+  height: 30px;
+  width: 30px;
+  padding: 6px 0px 0px 2px;
+}
+
+.cvBulletedItem {
+  padding: 0 0 0 10px;
 }
 
 .cvStory {
