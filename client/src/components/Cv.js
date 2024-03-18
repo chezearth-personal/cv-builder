@@ -39,11 +39,11 @@ const Cv = ({ result }) => {
   if (JSON.stringify(result) === '{}') {
     return <ErrorPage />;
   }
-  console.log('result.imageUrl =\n', result && result.imageUrl);
-  console.log('result.objective =', result.objective);
-  console.log('replaceWithBr() = ', replaceWithBr(result.objective));
-  console.log('result.technologiesString =', result.technologies);
-  console.log('replaceWithBr() = ', replaceWithBr(result.technologies));
+  // console.log('result.imageUrl =\n', result && result.imageUrl);
+  // console.log('result.objective =', result.objective);
+  // console.log('replaceWithBr() = ', replaceWithBr(result.objective));
+  // console.log('result.technologiesString =', result.technologies);
+  // console.log('replaceWithBr() = ', replaceWithBr(result.technologies));
   return (
     <>
       <button onClick={handlePrint}>Print page</button>
@@ -68,6 +68,11 @@ const Cv = ({ result }) => {
         </header>
         <div className='cvBody'>
           <div className='cvKeyPoints'>
+            <div>
+              <h4 className='cvBodyTitle cvHistoryTitle'>CONTACT</h4>
+              <div className='cvTechSkillGroup'>
+              </div>
+            </div>
             <div className='cvPoint'>
               <h4 className='cvBodyTitle'>TECHNICAL SKILLS</h4>
               <div className='cvTechSkillGroup'>

@@ -142,17 +142,17 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
         remainderText
       } Can you write me 50 words for each company seperated in numbers of my succession in the company (in first person)?`;
     /** Generate a GPT-3 result */
-    console.log('prompt1 = ', prompt1);
+    // console.log('prompt1 = ', prompt1);
     const objective = await gptFunction(prompt1);
-    console.log('prompt2 = ', prompt2);
+    // console.log('prompt2 = ', prompt2);
     const keyPoints = await gptFunction(prompt2);
-    console.log('prompt3 = ', prompt3);
+    // console.log('prompt3 = ', prompt3);
     const jobResponsibilities = await gptFunction(prompt3);
     /** Put them into an object */
     const chatGptData = { objective , keyPoints, jobResponsibilities };
     /** Log the result */
     const data = { ...newEntry, ...chatGptData };
-    console.log('data =\n', data);
+    // console.log('data =\n', data);
     database.push(data);
     res.json({
       message: 'Request successful!',

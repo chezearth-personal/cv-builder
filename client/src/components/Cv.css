@@ -134,8 +134,8 @@ h4 {
 
 .cvKeyPoints {
   background-color: #e8e2e2;
-  width: 30%;
-  padding: 30px 10px 10px 10px;
+  min-width: 30%;
+  padding: 8px 10px 10px 10px;
 }
 
 /* .cvPoint { */
@@ -146,7 +146,7 @@ h4 {
   margin: 0 0 10px 0;
   padding: 0 0 8px 0;
   text-align: center;
-  text-wrap: nowrap;
+  /* text-wrap: nowrap; */
   border-bottom: 1.5px solid black;
 }
 
@@ -164,7 +164,8 @@ h4 {
 .cvBullet {
   height: 20px;
   width: 20px;
-  padding: 6px 0px 0px 2px;
+  padding: 2px 0px 0px 2px;
+  object-fit: fill;
 }
 
 .cvBulletedItem {
@@ -173,6 +174,7 @@ h4 {
 
 .cvBulletHeading {
   font-family: pragati_narrowbold;
+  letter-spacing: normal;
 }
 
 .cvBulletContent {
@@ -184,7 +186,7 @@ h4 {
   flex-direction: column;
   justify-content: flex-start;
   align-items: left;
-  padding: 5px 0 10px 40px;
+  padding: 8px 0 10px 40px;
   /* border-bottom: 0 solid #e0e0ea; */
 }
 
