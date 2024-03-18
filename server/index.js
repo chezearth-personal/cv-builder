@@ -70,6 +70,9 @@ const upload = multer({
   limits: { fileSize: imageFileSize }
 });
 
+const getStringFromArray = (arr) => arr.reduce(
+  (res, e) => res + (!res.length ? '' : ', ') + e.name, ''
+);
 
 app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
     const {
@@ -77,16 +80,17 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
       tels,
       email,
       technologies,
-      skills,
+      skillGroups,
       workHistory /** JSON format*/
     } = req.body;
     const workArray = JSON.parse(workHistory); /** an array */
     const telsArray = JSON.parse(tels); /** an array */
     const technologiesArray = JSON.parse(technologies); /** an array */
-    const skillsArray = JSON.parse(skills); /** an array */
+    const skillGroupsArray = JSON.parse(skillGroups); /** an array */
+    console.log('technologiesArray =', technologiesArray);
+    console.log('skillGroupsArray =', skillGroupsArray);
     /** Create strings from arrays for returning as lists to document */
-    const technologiesString = technologiesArray.reduce((res, e) => res + (!res.length ? '' : ', ') + e.technology, '');
-    const skillsString = skillsArray.reduce((res, e) => res + (!res.length ? '' : ', ') + e.skill, '');
+    // const technologiesString = technologiesArray.reduce((res, e) => res + (!res.length ? '' : ', ') + e.technology, '');
     /** Group the values into an object */
     const newEntry = {
       id: randomUUID(),
@@ -94,8 +98,8 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
       imageUrl: req.file && `http://localhost:4000/uploads/${req.file.filename}`,
       tels: telsArray,
       email,
-      technologies: technologiesString,
-      skills: skillsString,
+      technologies: getStringFromArray(technologiesArray),
+      skillGroups: skillGroupsArray,
       workHistory: workArray
     };
     console.log('newEntry =\n', newEntry);
@@ -123,15 +127,15 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
     const prompt1 = `I am writing a CV, my name is ${
         fullName
       }. I work with the following technologies: ${
-        technologiesString
+        getStringFromArray(technologiesArray)
       }. I have the following skills: ${
-        skillsString
+        getStringFromArray(skillGroupsArray)
       }. Can you write a 100 words description of my skills and technology experience for the top of the CV (first person writing)?`;
     /** The job responsibilities message */
     const prompt2 = `I am writing a CV, my details are name: ${
         fullName
       } . I write in the technologies: ${
-        technologiesString
+        getStringFromArray(technologiesArray)
       }. Can you write 10 points for a CV on what I am good at?`;
     /** The job achievements message */
     const prompt3 = `I am writing a CV, my details are name: ${
@@ -152,7 +156,7 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
     const chatGptData = { objective , keyPoints, jobResponsibilities };
     /** Log the result */
     const data = { ...newEntry, ...chatGptData };
-    // console.log('data =\n', data);
+    console.log('data =\n', data);
     database.push(data);
     res.json({
       message: 'Request successful!',

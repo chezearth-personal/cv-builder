@@ -75,18 +75,20 @@ const Cv = ({ result }) => {
             </div>
             <div className='cvPoint'>
               <h4 className='cvBodyTitle'>TECHNICAL SKILLS</h4>
-              <div className='cvTechSkillGroup'>
-                <img src={tick} alt=' - ' className='cvBullet'/>
-                <div className='cvBulletedItem'>
-                  <h4 className='cvBulletHeading'>Languages and Frameworks</h4>
-                  <p 
-                    dangerouslySetInnerHTML={{
-                      __html: replaceWithBr(result.technologies + '\n'),
-                    }}
-                    className='cvBodyContent cvBulletContent'
-                  />
+              {result.skillGroups.map(skillGroup => (
+                <div className='cvTechSkillGroup' key={skillGroup.name.split(' ').join('_')}>
+                  <img src={tick} alt=' - ' className='cvBullet'/>
+                  <div className='cvBulletedItem'>
+                    <h4 className='cvBulletHeading'>{skillGroup.name}</h4>
+                    <p 
+                      dangerouslySetInnerHTML={{
+                        __html: replaceWithBr(result.technologies + '\n'),
+                      }}
+                      className='cvBodyContent cvBulletContent'
+                    />
+                  </div>
                 </div>
-              </div>
+              ))}
             </div>
           </div>
           <div className='cvStory'>
