@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { useReactToPrint } from 'react-to-print';
 import ErrorPage from './ErrorPage';
-import '../Cv.css';
+import './Cv.css';
 import tick from '../tick.png';
 
 const Cv = ({ result }) => {
@@ -73,12 +73,12 @@ const Cv = ({ result }) => {
               <div className='cvTechSkillGroup'>
                 <img src={tick} alt=' - ' className='cvBullet'/>
                 <div className='cvBulletedItem'>
-                  <h4 className='cvGroupHeading'>Languages and Frameworks</h4>
+                  <h4 className='cvBulletHeading'>Languages and Frameworks</h4>
                   <p 
                     dangerouslySetInnerHTML={{
                       __html: replaceWithBr(result.technologies + '\n'),
                     }}
-                    className='cvBodyContent'
+                    className='cvBodyContent cvBulletContent'
                   />
                 </div>
               </div>
