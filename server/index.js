@@ -70,6 +70,7 @@ const upload = multer({
   limits: { fileSize: imageFileSize }
 });
 
+/** Create strings from arrays for returning as lists to document */
 const getStringFromArray = (arr) => arr.reduce(
   (res, e) => res + (!res.length ? '' : ', ') + e.name, ''
 );
@@ -87,10 +88,8 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
     const telsArray = JSON.parse(tels); /** an array */
     const technologiesArray = JSON.parse(technologies); /** an array */
     const skillGroupsArray = JSON.parse(skillGroups); /** an array */
-    console.log('technologiesArray =', technologiesArray);
-    console.log('skillGroupsArray =', skillGroupsArray);
-    /** Create strings from arrays for returning as lists to document */
-    // const technologiesString = technologiesArray.reduce((res, e) => res + (!res.length ? '' : ', ') + e.technology, '');
+    // console.log('technologiesArray =', technologiesArray);
+    // console.log('skillGroupsArray =', skillGroupsArray);
     /** Group the values into an object */
     const newEntry = {
       id: randomUUID(),
@@ -102,7 +101,7 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
       skillGroups: skillGroupsArray,
       workHistory: workArray
     };
-    console.log('newEntry =\n', newEntry);
+    // console.log('newEntry =\n', newEntry);
     /** Reduces the items in the workArray and convert them to a string */
     const remainderText = workArray
       .reduce((res, e) => {
@@ -156,7 +155,7 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
     const chatGptData = { objective , keyPoints, jobResponsibilities };
     /** Log the result */
     const data = { ...newEntry, ...chatGptData };
-    console.log('data =\n', data);
+    // console.log('data =\n', data);
     database.push(data);
     res.json({
       message: 'Request successful!',

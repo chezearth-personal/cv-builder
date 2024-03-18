@@ -138,15 +138,10 @@ h4 {
   padding: 8px 20px 10px 10px;
 }
 
-/* .cvPoint { */
-  /* padding: 20px 0 8px 0; */
-/* } */
-
 .cvBodyTitle {
   margin: 0 0 10px 0;
   padding: 0 0 8px 0;
   text-align: center;
-  /* text-wrap: nowrap; */
   border-bottom: 1.5px solid black;
 }
 
