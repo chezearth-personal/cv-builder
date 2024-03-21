@@ -1,0 +1,59 @@
+.itemPills {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+.itemPillsInput {
+  display: flex;
+  flex-direction: row;
+  justify-content:space-between;
+  align-items: center;
+  /* margin: 10px; */
+  min-height: 50%;
+  /* width: 50%; */
+}
+
+.itemPillsList {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: top;
+  /* margin: 10px; */
+  min-height: 50%;
+  /* width: 50%; */
+}
+
+.pill {
+  height: 40px;
+  border-radius: 20px;
+  border: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  width: fit-content;
+  background-color: #c5a5f5;
+  min-width: 45px;
+}
+
+.pillText {
+  margin: 5px;
+  border-radius: 15px 0 0 20px;
+  line-height: 27px;
+  padding: 0 0 0 10px;
+}
+
+.pillRemove {
+  font-size: 30px;
+  color: #e0e0e0;
+  height: 30px;
+  width: 30px;
+  text-align: center;
+  line-height: 23px;
+  /* padding-top: -5px; */
+  margin: 5px;
+  border-radius: 15px;
+  border: 1px solid #e0e0e0;
+}

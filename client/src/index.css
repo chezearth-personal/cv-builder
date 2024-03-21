@@ -24,6 +24,7 @@ input {
   border-radius: 3px;
   outline: none;
   border: 1px solid #ddd;
+  width: 20vw;
 }
 
 h3 {
@@ -31,7 +32,8 @@ h3 {
 }
 
 button {
-  padding: 15px;
+  padding: 10px;
+  /* margin-right: 0; */
   cursor: pointer;
   outline: none;
   background-color: #5d3891;
@@ -55,11 +57,27 @@ button {
   margin-bottom: 30px;
 }
 
+.compositeContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
 .nestedContainer {
   display: flex;
-  align-items: center;
+  align-items: top;
   justify-content: space-between;
-  width: 39%;
+  width: 50%;
+}
+
+#nestedCompanies {
+  width: 100%;
+}
+
+.text__group {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
 }
 
 .companies {
@@ -68,24 +86,34 @@ button {
   width: 39%;
 }
 
-.currentInput {
-  width: 95%;
-}
+/* .currentInput { */
+  /* width: 95%; */
+/* } */
 
 #photo {
   width: 50%;
 }
 
+.text__company {
+  width: 15vw;
+}
+
+#check__company {
+  align-items: center;
+  text-align: center;
+  width: 10vw;
+}
+
 .btn__group {
   display: flex;
-  align-items: center;
+  align-items: right;
   justify-content: space-between;
   /* margin-top: 20px; */
 }
 
 #addBtn {
   background-color: green;
-  margin-right: 5px;
+  /* margin-right: 5px; */
 }
 
 #deleteBtn {

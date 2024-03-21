@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Loading from './Loading'
+import Loading from './Loading';
+import ItemPills from './ItemPills';
 import logo from '../logo.svg';
 import '../index.css';
 
@@ -149,7 +150,7 @@ const Home = ({ setResult }) => {
         <h3>Contact Information</h3>
         <div className='listItems'>Enter your telephone numbers
           {tels.map((tel, index) => (
-            <div className='nestedContainer' key = {index}>
+            <div className='nestedContainer' key={index}>
               <div className='listItem'>
                 <label htmlFor='telNumber'>tel</label>
                 <input
@@ -214,39 +215,45 @@ const Home = ({ setResult }) => {
             </div>
           ))}
         </div>
-        <div className='listItems'>Choose or enter a skill group
+        <div className='listItems'>General skills (across whole work history)
           {skillGroups.map((skillGroup, index) => (
-            <div className='nestedContainer' key={index}>
-              <div className='listItem'>
-                <label htmlFor='skillGroup'>Skill Group</label>
-                <input
-                  type='text'
-                  required
-                  name='skillGroup'
-                  onChange={e => handleUpdateSkillGroup(e, index)}
-                />
+            <div className='compositeContainer' key={index}>
+              <div className='nestedContainer'>
+                <div className='listItem'>
+                  <div className='text__group'>
+                    <label htmlFor='skillGroup'>Enter a skill group</label>
+                    <input
+                      type='text'
+                      required
+                      name='skillGroup'
+                      onChange={e => handleUpdateSkillGroup(e, index)}
+                    />
+                  </div>
+                </div>
+                <div className='btn__group'>
+                  {skillGroups.length - 1 === index && skillGroups.length < 20 && (
+                    <button id='addBtn' onClick={handleAddSkillGroup}>
+                      Add
+                    </button>
+                  )}
+                  {skillGroups.length > 1 && (
+                    <button id='deleteBtn' onClick={() => handleRemoveSkillGroup(index)}>
+                      Delete
+                    </button>
+                  )}
+                </div>
               </div>
-              <div className='btn__group'>
-                {skillGroups.length - 1 === index && skillGroups.length < 20 && (
-                  <button id='addBtn' onClick={handleAddSkillGroup}>
-                    Add
-                  </button>
-                )}
-                {skillGroups.length > 1 && (
-                  <button id='deleteBtn' onClick={() => handleRemoveSkillGroup(index)}>
-                    Delete
-                  </button>
-                )}
-              </div>
+              <ItemPills />
             </div>
           ))}
         </div>
         <h3>Companies you've worked at</h3>
           {companyInfo.map((company, index) => (
-            <div className='nestedContainer' key={index}>
+            <div className='nestedContainer' id="nestedCompanies" key={index}>
               <div className='companies'>
                 <label htmlFor='name'>Company name</label>
                 <input
+                  className='text__company'
                   type='text'
                   required
                   name='name'
@@ -256,6 +263,7 @@ const Home = ({ setResult }) => {
               <div className='companies'>
                 <label htmlFor='position'>Position held</label>
                 <input
+                  className='text__company'
                   type='text'
                   required
                   name='position'
@@ -265,6 +273,7 @@ const Home = ({ setResult }) => {
               <div className='companies'>
                 <label htmlFor='startDate'>Start date</label>
                 <input
+                  className='text__company'
                   type='month'
                   required
                   name='startDate'
@@ -272,9 +281,10 @@ const Home = ({ setResult }) => {
                 />
               </div>
               {index < 1 && (
-                <div className='companies'>
+                <div className='companies' id='check__company'>
                   <label htmlFor='isCurrent'>Current position?</label>
                   <input
+                    
                     type='checkbox'
                     // required
                     name='isCurrent'
@@ -286,6 +296,7 @@ const Home = ({ setResult }) => {
                 <div className='companies'>
                   <label htmlFor='endDate'>End date</label>
                   <input
+                    className='text__company'
                     type='month'
                     required
                     name='endDate'
