@@ -32,8 +32,8 @@ h3 {
 }
 
 button {
-  padding: 10px;
-  /* margin-right: 0; */
+  margin: 2.5px 0 2.5px 0;
+  padding: 8px;
   cursor: pointer;
   outline: none;
   background-color: #5d3891;
@@ -86,10 +86,6 @@ button {
   width: 39%;
 }
 
-/* .currentInput { */
-  /* width: 95%; */
-/* } */
-
 #photo {
   width: 50%;
 }
@@ -108,16 +104,15 @@ button {
   display: flex;
   align-items: right;
   justify-content: space-between;
-  /* margin-top: 20px; */
 }
 
 #addBtn {
   background-color: green;
-  /* margin-right: 5px; */
 }
 
 #deleteBtn {
   background-color: red;
+  margin-left: 5px;
 }
 
 .container {
