@@ -11,8 +11,8 @@ import './ItemPills.css';
 // }
 
 const ItemPills = () => {
-  const [item, setItem] = useState('');
   const [items, setItems] = useState([]);
+  const [item, setItem] = useState('');
   const handleRemovePill = (index) => {
     const newItems = [...items];
     newItems.splice(index, 1);
@@ -24,11 +24,19 @@ const ItemPills = () => {
   };
   const handleButtonClick = () => {
     console.log('item =', item);
-    setItems([...items, { name: item }]);
     console.log('items =', items);
     console.log('item =', item);
-    setItem('');
-    console.log('item =', item);
+    if (items.filter(i => i.name === item).length > 0) {
+      alert('Item already exists');
+      return setItems(() => [...items]);
+    } else {
+      return setItems(() => [...items, { name: item }]);
+      // console.log('items =', items);
+      // console.log('item =', item);
+    }
+    // console.log('items =', items);
+    // return setItem(() => '');
+    // console.log('item (after clearing) =', item);
     // console.log('newItem =', newItem);
     // Items.push({ name: newItem });
     // console.log(newItem);
