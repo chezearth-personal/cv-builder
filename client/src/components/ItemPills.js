@@ -31,16 +31,7 @@ const ItemPills = () => {
       return setItems(() => [...items]);
     } else {
       return setItems(() => [...items, { name: item }]);
-      // console.log('items =', items);
-      // console.log('item =', item);
     }
-    // console.log('items =', items);
-    // return setItem(() => '');
-    // console.log('item (after clearing) =', item);
-    // console.log('newItem =', newItem);
-    // Items.push({ name: newItem });
-    // console.log(newItem);
-    // setItems(newItem);
   }
   return (
     <div className='itemPills'>
