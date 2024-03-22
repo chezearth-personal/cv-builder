@@ -2,17 +2,17 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Loading from './Loading';
-import ItemPills from './ItemPills';
+import ItemGroups from './item-lists/ItemGroups';
 import logo from '../logo.svg';
 import '../index.css';
 
 const Home = ({ setResult }) => {
   const [fullName, setFullName] = useState('');
+  const [headShot, setHeadShot] = useState(null);
   const [tels, setTels] = useState([{ telNumber: '', telType: '' }]);
   const [email, setEmail] = useState('');
   const [technologies, setTechnologies] = useState([{ name: '' }]);
   const [skillGroups, setSkillGroups] = useState([{ name: '' }]);
-  const [headShot, setHeadShot] = useState(null);
   const [loading, setLoading] = useState(false);
   const [companyInfo, setCompanyInfo] = useState([{ name: '', position: '', startDate: '', endDate: '', isCurrent: null}]);
   const navigate = useNavigate();
@@ -49,24 +49,6 @@ const Home = ({ setResult }) => {
     list[index]['name'] = value;
     // console.log('list', list);
     setTechnologies(list);
-  }
-  /** Updates the state with user's input */
-  const handleAddSkillGroup = () =>
-    setSkillGroups([ ...skillGroups, { name: '' }]);
-  /** Removes a selected item from the list */
-  const handleRemoveSkillGroup = (index) => {
-    const list = [...skillGroups];
-    list.splice(index, 1);
-    setSkillGroups(list);
-  }
-  /** Updates an item within the list */
-  const handleUpdateSkillGroup = (e, index) => {
-    const { value } = e.target;
-    const list = [...skillGroups];
-    // console.log('list =', list);
-    list[index]['name'] = value;
-    // console.log('list =', list);
-    setSkillGroups(list);
   }
   /** Updates the state with user's input */
   const handleAddCompany = () => 
@@ -215,43 +197,7 @@ const Home = ({ setResult }) => {
             </div>
           ))}
         </div>
-        <div className='listItems'>General skills (across whole work history)
-          {skillGroups.map((skillGroup, index) => (
-            <div className='compositeContainer' key={index}>
-              <div className='nestedContainer'>
-                <div className='listItem'>
-                  <div className='text__group'>
-                    <label htmlFor='skillGroup'>Enter a skill group</label>
-                    <input
-                      type='text'
-                      required
-                      name='skillGroup'
-                      onChange={e => handleUpdateSkillGroup(e, index)}
-                    />
-                  </div>
-                </div>
-                <div className='btn__group'>
-                  {skillGroups.length - 1 === index && skillGroups.length < 20 && (
-                    <button id='addBtn' onClick={handleAddSkillGroup}>
-                      Add
-                    </button>
-                  )}
-                  {skillGroups.length > 1 && (
-                    <button id='deleteBtn' onClick={() => handleRemoveSkillGroup(index)}>
-                      Delete
-                    </button>
-                  )}
-                </div>
-              </div>
-              <ItemPills
-                index={index}
-                pillGroup='SkillGroup'
-                pillGroupLabel='Enter a skill group'
-                pillItemLabel='Skill to be added'
-              />
-            </div>
-          ))}
-        </div>
+        <ItemGroups skillGroups={skillGroups} setSkillGroups={setSkillGroups}/>
         <h3>Companies you've worked at</h3>
           {companyInfo.map((company, index) => (
             <div className='nestedContainer' id="nestedCompanies" key={index}>
