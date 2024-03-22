@@ -20,8 +20,8 @@ export default function ItemGroup({
     setItem('');
     if (newItem !== '' && numSame === 0) {
       const newItemsList = [...items, { name: newItem }];
-      // updateItemGroup({ ...itemGroup, itemList: newItemsList });
-      updateItemGroup(Object.assign(itemGroup, {itemList: newItemsList}));
+      // updateItemGroup({ ...itemGroup, ...{ itemList: newItemsList } });
+      updateItemGroup(Object.assign(itemGroup, { itemList: newItemsList }));
       // console.log('(added item to items) items =' , items);
       setItems(() => newItemsList);
     } else {
@@ -34,7 +34,7 @@ export default function ItemGroup({
   const handleRemovePill = (index) => {
     const newItems = [...items];
     newItems.splice(index, 1);
-    updateItemGroup(Object.assign(itemGroup, {itemList: newItems}));
+    updateItemGroup(Object.assign(itemGroup, { itemList: newItems }));
     setItems(newItems);
   };
   return (
