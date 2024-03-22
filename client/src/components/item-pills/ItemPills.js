@@ -10,15 +10,17 @@ const ItemPills = (props) => {
     // console.log('item =', item);
     setItem(item);
   };
-  const handleButtonClick = () => {
-    console.log('item =', item);
-    console.log('items =', items);
-    console.log('item =', item);
+  const handleAddPill = () => {
+    // console.log('item =', item);
+    // console.log('items =', items);
+    const newItem = item.trim();
     if (items.filter(i => i.name === item).length > 0) {
       alert('Item already exists');
       return setItems(() => [...items]);
     } else {
-      return setItems(() => [...items, { name: item }]);
+      setItem('');
+      // console.log('(after setting) item =', item);
+      return setItems(() => [...items, { name: newItem }]);
     }
   }
   const handleRemovePill = (index) => {
@@ -26,16 +28,16 @@ const ItemPills = (props) => {
     newItems.splice(index, 1);
     setItems(newItems);
   };
-  console.log('props =', props);
+  // console.log('props =', props);
   return (
     <div className='itemPills' key={props.name}>
       <div className='itemPillsInput'>
         <div className='itemPillsTitle'>
           <label htmlFor='inputItem'>{props.pillItemLabel}</label>
-          <input id='inputItem' type='text' onChange={(e) => addToItem(e.target.value)}/>
+          <input id='inputItem' type='text' value={item} onChange={(e) => addToItem(e.target.value)} />
         </div>
         <div className='btn__group'>
-          <button onClick={() => handleButtonClick()}>Add item</button>
+          <button onClick={() => handleAddPill()}>Add item</button>
         </div>
       </div>
       <div className='itemPillsList'>
@@ -48,3 +50,4 @@ const ItemPills = (props) => {
 }
 
 export default ItemPills;
+// 

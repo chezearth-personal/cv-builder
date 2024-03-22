@@ -198,7 +198,6 @@ const Home = ({ setResult }) => {
           ))}
         </div>
         <ItemGroups
-          name='skill_groups'
           description='General skills (across whole work history)'
           itemGroups={skillGroups}
           setItemGroups={setSkillGroups}
