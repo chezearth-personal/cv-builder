@@ -28,7 +28,7 @@
 .pill {
   height: 40px;
   border-radius: 20px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #5d3891;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -39,6 +39,9 @@
 }
 
 .pillText {
+  font-size: 15px;
+  font-weight: 600;
+  color: #5d3891;
   margin: 5px;
   border-radius: 15px 0 0 20px;
   line-height: 27px;
@@ -47,13 +50,14 @@
 
 .pillRemove {
   font-size: 30px;
-  color: #e0e0e0;
-  height: 30px;
-  width: 30px;
+  color: #5d3891;
+  cursor: pointer;
+  height: 28px;
+  width: 28px;
   text-align: center;
   line-height: 23px;
   /* padding-top: -5px; */
-  margin: 5px;
+  margin: 5px 6px 5px 5px;
   border-radius: 15px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #5d3891;
 }

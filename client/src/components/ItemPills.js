@@ -1,23 +1,18 @@
 import React, {useState} from "react";
 import './ItemPills.css';
 
-// const ItemPill = () => {
-  // return (
-    // <div className='pill'>
-      // <p className='pillText'>{item.name}</p>
-      // <div className='pillRemove' onClick={() => handleRemovePill(index)}></div>
-    // </div>
-  // );
-// }
+const ItemPill = (props) => {
+  return (
+    <div className='pill' key={props.index}>
+      <p className='pillText'>{props.itemName}</p>
+      <div className='pillRemove' onClick={() => props.removePill(props.index)}>{'\u00D7'}</div>
+    </div>
+  );
+}
 
-const ItemPills = () => {
+const ItemPills = (props) => {
   const [items, setItems] = useState([]);
   const [item, setItem] = useState('');
-  const handleRemovePill = (index) => {
-    const newItems = [...items];
-    newItems.splice(index, 1);
-    setItems(newItems);
-  };
   const addToItem = (item) => {
     // console.log('item =', item);
     setItem(item);
@@ -33,11 +28,17 @@ const ItemPills = () => {
       return setItems(() => [...items, { name: item }]);
     }
   }
+  const handleRemovePill = (index) => {
+    const newItems = [...items];
+    newItems.splice(index, 1);
+    setItems(newItems);
+  };
+  console.log('props =', props);
   return (
-    <div className='itemPills'>
+    <div className='itemPills' key={props.index}>
       <div className='itemPillsInput'>
         <div className='itemPillsTitle'>
-          <label htmlFor='inputItem'>Item to be added</label>
+          <label htmlFor='inputItem'>{props.pillItemLabel}</label>
           <input id='inputItem' type='text' onChange={(e) => addToItem(e.target.value)}/>
         </div>
         <div className='btn__group'>
@@ -46,10 +47,7 @@ const ItemPills = () => {
       </div>
       <div className='itemPillsList'>
         {items.map((item, index) => (
-          <div className='pill' key={index}>
-            <p className='pillText'>{item.name}</p>
-            <div className='pillRemove' onClick={() => handleRemovePill(index)}>{'\u00D7'}</div>
-          </div>
+          <ItemPill key={index} index={index} itemName={item.name} removePill={handleRemovePill} />
         ))}
       </div>
     </div>

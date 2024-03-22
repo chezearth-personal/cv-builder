@@ -243,7 +243,12 @@ const Home = ({ setResult }) => {
                   )}
                 </div>
               </div>
-              <ItemPills />
+              <ItemPills
+                index={index}
+                pillGroup='SkillGroup'
+                pillGroupLabel='Enter a skill group'
+                pillItemLabel='Skill to be added'
+              />
             </div>
           ))}
         </div>
