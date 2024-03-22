@@ -18,6 +18,7 @@ export default function ItemGroups(props) {
     list.splice(index, 1);
     props.setSkillGroups(list);
   }
+  console.log(``)
   return (
     <div key={props.name} className='listItems'>{props.description}
       {props.itemGroups.map((itemGroup, index) => (
