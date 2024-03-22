@@ -21,15 +21,14 @@ export default function ItemGroups({ itemGroups, setItemGroups, ...props }) {
   return (
     <div className='listItems'>{props.description}
       {itemGroups.map((itemGroup, index) => (
-        <div className='compositeContainer' key={index}>
           <ItemGroup
+            key={index}
             addItemGroup={handleAddItemGroup}
             updateItemGroup={handleUpdateItemGroup}
             removeItemGroup={handleRemoveItemGroup}
             index={index}
             numItemGroups={itemGroups.length}
           />
-        </div>
       ))}
     </div>
   );

@@ -50,4 +50,3 @@ const ItemPills = (props) => {
 }
 
 export default ItemPills;
-// 

@@ -8,7 +8,7 @@ export default function ItemGroup({
   ...props
 }) {
   return (
-    <>
+    <div className='compositeContainer'>
       <div className='nestedContainer'>
         <div className='listItem'>
           <div className='text__group'>
@@ -38,7 +38,7 @@ export default function ItemGroup({
         pillGroupLabel='Enter a skill group'
         pillItemLabel='Skill to be added'
       />
-    </>
+    </div>
   );
 }
         // name={`${props.name}_pills`}

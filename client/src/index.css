@@ -95,9 +95,11 @@ button {
 }
 
 #check__company {
+  justify-content: space-between;
   align-items: center;
   text-align: center;
   width: 10vw;
+  padding: 0 0 15px 0;
 }
 
 .btn__group {
