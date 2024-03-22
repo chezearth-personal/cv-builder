@@ -14,14 +14,14 @@ const ItemPills = (props) => {
     // console.log('item =', item);
     // console.log('items =', items);
     const newItem = item.trim();
-    if (items.filter(i => i.name === item).length > 0) {
-      alert('Item already exists');
-      return setItems(() => [...items]);
-    } else {
-      setItem('');
-      // console.log('(after setting) item =', item);
+    const numSame = items.filter(i => i.name === item).length; 
+    setItem('');
+    if (newItem !== '' && numSame === 0) {
       return setItems(() => [...items, { name: newItem }]);
+    } else if (numSame > 0) {
+      alert('Item already exists');
     }
+    return setItems(() => [...items]);
   }
   const handleRemovePill = (index) => {
     const newItems = [...items];
@@ -32,7 +32,7 @@ const ItemPills = (props) => {
   return (
     <div className='itemPills' key={props.name}>
       <div className='itemPillsInput'>
-        <div className='itemPillsTitle'>
+        <div className='text__group'>
           <label htmlFor='inputItem'>{props.pillItemLabel}</label>
           <input id='inputItem' type='text' value={item} onChange={(e) => addToItem(e.target.value)} />
         </div>
