@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Loading from './Loading';
-import ItemGroups from './item-lists/ItemGroups';
+import ItemGroups from './item-groups/ItemGroups';
 import logo from '../logo.svg';
 import '../index.css';
 
@@ -197,7 +197,12 @@ const Home = ({ setResult }) => {
             </div>
           ))}
         </div>
-        <ItemGroups skillGroups={skillGroups} setSkillGroups={setSkillGroups}/>
+        <ItemGroups
+          name='skill_groups'
+          description='General skills (across whole work history)'
+          itemGroups={skillGroups}
+          setItemGroups={setSkillGroups}
+        />
         <h3>Companies you've worked at</h3>
           {companyInfo.map((company, index) => (
             <div className='nestedContainer' id="nestedCompanies" key={index}>

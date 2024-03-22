@@ -28,7 +28,7 @@ const ItemPills = (props) => {
   };
   console.log('props =', props);
   return (
-    <div className='itemPills' key={props.index}>
+    <div className='itemPills' key={props.name}>
       <div className='itemPillsInput'>
         <div className='itemPillsTitle'>
           <label htmlFor='inputItem'>{props.pillItemLabel}</label>

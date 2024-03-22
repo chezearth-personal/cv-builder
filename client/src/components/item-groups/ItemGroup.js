@@ -1,8 +1,8 @@
 import React from 'react';
-import ItemPills from './ItemPills';
+import ItemPills from '../item-pills/ItemPills';
 
 export default function ItemGroup(props) {
-  <div className='compositeContainer' key={props.index}>
+  <div className='compositeContainer' key={props.name}>
     <div className='nestedContainer'>
       <div className='listItem'>
         <div className='text__group'>
@@ -16,21 +16,20 @@ export default function ItemGroup(props) {
         </div>
       </div>
       <div className='btn__group'>
-        {props.numSkillGroups - 1 === props.index && props.numSkillGroups < 20 && (
-          <button id='addBtn' onClick={props.addSkillGroup}>
+        {props.numItemGroups - 1 === props.index && props.numItemGroups < 20 && (
+          <button id='addBtn' onClick={props.addItemGroup}>
             Add
           </button>
         )}
         {props.numSkillGroups > 1 && (
-          <button id='deleteBtn' onClick={() => props.removeSkillGroup(props.index)}>
+          <button id='deleteBtn' onClick={() => props.removeItemGroup(props.index)}>
             Delete
           </button>
         )}
       </div>
     </div>
     <ItemPills
-      index={props.index}
-      pillGroup='SkillGroup'
+      name={`${props.name}_pills`}
       pillGroupLabel='Enter a skill group'
       pillItemLabel='Skill to be added'
     />
