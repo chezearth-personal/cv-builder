@@ -12,7 +12,7 @@ const Home = ({ setResult }) => {
   const [tels, setTels] = useState([{ telNumber: '', telType: '' }]);
   const [email, setEmail] = useState('');
   const [technologies, setTechnologies] = useState([{ name: '' }]);
-  const [skillGroups, setSkillGroups] = useState([{ name: '' }]);
+  const [skillGroups, setSkillGroups] = useState([{ name: '', itemList: [] }]);
   const [loading, setLoading] = useState(false);
   const [companyInfo, setCompanyInfo] = useState([{ name: '', position: '', startDate: '', endDate: '', isCurrent: null}]);
   const navigate = useNavigate();
@@ -76,6 +76,8 @@ const Home = ({ setResult }) => {
     formData.append('email', email);
     formData.append('technologies', JSON.stringify(technologies));
     formData.append('skillGroups', JSON.stringify(skillGroups));
+    console.log('skillGroups = ', skillGroups);
+    console.log('JSON:', JSON.stringify(skillGroups));
     formData.append('workHistory', JSON.stringify(companyInfo));
     axios
       .post('http://localhost:4000/cv/create', formData, {})
@@ -134,11 +136,12 @@ const Home = ({ setResult }) => {
           {tels.map((tel, index) => (
             <div className='nestedContainer' key={index}>
               <div className='listItem'>
-                <label htmlFor='telNumber'>tel</label>
+                <label htmlFor={`telNumber_${index}`}>tel</label>
                 <input
                   type='tel'
                   required
-                  name='telNumber'
+                  name={`telNumber_${index}`}
+                  id={`telNumber_${index}`}
                   onChange={e => handleUpdateTel(e, index)}
                 />
               </div>

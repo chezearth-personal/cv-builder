@@ -1,12 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ItemPills from '../item-pills/ItemPills';
 
 export default function ItemGroup({
+  // itemGroups,
+  itemGroup,
   addItemGroup,
   updateItemGroup,
   removeItemGroup,
   ...props
 }) {
+  const [items, setItems] = useState([]);
+  const [item, setItem] = useState('');
+  const addToItem = (item) => {
+    setItem(item);
+  };
+  const handleAddPill = () => {
+    const newItem = item.trim();
+    const numSame = items.filter(i => i.name === item).length; 
+    setItem('');
+    if (newItem !== '' && numSame === 0) {
+      const newItemsList = [...items, { name: newItem }];
+      // updateItemGroup({ ...itemGroup, itemList: newItemsList });
+      updateItemGroup(Object.assign(itemGroup, {itemList: newItemsList}));
+      // console.log('(added item to items) items =' , items);
+      setItems(() => newItemsList);
+    } else {
+      if (numSame > 0) {
+        alert('Item already exists');
+      }
+      setItems(() => [...items]);
+    }
+  }
+  const handleRemovePill = (index) => {
+    const newItems = [...items];
+    newItems.splice(index, 1);
+    updateItemGroup(Object.assign(itemGroup, {itemList: newItems}));
+    setItems(newItems);
+  };
   return (
     <div className='compositeContainer'>
       <div className='nestedContainer'>
@@ -35,6 +65,11 @@ export default function ItemGroup({
         </div>
       </div>
       <ItemPills
+        addToItem={addToItem}
+        addPill={handleAddPill}
+        removePill={handleRemovePill}
+        items={items}
+        item={item}
         pillGroupLabel='Enter a skill group'
         pillItemLabel='Skill to be added'
       />

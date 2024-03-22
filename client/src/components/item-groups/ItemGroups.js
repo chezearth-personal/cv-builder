@@ -7,10 +7,12 @@ export default function ItemGroups({ itemGroups, setItemGroups, ...props }) {
     setItemGroups([ ...itemGroups, { name: '' }]);
   /** Updates an item within the list */
   const handleUpdateItemGroup = (e, index) => {
-    const { value } = e.target;
-    const list = [...itemGroups];
-    list[index]['name'] = value;
-    setItemGroups(list);
+    if (e && e.target) {
+      const { value } = e.target;
+      const list = [...itemGroups];
+      list[index]['name'] = value;
+      setItemGroups(list);
+    }
   }
   /** Removes a selected item from the list */
   const handleRemoveItemGroup = (index) => {
@@ -23,11 +25,12 @@ export default function ItemGroups({ itemGroups, setItemGroups, ...props }) {
       {itemGroups.map((itemGroup, index) => (
           <ItemGroup
             key={index}
+            index={index}
+            numItemGroups={itemGroups.length}
+            itemGroup={itemGroup}
             addItemGroup={handleAddItemGroup}
             updateItemGroup={handleUpdateItemGroup}
             removeItemGroup={handleRemoveItemGroup}
-            index={index}
-            numItemGroups={itemGroups.length}
           />
       ))}
     </div>
