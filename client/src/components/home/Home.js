@@ -14,7 +14,7 @@ const Home = ({ setResult }) => {
   const [email, setEmail] = useState('');
   const [skillGroups, setSkillGroups] = useState([{ name: '', itemList: [] }]);
   const [loading, setLoading] = useState(false);
-  const [companies, setCompanies] = useState([{ name: '', position: '', startDate: '', endDate: '', isCurrent: null}]);
+  const [companies, setCompanies] = useState([{ name: '', position: '', startDate: '', endDate: '', isCurrent: false}]);
   const navigate = useNavigate();
   /** Updates the state with user's input */
   const handleAddTel = () =>
@@ -45,7 +45,11 @@ const Home = ({ setResult }) => {
   const handleUpdateCompany = (e, index) => {
     const {name, value } = e.target;
     const list = [...companies];
-    list[index][name] = value;
+    if (name === 'isCurrent') {
+      list[index][name] = !list[index][name];
+    } else {
+      list[index][name] = value;
+    }
     setCompanies(list);
   }
   /** Submit the form */
@@ -117,14 +121,16 @@ const Home = ({ setResult }) => {
           {tels.map((tel, index) => (
             <div className='nestedContainer' key={index}>
               <div className='listItem'>
-                <label htmlFor={`telNumber_${index}`}>tel</label>
-                <input
-                  type='tel'
-                  required
-                  name={`telNumber_${index}`}
-                  id={`telNumber_${index}`}
-                  onChange={e => handleUpdateTel(e, index)}
-                />
+                <div className='text__group'>
+                  <label htmlFor={`telNumber_${index}`}>tel</label>
+                  <input
+                    type='tel'
+                    required
+                    name={`telNumber_${index}`}
+                    id={`telNumber_${index}`}
+                    onChange={e => handleUpdateTel(e, index)}
+                  />
+                </div>
               </div>
               <div className='btn__group'>
                 {tels.length - 1 === index && tels.length < 4 && (
@@ -141,18 +147,16 @@ const Home = ({ setResult }) => {
             </div>
           ))}
         </div>
-        <div>
           <label htmlFor='email'>Email address</label>
           <input
             type='email'
             required
             name='email'
             id='email'
-            className='currentInput'
             value={email}
+            autoComplete='email'
             onChange={e => setEmail(e.target.value)}
           />
-        </div>
         <ItemGroups
           description='General skills (across whole work history)'
           itemGroups={skillGroups}

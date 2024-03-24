@@ -47,6 +47,7 @@ export default function ItemGroup({
               type='text'
               required
               name='skillGroup'
+              id='skillGroup'
               onChange={e => updateItemGroup(e, props.index)}
             />
           </div>
