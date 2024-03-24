@@ -90,15 +90,12 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
       fullName,
       tels,
       email,
-      // technologies,
       skillGroups,
       workHistory /** JSON format*/
     } = req.body;
     const workArray = JSON.parse(workHistory); /** an array */
     const telsArray = JSON.parse(tels); /** an array */
-    // const technologiesArray = JSON.parse(technologies); [>* an array <]
     const skillGroupsArray = JSON.parse(skillGroups); /** an array */
-    // console.log('technologiesArray =', technologiesArray);
     console.log('skillGroupsArray =', skillGroupsArray);
     /** Group the values into an object */
     const newEntry = {
@@ -107,7 +104,6 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
       imageUrl: req.file && `http://localhost:4000/uploads/${req.file.filename}`,
       tels: telsArray,
       email,
-      // technologies: getStringFromArray(technologiesArray),
       skillGroups: skillGroupsArray,
       workHistory: workArray
     };
@@ -176,7 +172,3 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
 app.listen(port, host, () => {
   console.log(`Server listening on ${host}:${port}`);
 });
-
-
-      // }. I work with the following technologies: ${
-        // getStringFromArray(technologiesArray)
