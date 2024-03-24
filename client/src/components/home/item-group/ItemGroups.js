@@ -21,7 +21,7 @@ export default function ItemGroups({ itemGroups, setItemGroups, ...props }) {
     setItemGroups(list);
   }
   return (
-    <div className='listItems'>{props.description}
+    <h3 className='listItems'>{props.description}
       {itemGroups.map((itemGroup, index) => (
           <ItemGroup
             key={index}
@@ -33,6 +33,6 @@ export default function ItemGroups({ itemGroups, setItemGroups, ...props }) {
             removeItemGroup={handleRemoveItemGroup}
           />
       ))}
-    </div>
+    </h3>
   );
 }

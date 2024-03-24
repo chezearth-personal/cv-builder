@@ -71,25 +71,35 @@ const upload = multer({
 });
 
 /** Create strings from arrays for returning as lists to document */
-const getStringFromArray = (arr) => arr.reduce(
-  (res, e) => res + (!res.length ? '' : ', ') + e.name, ''
-);
-
+const commaSep = (t) => !t.length ? '' : ', ';
+const testArray = (arr, trueStr, falseStr) => { return arr  && arr.length > 0 ? trueStr : falseStr; }
+const getStringFromArray = (itemGroups) => !itemGroups || !Array.isArray(itemGroups)
+  ? ''
+  : itemGroups.reduce(
+      (res, itemGroup) => `${res}${commaSep(res)}${itemGroup.name}${
+          testArray(itemGroup.itemList, ' (', '')
+        }${
+          testArray(itemGroup.itemList, getStringFromArray(itemGroup.itemList), '')
+        }${
+          testArray(itemGroup.itemList, ')', '')
+        }`,
+      ''
+    );
 app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
     const {
       fullName,
       tels,
       email,
-      technologies,
+      // technologies,
       skillGroups,
       workHistory /** JSON format*/
     } = req.body;
     const workArray = JSON.parse(workHistory); /** an array */
     const telsArray = JSON.parse(tels); /** an array */
-    const technologiesArray = JSON.parse(technologies); /** an array */
+    // const technologiesArray = JSON.parse(technologies); [>* an array <]
     const skillGroupsArray = JSON.parse(skillGroups); /** an array */
     // console.log('technologiesArray =', technologiesArray);
-    // console.log('skillGroupsArray =', skillGroupsArray);
+    console.log('skillGroupsArray =', skillGroupsArray);
     /** Group the values into an object */
     const newEntry = {
       id: randomUUID(),
@@ -97,11 +107,13 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
       imageUrl: req.file && `http://localhost:4000/uploads/${req.file.filename}`,
       tels: telsArray,
       email,
-      technologies: getStringFromArray(technologiesArray),
+      // technologies: getStringFromArray(technologiesArray),
       skillGroups: skillGroupsArray,
       workHistory: workArray
     };
-    // console.log('newEntry =\n', newEntry);
+    console.log('newEntry =\n', newEntry);
+    console.log('skillsGroupsString =', getStringFromArray(skillGroupsArray));
+    // console.log('testArray(skillGroupsArray) =\n', testArray(skillGroupsArray, 'true', 'false'));
     /** Reduces the items in the workArray and convert them to a string */
     const remainderText = workArray
       .reduce((res, e) => {
@@ -125,16 +137,14 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
     /** The job description message */
     const prompt1 = `I am writing a CV, my name is ${
         fullName
-      }. I work with the following technologies: ${
-        getStringFromArray(technologiesArray)
       }. I have the following skills: ${
         getStringFromArray(skillGroupsArray)
       }. Can you write a 100 words description of my skills and technology experience for the top of the CV (first person writing)?`;
     /** The job responsibilities message */
     const prompt2 = `I am writing a CV, my details are name: ${
         fullName
-      } . I write in the technologies: ${
-        getStringFromArray(technologiesArray)
+      } . I work in the following skills: ${
+        getStringFromArray(skillGroupsArray)
       }. Can you write 10 points for a CV on what I am good at?`;
     /** The job achievements message */
     const prompt3 = `I am writing a CV, my details are name: ${
@@ -145,11 +155,11 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
         remainderText
       } Can you write me 50 words for each company seperated in numbers of my succession in the company (in first person)?`;
     /** Generate a GPT-3 result */
-    // console.log('prompt1 = ', prompt1);
+    console.log('prompt1 = ', prompt1);
     const objective = await gptFunction(prompt1);
-    // console.log('prompt2 = ', prompt2);
+    console.log('prompt2 = ', prompt2);
     const keyPoints = await gptFunction(prompt2);
-    // console.log('prompt3 = ', prompt3);
+    console.log('prompt3 = ', prompt3);
     const jobResponsibilities = await gptFunction(prompt3);
     /** Put them into an object */
     const chatGptData = { objective , keyPoints, jobResponsibilities };
@@ -166,3 +176,7 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
 app.listen(port, host, () => {
   console.log(`Server listening on ${host}:${port}`);
 });
+
+
+      // }. I work with the following technologies: ${
+        // getStringFromArray(technologiesArray)

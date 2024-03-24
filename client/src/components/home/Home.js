@@ -11,7 +11,7 @@ const Home = ({ setResult }) => {
   const [headShot, setHeadShot] = useState(null);
   const [tels, setTels] = useState([{ telNumber: '', telType: '' }]);
   const [email, setEmail] = useState('');
-  const [technologies, setTechnologies] = useState([{ name: '' }]);
+  // const [technologies, setTechnologies] = useState([{ name: '' }]);
   const [skillGroups, setSkillGroups] = useState([{ name: '', itemList: [] }]);
   const [loading, setLoading] = useState(false);
   const [companyInfo, setCompanyInfo] = useState([{ name: '', position: '', startDate: '', endDate: '', isCurrent: null}]);
@@ -33,23 +33,21 @@ const Home = ({ setResult }) => {
     setTels(list);
   }
   /** Updates the state with user's input */
-  const handleAddTechnology = () =>
-    setTechnologies([ ...technologies, { name: '' }]);
+  // const handleAddTechnology = () =>
+    // setTechnologies([ ...technologies, { name: '' }]);
   /** Removes a selected item from the list */
-  const handleRemoveTechnology = (index) => {
-    const list = [...technologies];
-    list.splice(index, 1);
-    setTechnologies(list);
-  }
+  // const handleRemoveTechnology = (index) => {
+    // const list = [...technologies];
+    // list.splice(index, 1);
+    // setTechnologies(list);
+  // }
   /** Updates an item within the list */
-  const handleUpdateTechnology = (e, index) => {
-    const { value } = e.target;
-    const list = [...technologies];
-    // console.log('list', list);
-    list[index]['name'] = value;
-    // console.log('list', list);
-    setTechnologies(list);
-  }
+  // const handleUpdateTechnology = (e, index) => {
+    // const { value } = e.target;
+    // const list = [...technologies];
+    // list[index]['name'] = value;
+    // setTechnologies(list);
+  // }
   /** Updates the state with user's input */
   const handleAddCompany = () => 
     setCompanyInfo([ ...companyInfo, { name: '', position: '', startDate: '', endDate: '', isCurrent: false}]);
@@ -74,7 +72,7 @@ const Home = ({ setResult }) => {
     formData.append('fullName', fullName);
     formData.append('tels', JSON.stringify(tels));
     formData.append('email', email);
-    formData.append('technologies', JSON.stringify(technologies));
+    // formData.append('technologies', JSON.stringify(technologies));
     formData.append('skillGroups', JSON.stringify(skillGroups));
     console.log('skillGroups = ', skillGroups);
     console.log('JSON:', JSON.stringify(skillGroups));
@@ -172,34 +170,6 @@ const Home = ({ setResult }) => {
             onChange={e => setEmail(e.target.value)}
           />
         </div>
-        <h3>Technical Skills</h3>
-        <div className='listItems'>Choose or enter a technology
-          {technologies.map((technology, index) => (
-            <div className='nestedContainer' key={index}>
-              <div className='listItem'>
-                <label htmlFor='technology'>Technology</label>
-                <input
-                  type='text'
-                  required
-                  name='skillGroup'
-                  onChange={e => handleUpdateTechnology(e, index)}
-                />
-              </div>
-              <div className='btn__group'>
-                {technologies.length - 1 === index && technologies.length < 20 && (
-                  <button id='addBtn' onClick={handleAddTechnology}>
-                    Add
-                  </button>
-                )}
-                {technologies.length > 1 && (
-                  <button id='deleteBtn' onClick={() => handleRemoveTechnology(index)}>
-                    Delete
-                  </button>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
         <ItemGroups
           description='General skills (across whole work history)'
           itemGroups={skillGroups}
@@ -283,3 +253,32 @@ const Home = ({ setResult }) => {
 }
 
 export default Home;
+
+        // <h3>Skills and Experience</h3>
+        // <div className='listItems'>Choose or enter a technology
+          // {technologies.map((technology, index) => (
+            // <div className='nestedContainer' key={index}>
+              // <div className='listItem'>
+                // <label htmlFor='technology'>Technology</label>
+                // <input
+                  // type='text'
+                  // required
+                  // name='skillGroup'
+                  // onChange={e => handleUpdateTechnology(e, index)}
+                // />
+              // </div>
+              // <div className='btn__group'>
+                // {technologies.length - 1 === index && technologies.length < 20 && (
+                  // <button id='addBtn' onClick={handleAddTechnology}>
+                    // Add
+                  // </button>
+                // )}
+                // {technologies.length > 1 && (
+                  // <button id='deleteBtn' onClick={() => handleRemoveTechnology(index)}>
+                    // Delete
+                  // </button>
+                // )}
+              // </div>
+            // </div>
+          // ))}
+        // </div>
