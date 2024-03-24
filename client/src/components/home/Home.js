@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Loading from './Loading';
-import ItemGroups from './item-groups/ItemGroups';
-import logo from '../logo.svg';
-import '../index.css';
+import Loading from '../placeholders/Loading';
+import ItemGroups from './item-group/ItemGroups';
+import logo from '../../logo.svg';
+import '../../index.css';
 
 const Home = ({ setResult }) => {
   const [fullName, setFullName] = useState('');

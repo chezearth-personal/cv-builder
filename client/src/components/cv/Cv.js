@@ -1,8 +1,8 @@
 import React, { useRef } from 'react';
 import { useReactToPrint } from 'react-to-print';
-import ErrorPage from './ErrorPage';
+import ErrorPage from '../placeholders/ErrorPage';
 import './Cv.css';
-import tick from '../tick.png';
+import tick from '../../tick.png';
 
 const Cv = ({ result }) => {
   const componentRef = useRef();

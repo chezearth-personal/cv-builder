@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ItemPills from '../item-pills/ItemPills';
+import ItemPills from '../item-pill/ItemPills';
 
 export default function ItemGroup({
   // itemGroups,
