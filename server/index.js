@@ -96,7 +96,7 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
     const workArray = JSON.parse(workHistory); /** an array */
     const telsArray = JSON.parse(tels); /** an array */
     const skillGroupsArray = JSON.parse(skillGroups); /** an array */
-    console.log('skillGroupsArray =', skillGroupsArray);
+    // console.log('skillGroupsArray =', skillGroupsArray);
     /** Group the values into an object */
     const newEntry = {
       id: randomUUID(),
@@ -107,7 +107,7 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
       skillGroups: skillGroupsArray,
       workHistory: workArray
     };
-    console.log('newEntry =\n', newEntry);
+    // console.log('newEntry =\n', newEntry);
     console.log('skillsGroupsString =', getStringFromArray(skillGroupsArray));
     // console.log('testArray(skillGroupsArray) =\n', testArray(skillGroupsArray, 'true', 'false'));
     /** Reduces the items in the workArray and convert them to a string */
@@ -151,11 +151,11 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
         remainderText
       } Can you write me 50 words for each company seperated in numbers of my succession in the company (in first person)?`;
     /** Generate a GPT-3 result */
-    console.log('prompt1 = ', prompt1);
+    // console.log('prompt1 = ', prompt1);
     const objective = await gptFunction(prompt1);
-    console.log('prompt2 = ', prompt2);
+    // console.log('prompt2 = ', prompt2);
     const keyPoints = await gptFunction(prompt2);
-    console.log('prompt3 = ', prompt3);
+    // console.log('prompt3 = ', prompt3);
     const jobResponsibilities = await gptFunction(prompt3);
     /** Put them into an object */
     const chatGptData = { objective , keyPoints, jobResponsibilities };
