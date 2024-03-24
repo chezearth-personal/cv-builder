@@ -1,8 +1,8 @@
 import React, { useRef } from 'react';
 import { useReactToPrint } from 'react-to-print';
 import ErrorPage from '../placeholders/ErrorPage';
+import ItemGroups from './item-group/ItemGroups';
 import './Cv.css';
-import tick from '../../tick.png';
 
 const Cv = ({ result }) => {
   const componentRef = useRef();
@@ -73,23 +73,7 @@ const Cv = ({ result }) => {
               <div className='cvTechSkillGroup'>
               </div>
             </div>
-            <div className='cvPoint'>
-              <h4 className='cvBodyTitle'>TECHNICAL SKILLS</h4>
-              {result.skillGroups.map((skillGroup, index) => (
-                <div className='cvTechSkillGroup' key={index}>
-                  <img src={tick} alt=' - ' className='cvBullet'/>
-                  <div className='cvBulletedItem'>
-                    <h4 className='cvBulletHeading'>{skillGroup.name}</h4>
-                    <p 
-                      dangerouslySetInnerHTML={{
-                        __html: replaceWithBr(result.technologies + '\n'),
-                      }}
-                      className='cvBodyContent cvBulletContent'
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
+            <ItemGroups handleBr={replaceWithBr} itemGroups={result.skillGroups} headingText='TECHNICAL SKILLS' />
           </div>
           <div className='cvStory'>
             <div>
