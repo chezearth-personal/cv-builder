@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Loading from '../placeholders/Loading';
 import ItemGroups from './item-group/ItemGroups';
+import Companies from './work-history/Companies';
 import logo from '../../logo.svg';
 import '../../index.css';
 
@@ -13,7 +14,7 @@ const Home = ({ setResult }) => {
   const [email, setEmail] = useState('');
   const [skillGroups, setSkillGroups] = useState([{ name: '', itemList: [] }]);
   const [loading, setLoading] = useState(false);
-  const [companyInfo, setCompanyInfo] = useState([{ name: '', position: '', startDate: '', endDate: '', isCurrent: null}]);
+  const [companies, setCompanies] = useState([{ name: '', position: '', startDate: '', endDate: '', isCurrent: null}]);
   const navigate = useNavigate();
   /** Updates the state with user's input */
   const handleAddTel = () =>
@@ -33,19 +34,19 @@ const Home = ({ setResult }) => {
   }
   /** Updates the state with user's input */
   const handleAddCompany = () => 
-    setCompanyInfo([ ...companyInfo, { name: '', position: '', startDate: '', endDate: '', isCurrent: false}]);
+    setCompanies([ ...companies, { name: '', position: '', startDate: '', endDate: '', isCurrent: false}]);
   /** Removes a selected item from the list */
   const handleRemoveCompany = (index) => {
-    const list = [...companyInfo];
+    const list = [...companies];
     list.splice(index, 1);
-    setCompanyInfo(list);
+    setCompanies(list);
   }
   /** Updates an item within the list*/
   const handleUpdateCompany = (e, index) => {
     const {name, value } = e.target;
-    const list = [...companyInfo];
+    const list = [...companies];
     list[index][name] = value;
-    setCompanyInfo(list);
+    setCompanies(list);
   }
   /** Submit the form */
   const handleFormSubmit = (e) => {
@@ -58,7 +59,7 @@ const Home = ({ setResult }) => {
     formData.append('skillGroups', JSON.stringify(skillGroups));
     console.log('skillGroups = ', skillGroups);
     console.log('JSON:', JSON.stringify(skillGroups));
-    formData.append('workHistory', JSON.stringify(companyInfo));
+    formData.append('workHistory', JSON.stringify(companies));
     axios
       .post('http://localhost:4000/cv/create', formData, {})
       .then(res => {
@@ -157,77 +158,12 @@ const Home = ({ setResult }) => {
           itemGroups={skillGroups}
           setItemGroups={setSkillGroups}
         />
-        <h3>Companies you've worked at</h3>
-          {companyInfo.map((company, index) => (
-            <div className='nestedContainer' id="nestedCompanies" key={index}>
-              <div className='companies'>
-                <label htmlFor='name'>Company name</label>
-                <input
-                  className='text__company'
-                  type='text'
-                  required
-                  name='name'
-                  onChange={e => handleUpdateCompany(e, index)}
-                />
-              </div>
-              <div className='companies'>
-                <label htmlFor='position'>Position held</label>
-                <input
-                  className='text__company'
-                  type='text'
-                  required
-                  name='position'
-                  onChange={e => handleUpdateCompany(e, index)}
-                />
-              </div>
-              <div className='companies'>
-                <label htmlFor='startDate'>Start date</label>
-                <input
-                  className='text__company'
-                  type='month'
-                  required
-                  name='startDate'
-                  onChange={e => handleUpdateCompany(e, index)}
-                />
-              </div>
-              {index < 1 && (
-                <div className='companies' id='check__company'>
-                  <label htmlFor='isCurrent'>Current position?</label>
-                  <input
-                    
-                    type='checkbox'
-                    // required
-                    name='isCurrent'
-                    onChange={e => handleUpdateCompany(e, index)}
-                  />
-                </div>
-              )}
-              {!company.isCurrent && (
-                <div className='companies'>
-                  <label htmlFor='endDate'>End date</label>
-                  <input
-                    className='text__company'
-                    type='month'
-                    required
-                    name='endDate'
-                    onChange={e => handleUpdateCompany(e, index)}
-                  />
-                </div>
-              )}
-              <div className='btn__group'>
-                {companyInfo.length - 1 === index && companyInfo.length < 4 && (
-                  <button id='addBtn' onClick={handleAddCompany}>
-                    Add
-                  </button>
-                )}
-                {companyInfo.length > 1 && (
-                  <button id='deleteBtn' onClick={() => handleRemoveCompany(index)}>
-                    Delete
-                  </button>
-                )}
-              </div>
-            </div>
-          ))}
+        <Companies
+          addCompany={handleAddCompany}
+          updateCompany={handleUpdateCompany}
+          removeCompany={handleRemoveCompany}
+          companies={companies}
+        />
         <button>CREATE CV</button>
       </form>
     </div>
