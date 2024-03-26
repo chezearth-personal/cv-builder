@@ -61,10 +61,13 @@ button {
 }
 
 .compositeContainer {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
   border: 1px solid #ddd;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
   padding: 5px;
   margin: 0 0 5px 0;
 }
@@ -72,7 +75,7 @@ button {
 .nestedContainer {
   display: flex;
   align-items: top;
-  justify-content: space-between;
+  justify-content: flex-left;
   width: 50%;
 }
 
@@ -120,6 +123,7 @@ button {
   display: flex;
   align-items: right;
   justify-content: space-between;
+  margin: 0 0 0 15px;
 }
 
 #addBtn {

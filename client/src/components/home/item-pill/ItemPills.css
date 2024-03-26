@@ -1,7 +1,7 @@
 .itemPills {
   display: flex;
   flex-direction: column;
-  width: 50%;
+  width: calc(100% - 10px);
 }
 
 .itemPillsInput {
@@ -20,9 +20,13 @@
   flex-wrap: wrap;
   justify-content: flex-start;
   align-items: top;
-  /* margin: 10px; */
+  margin: 5px;
   min-height: 50%;
-  /* width: 50%; */
+  width: 100%;
+  border: 1px  solid #ddd;
+}
+.itemPillsList:empty {
+  border: hidden;
 }
 
 .pill {
@@ -32,7 +36,7 @@
   justify-content: flex-start;
   border-radius: 17px;
   border: 1px solid #5d3891;
-  margin: 2px;
+  margin: 5px;
   height: 34px;
   width: fit-content;
   min-width: 45px;

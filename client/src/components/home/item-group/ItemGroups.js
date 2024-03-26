@@ -25,12 +25,15 @@ export default function ItemGroups({ itemGroups, setItemGroups, ...props }) {
       {itemGroups.map((itemGroup, index) => (
           <ItemGroup
             key={index}
-            index={index}
-            numItemGroups={itemGroups.length}
             itemGroup={itemGroup}
             addItemGroup={handleAddItemGroup}
             updateItemGroup={handleUpdateItemGroup}
             removeItemGroup={handleRemoveItemGroup}
+            index={index}
+            numItemGroups={itemGroups.length}
+            name={props.name}
+            pillGroupLabel={props.pillGroupLabel}
+            pillItemLabel={props.pillItemLabel}
           />
       ))}
     </h3>

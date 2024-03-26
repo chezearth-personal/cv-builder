@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import ItemPills from '../item-pill/ItemPills';
 
 export default function ItemGroup({
-  // itemGroups,
   itemGroup,
   addItemGroup,
   updateItemGroup,
@@ -38,16 +37,18 @@ export default function ItemGroup({
     setItems(newItems);
   };
   return (
+    <>
     <div className='compositeContainer'>
+      <div className='inputContainer'>
       <div className='nestedContainer'>
         <div className='listItem'>
           <div className='text__group'>
-            <label htmlFor='skillGroup'>Enter a skill group</label>
+            <label htmlFor={`${props.name}_${props.index}`}>{props.pillGroupLabel}</label>
             <input
               type='text'
               required
-              name='skillGroup'
-              id='skillGroup'
+              name='itemGroup'
+              id={`${props.name}_${props.index}`}
               onChange={e => updateItemGroup(e, props.index)}
             />
           </div>
@@ -65,16 +66,34 @@ export default function ItemGroup({
           )}
         </div>
       </div>
+      <div className='itemPillsInput'>
+        <div className='text__group'>
+          <label htmlFor={`${props.name}_input_${props.index}`}>{props.pillItemLabel}</label>
+          <input
+            id={`${props.name}_input_${props.index}`}
+            name='inputItem'
+            type='text'
+            value={item}
+            onChange={(e) => addToItem(e.target.value)}
+          />
+        </div>
+        <div className='btn__group'>
+          <button onClick={() => handleAddPill()}>Add item</button>
+        </div>
+      </div>
+    </div>
       <ItemPills
         addToItem={addToItem}
-        addPill={handleAddPill}
         removePill={handleRemovePill}
         items={items}
         item={item}
-        pillGroupLabel='Enter a skill group'
-        pillItemLabel='Skill to be added'
+        index={props.index}
+        name={props.name}
+        pillGroupLabel={props.pillGroupLabel}
+        pillItemLabel={props.pillItemLabel}
       />
-    </div>
+      </div>
+    </>
   );
 }
         // name={`${props.name}_pills`}

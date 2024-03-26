@@ -158,9 +158,12 @@ const Home = ({ setResult }) => {
             onChange={e => setEmail(e.target.value)}
           />
         <ItemGroups
-          description='General skills (across whole work history)'
           itemGroups={skillGroups}
           setItemGroups={setSkillGroups}
+          description='General skills (across whole work history)'
+          name='skillGroup'
+          pillGroupLabel='Enter a skill group'
+          pillItemLabel='Skill to be added'
         />
         <Companies
           addCompany={handleAddCompany}
