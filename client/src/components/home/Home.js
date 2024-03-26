@@ -69,9 +69,11 @@ const Home = ({ setResult }) => {
     formData.append('tels', JSON.stringify(tels));
     formData.append('email', email);
     formData.append('skillGroups', JSON.stringify(skillGroups));
-    console.log('skillGroups = ', skillGroups);
-    console.log('JSON:', JSON.stringify(skillGroups));
     formData.append('workHistory', JSON.stringify(companies));
+    console.log('skillGroups = ', skillGroups);
+    console.log('skillGroups JSON:', JSON.stringify(skillGroups));
+    console.log('workHistory = ', companies);
+    console.log('Companies JSON:', JSON.stringify(companies));
     axios
       .post('http://localhost:4000/cv/create', formData, {})
       .then(res => {

@@ -130,11 +130,11 @@ button {
   margin: 0 0 0 15px;
 }
 
-#addBtn {
+.addBtn {
   background-color: green;
 }
 
-#deleteBtn {
+.deleteBtn {
   background-color: red;
   margin-left: 5px;
 }

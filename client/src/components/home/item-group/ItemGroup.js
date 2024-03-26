@@ -52,12 +52,12 @@ export default function ItemGroup({
           </div>
           <div className='btn__group'>
             {props.numItemGroups - 1 === props.index && props.numItemGroups < 20 && (
-              <button id='addBtn' onClick={addItemGroup}>
+              <button type='button' className='addBtn' onClick={addItemGroup}>
                 Add
               </button>
             )}
             {props.numItemGroups > 1 && (
-              <button id='deleteBtn' onClick={() => removeItemGroup(props.index)}>
+              <button type='button' className='deleteBtn' onClick={() => removeItemGroup(props.index)}>
                 Delete
               </button>
             )}
@@ -75,7 +75,7 @@ export default function ItemGroup({
             />
           </div>
           <div className='btn__group'>
-            <button onClick={() => handleAddPill()}>Add item</button>
+            <button type='button' onClick={() => handleAddPill()}>Add item</button>
           </div>
         </div>
       </div>
