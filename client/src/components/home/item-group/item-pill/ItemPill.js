@@ -9,4 +9,3 @@ export default function ItemPill(props) {
     </div>
   );
 }
-// key={props.index}>

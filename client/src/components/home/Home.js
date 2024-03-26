@@ -8,13 +8,21 @@ import logo from '../../logo.svg';
 import '../../index.css';
 
 const Home = ({ setResult }) => {
+  const initCompany = {
+    name: '',
+    position: '',
+    startDate: '',
+    endDate: '',
+    isCurrent: false,
+    keywordGroups: []
+  };
   const [fullName, setFullName] = useState('');
   const [headShot, setHeadShot] = useState(null);
   const [tels, setTels] = useState([{ telNumber: '', telType: '' }]);
   const [email, setEmail] = useState('');
   const [skillGroups, setSkillGroups] = useState([{ name: '', itemList: [] }]);
   const [loading, setLoading] = useState(false);
-  const [companies, setCompanies] = useState([{ name: '', position: '', startDate: '', endDate: '', isCurrent: false}]);
+  const [companies, setCompanies] = useState([initCompany])
   const navigate = useNavigate();
   /** Updates the state with user's input */
   const handleAddTel = () =>
@@ -34,7 +42,7 @@ const Home = ({ setResult }) => {
   }
   /** Updates the state with user's input */
   const handleAddCompany = () => 
-    setCompanies([ ...companies, { name: '', position: '', startDate: '', endDate: '', isCurrent: false}]);
+    setCompanies([ ...companies, initCompany]);
   /** Removes a selected item from the list */
   const handleRemoveCompany = (index) => {
     const list = [...companies];

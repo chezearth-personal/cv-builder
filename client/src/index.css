@@ -102,12 +102,16 @@ button {
   width: 100%;
 }
 
+.company {
+  margin: 0 5px 5px 5px;
+}
+
 #photo {
   width: 50%;
 }
 
 .text__company {
-  width: 15vw;
+  width: 14vw;
 }
 
 .check__company {
