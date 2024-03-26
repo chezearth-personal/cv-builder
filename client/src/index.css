@@ -23,7 +23,7 @@ input {
   padding: 10px 20px;
   border-radius: 3px;
   outline: none;
-  border: 1px solid #ddd;
+  border: 1px solid #aad;
   width: 20vw;
 }
 
@@ -61,7 +61,8 @@ button {
 }
 
 .compositeContainer {
-  border: 1px solid #ddd;
+  border: 1px solid #aad;
+  border-radius: 3px;
   margin: 0 0 5px 0;
 }
 
