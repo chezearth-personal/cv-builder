@@ -97,6 +97,8 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
     const telsArray = JSON.parse(tels); /** an array */
     const skillGroupsArray = JSON.parse(skillGroups); /** an array */
     // console.log('skillGroupsArray =', skillGroupsArray);
+    console.log('workArray =', workArray);
+    console.log('workArray.keywordGroups =', workArray.keywordGroups);
     /** Group the values into an object */
     const newEntry = {
       id: randomUUID(),

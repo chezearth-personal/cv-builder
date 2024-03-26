@@ -62,6 +62,7 @@ button {
 
 .compositeContainer {
   border: 1px solid #ddd;
+  margin: 0 0 5px 0;
 }
 
 .inputContainer {

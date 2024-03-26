@@ -22,7 +22,7 @@ const Home = ({ setResult }) => {
   const [email, setEmail] = useState('');
   const [skillGroups, setSkillGroups] = useState([{ name: '', itemList: [] }]);
   const [loading, setLoading] = useState(false);
-  const [companies, setCompanies] = useState([initCompany])
+  const [companies, setCompanies] = useState([initCompany]);
   const navigate = useNavigate();
   /** Updates the state with user's input */
   const handleAddTel = () =>
@@ -39,26 +39,6 @@ const Home = ({ setResult }) => {
     const list = [...tels];
     list[index][name] = value;
     setTels(list);
-  }
-  /** Updates the state with user's input */
-  const handleAddCompany = () => 
-    setCompanies([ ...companies, initCompany]);
-  /** Removes a selected item from the list */
-  const handleRemoveCompany = (index) => {
-    const list = [...companies];
-    list.splice(index, 1);
-    setCompanies(list);
-  }
-  /** Updates an item within the list*/
-  const handleUpdateCompany = (e, index) => {
-    const {name, value } = e.target;
-    const list = [...companies];
-    if (name === 'isCurrent') {
-      list[index][name] = !list[index][name];
-    } else {
-      list[index][name] = value;
-    }
-    setCompanies(list);
   }
   /** Submit the form */
   const handleFormSubmit = (e) => {
@@ -157,29 +137,30 @@ const Home = ({ setResult }) => {
             </div>
           ))}
         </div>
-          <label htmlFor='email'>Email address</label>
-          <input
-            type='email'
-            required
-            name='email'
-            id='email'
-            value={email}
-            autoComplete='email'
-            onChange={e => setEmail(e.target.value)}
-          />
+        <label htmlFor='email'>Email address</label>
+        <input
+          type='email'
+          required
+          name='email'
+          id='email'
+          value={email}
+          autoComplete='email'
+          onChange={e => setEmail(e.target.value)}
+        />
+        <h3 className='listItems'>General skills (across whole work history)</h3>
         <ItemGroups
           itemGroups={skillGroups}
           setItemGroups={setSkillGroups}
-          description='General skills (across whole work history)'
+          description=''
           name='skillGroup'
           pillGroupLabel='Enter a skill group'
           pillItemLabel='Skill to be added'
         />
+        <h3>Companies you've worked at</h3>
         <Companies
-          addCompany={handleAddCompany}
-          updateCompany={handleUpdateCompany}
-          removeCompany={handleRemoveCompany}
           companies={companies}
+          setCompanies={setCompanies}
+          initCompany={initCompany}
         />
         <button>CREATE CV</button>
       </form>
@@ -188,3 +169,10 @@ const Home = ({ setResult }) => {
 }
 
 export default Home;
+
+          // addCompany={handleAddCompany}
+          // updateCompany={handleUpdateCompany}
+          // removeCompany={handleRemoveCompany}
+
+          // keywordGroups={keywordGroups}
+          // setKeywordGroups={setKeywordGroups}

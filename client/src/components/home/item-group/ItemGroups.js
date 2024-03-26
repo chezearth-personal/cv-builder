@@ -1,7 +1,7 @@
 import React from 'react';
 import ItemGroup from './ItemGroup';
 
-export default function ItemGroups({ itemGroups, setItemGroups, ...props }) {
+export default function ItemGroups({ itemGroups, setItemGroups, updateParent, ...props }) {
   /** Updates the state with user's input */
   const handleAddItemGroup = () =>
     setItemGroups([ ...itemGroups, { name: '' }]);
@@ -12,6 +12,10 @@ export default function ItemGroups({ itemGroups, setItemGroups, ...props }) {
       const list = [...itemGroups];
       list[index]['name'] = value;
       setItemGroups(list);
+      console.log('updateParent =', updateParent);
+      if (updateParent) {
+        updateParent(list);
+      }
     }
   }
   /** Removes a selected item from the list */
@@ -21,7 +25,8 @@ export default function ItemGroups({ itemGroups, setItemGroups, ...props }) {
     setItemGroups(list);
   }
   return (
-    <h3 className='listItems'>{props.description}
+    <div>
+      <p>{props.description}</p>
       {itemGroups.map((itemGroup, index) => (
           <ItemGroup
             key={index}
@@ -36,6 +41,6 @@ export default function ItemGroups({ itemGroups, setItemGroups, ...props }) {
             pillItemLabel={props.pillItemLabel}
           />
       ))}
-    </h3>
+    </div>
   );
 }

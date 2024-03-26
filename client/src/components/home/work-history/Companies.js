@@ -1,17 +1,54 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Company from './Company';
 
-export default function Companies({ addCompany, updateCompany, removeCompany, companies}) {
+export default function Companies({
+  // addCompany,
+  // updateCompany,
+  // removeCompany,
+  companies,
+  setCompanies,
+  // keywordGroups,
+  // setKeywordGroups,
+  initCompany
+}) {
+  const [keywordGroups, setKeywordGroups] = useState([{ name: '', itemList: [] }]);
+  /** Updates the state with user's input */
+  const handleAddCompany = () => 
+    setCompanies([ ...companies, initCompany]);
+  /** Removes a selected item from the list */
+  const handleRemoveCompany = (index) => {
+    const list = [...companies];
+    list.splice(index, 1);
+    setCompanies(list);
+  }
+  /** Updates an item within the list*/
+  const handleUpdateCompany = (e, index) => {
+    const {name, value } = e.target;
+    const list = [...companies];
+    if (name === 'isCurrent') {
+      list[index][name] = !list[index][name];
+    } else {
+      list[index][name] = value;
+    }
+    setKeywordGroups(keywordGroups);
+    console.log('list[index] =' , list[index]);
+    console.log('keywordGroups =' , keywordGroups);
+    const listObj = Object.assign(list[index], { keywordGroups });
+    console.log('listObj =' , listObj);
+    setCompanies(list);
+  }
   return (
     <div>
-        <h3>Companies you've worked at</h3>
           {companies.map((company, index) => (
             <Company
               key={index}
-              addCompany={addCompany}
-              updateCompany={updateCompany}
-              removeCompany={removeCompany}
+              addCompany={handleAddCompany}
+              updateCompany={handleUpdateCompany}
+              removeCompany={handleRemoveCompany}
               company={company}
+              setCompanies={setCompanies}
+              keywordGroups={keywordGroups}
+              setKeywordGroups={setKeywordGroups}
               index={index}
               numCompanies={companies.length}
             />

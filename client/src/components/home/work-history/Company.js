@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import React from 'react';
 import ItemGroups from '../item-group/ItemGroups';
 
 export default function Company({
@@ -6,12 +6,20 @@ export default function Company({
   updateCompany,
   removeCompany,
   company,
+  setCompanies,
+  keywordGroups,
+  setKeywordGroups,
   ...props
 }) {
-  const [keywordGroups, setKeywordGroups] = useState([{ name: '', itemList: [] }]);
-  console.log('company =', company);
-  console.log('props.index =', props.index);
-  console.log('props.numCompanies =', props.numCompanies);
+  // console.log('company =', company);
+  // console.log('props.index =', props.index);
+  // console.log('props.numCompanies =', props.numCompanies);
+  const handleUpdateGroupItems = (list) => {
+    // console.log('list =', list);
+    // console.log('deconstructed list =', [...list]);
+    setKeywordGroups(list);
+    company.keywordGroups = [ ...list ]; //
+  }
   return (
     <div className='compositeContainer'>
       <div className='company'>
@@ -92,6 +100,7 @@ export default function Company({
         <ItemGroups
           itemGroups={keywordGroups}
           setItemGroups={setKeywordGroups}
+          updateParent={handleUpdateGroupItems}
           name='keywordGroups'
           description='Keywords grouped by topic, e.g. "company background", "situation", "task", "action", "result", "learning"'
           pillGroupLabel='Enter a keyword topic'
