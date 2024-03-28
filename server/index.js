@@ -112,7 +112,18 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
     // console.log('newEntry =\n', newEntry);
     console.log('skillsGroupsString =', getStringFromArray(skillGroupsArray));
     // console.log('testArray(skillGroupsArray) =\n', testArray(skillGroupsArray, 'true', 'false'));
+    /** Calculates the duration */
+    const duration = (startDate, isCurrent, endDate) => {
+      const elapsedMillis = Date.parse(!isCurrent ? endDate : (new Date).toDateString()) - Date.parse(startDate);
+      const elapsedMonths = Math.floor(elapsedMillis / (3600000 * 24 * 30.4375) + 1);
+      const elapsedYears = Math.floor(elapsedMonths / 12)
+      const remMonths = elapsedMonths % 12;
+      return `${elapsedYears} year${plurals(elapsedYears, '', 's')} ${remMonths} month${plurals(remMonths, '', 's')}`
+    }
+    const getSeparator = (s => s === '' ? '' : ', ');
     /** Reduces the items in the workArray and convert them to a string */
+    // const remainderText = workArray
+      // .reduce((acc, work) => acc + ` ${work.name} as a ${}` duration(work.startDate, work.isCurrent, work.endDate), '').trim();
     const remainderText = workArray
       .reduce((res, e) => {
         const elapsedMillis = Date.parse(!e.isCurrent
@@ -138,6 +149,21 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
       }. I have the following skills: ${
         getStringFromArray(skillGroupsArray)
       }. Can you write a 100 words description of my skills and technology experience for the top of the CV (first person writing)?`;
+    /** Work history */
+    const workHistoryPrompts = workArray.map(w => `I am writing a CV, my name is ${
+        fullName
+      }. I worked at ${w.name} as a ${w.position} for ${
+        duration(w.startDate, w.isCurrent, w.endDate)
+      }. My work covered the following areas: ${
+        w.keywordGroups
+          .reduce((acc, kwg) => acc 
+            + getSeparator(acc) 
+            + kwg.name 
+            + ' (' 
+            + kwg.items.reduce((acc, item) => acc + getSeparator(acc) + item.name) 
+            + ')')
+      }. Can you write 50 to 150 words for this company (first person writing)?`);
+    workHistoryPrompts.forEach((w, index) => console.log(`workHistoryPrompt [${index}] =\n${w}`));
     /** The job responsibilities message */
     const prompt2 = `I am writing a CV, my details are name: ${
         fullName
@@ -159,6 +185,8 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
     const keyPoints = await gptFunction(prompt2);
     // console.log('prompt3 = ', prompt3);
     const jobResponsibilities = await gptFunction(prompt3);
+    const response = await workHistoryPrompts.map(async (w) => await gptFunction(w));
+    response.forEach((r, index) => console.log(`response [${index}] =\n${r}`));
     /** Put them into an object */
     const chatGptData = { objective , keyPoints, jobResponsibilities };
     /** Log the result */
