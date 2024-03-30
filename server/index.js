@@ -91,9 +91,9 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
       tels,
       email,
       skillGroups,
-      workHistory /** JSON format*/
+      companyDetails /** JSON format*/
     } = req.body;
-    const workArray = JSON.parse(workHistory); /** an array */
+    const companyDetailsArray = JSON.parse(companyDetails); /** an array */
     const telsArray = JSON.parse(tels); /** an array */
     const skillGroupsArray = JSON.parse(skillGroups); /** an array */
     /** Group the values into an object */
@@ -104,7 +104,7 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
       tels: telsArray,
       email,
       skillGroups: skillGroupsArray,
-      workHistory: workArray
+      companyDetails: companyDetailsArray
     };
     /** Calculates the duration */
     const duration = (startDate, isCurrent, endDate) => {
@@ -115,40 +115,30 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
       return `${elapsedYears} year${plurals(elapsedYears, '', 's')} ${remMonths} month${plurals(remMonths, '', 's')}`
     }
     const getSeparator = (s, char) => s === '' ? '' :  `${char} `;
-    /** Reduces the items in the workArray and convert them to a string */
-    // const remainderText = workArray
-      // .reduce((acc, work) => acc + ` ${work.name} as a ${}` duration(work.startDate, work.isCurrent, work.endDate), '').trim();
-    const remainderText = workArray
-      .reduce((res, e) => {
-        const elapsedMillis = Date.parse(!e.isCurrent
-          ? e.endDate 
-          : (new Date).toDateString()
-        ) - Date.parse(e.startDate);
-        const elapsedMonths = Math.floor(elapsedMillis / (3600000 * 24 * 30.4375) + 1);
-        const elapsedYears = Math.floor(elapsedMonths / 12)
-        const remMonths = elapsedMonths % 12;
-        return res + ` ${e.name} as a ${e.position}, starting in ${
-          e.startDate
-        } until ${
-          !e.isCurrent ? e.endDate : 'now'
-        } (${
-          elapsedYears
-        } year${plurals(elapsedYears, '', 's')} ${
-          remMonths
-        } month${plurals(remMonths, '', 's')}).`
-        }, '').trim();
+    // const remainderText = companyDetailsArray
+      // .reduce((res, e) => {
+        // const elapsedMillis = Date.parse(!e.isCurrent
+          // ? e.endDate 
+          // : (new Date).toDateString()
+        // ) - Date.parse(e.startDate);
+        // const elapsedMonths = Math.floor(elapsedMillis / (3600000 * 24 * 30.4375) + 1);
+        // const elapsedYears = Math.floor(elapsedMonths / 12)
+        // const remMonths = elapsedMonths % 12;
+        // return res + ` ${e.name} as a ${e.position}, starting in ${
+          // e.startDate
+        // } until ${
+          // !e.isCurrent ? e.endDate : 'now'
+        // } (${
+          // elapsedYears
+        // } year${plurals(elapsedYears, '', 's')} ${
+          // remMonths
+        // } month${plurals(remMonths, '', 's')}).`
+        // }, '').trim();
     /** The job description message */
-    const companyKeywords = workArray.map(w => ({
+    const companyKeywords = companyDetailsArray.map(w => ({
         ...w,
         ...{ duration: duration(w.startDate, w.isCurrent, w. endDate) },
         ...{ keywordText: w.keywordGroups.reduce((acc, keywordGroup) => {
-            // console.log('acc =', acc);
-            // console.log('acc + getSeparator() + keywordGroup.name =', acc + getSeparator(acc, ';') + keywordGroup.name);
-            // console.log('itemList reduced =', keywordGroup.itemList.reduce((acc, item) => {
-              // console.log('itemList acc =', acc);
-              // console.log('item.name =', item.name);
-              // return acc + getSeparator(acc, ',') + item.name
-            // }, ''));
             const res = acc
               + getSeparator(acc, ';')
               + keywordGroup.name
@@ -174,31 +164,27 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
         w.keywordText
       }. Can you write 100 to 200 words for this company, using some bullet points and in an exciting, interesting tone (first person writing)?` } }));
     /** The job responsibilities message */
-    const prompt2 = `I am writing a CV, my details are name: ${
-        fullName
-      } . I work in the following skills: ${
-        getStringFromArray(skillGroupsArray)
-      }. Can you write 10 points for a CV on what I am good at?`;
+    // const prompt2 = `I am writing a CV, my details are name: ${
+        // fullName
+      // } . I work in the following skills: ${
+        // getStringFromArray(skillGroupsArray)
+      // }. Can you write 10 points for a CV on what I am good at?`;
     /** The job achievements message */
-    const prompt3 = `I am writing a CV, my details are name: ${
-        fullName
-      }. During my years I worked at ${
-        workArray.length
-      } companiesr. ${
-        remainderText
-      } Can you write me 100 words for each company seperated in numbers of my succession in the company (in first person)?`;
+    // const prompt3 = `I am writing a CV, my details are name: ${
+        // fullName
+      // }. During my years I worked at ${
+        // companyDetailsArray.length
+      // } companiesr. ${
+        // remainderText
+      // } Can you write me 100 words for each company seperated in numbers of my succession in the company (in first person)?`;
     /** Generate a GPT-3 result */
-    // console.log('prompt1 = ', prompt1);
     const objective = await gptFunction(prompt1);
-    // console.log('prompt2 = ', prompt2);
-    const keyPoints = await gptFunction(prompt2);
-    // console.log('prompt3 = ', prompt3);
-    const jobResponsibilities = await gptFunction(prompt3);
-    const companyStories = await Promise.all(companyPrompts.map(async (cp) => ({ ...cp, ...{ companyStory: await gptFunction(cp.prompt) } })));
-    console.log('companyStories =\n', companyStories);
-    // responses.forEach((r, index) => console.log(`response [${index}] =\n${r}`));
+    // const keyPoints = await gptFunction(prompt2);
+    // const jobResponsibilities = await gptFunction(prompt3);
+    const workHistories = await Promise.all(companyPrompts.map(async (cp) => ({ ...cp, ...{ companyStory: await gptFunction(cp.prompt) } })));
+    // console.log('workHistories =\n', workHistories);
     /** Put them into an object */
-    const chatGptData = { objective , keyPoints, jobResponsibilities, companyStories };
+    const chatGptData = { objective, workHistories };
     /** Log the result */
     const data = { ...newEntry, ...chatGptData };
     // console.log('data =\n', data);

@@ -7,10 +7,10 @@ import './Cv.css';
 const Cv = ({ result }) => {
   const componentRef = useRef();
   const possesive = (num) => num > 1 ? 's\'' : 'year\'s';
-  console.log('workHistory = ', result.workHistory);
-  const totalWorkMonths = !result.workHistory
+  console.log('companyDetails = ', result.companyDetails);
+  const totalWorkMonths = !result.companyDetails
     ? 0
-    : result.workHistory
+    : result.companyDetails
       .map(work => {
         const startDate = new Date(work.startDate);
         const endDate = !work.isCurrent ? new Date(work.endDate) : new Date();
@@ -87,18 +87,18 @@ const Cv = ({ result }) => {
             </div>
             <div>
               <h4 className='cvBodyTitle cvHistoryTitle'>WORK HISTORY</h4>
-              {result.companyStories.map((companyStory, index) => (
+              {result.workHistories.map((workStory, index) => (
                 <div key={index} className='cvBodyContent'>
                   <p className='cvBodyContent' key={index}>
-                    <span style={{ fontWeight: "bold" }}>{companyStory.name}</span>
+                    <span style={{ fontWeight: "bold" }}>{workStory.name}</span>
                   </p>
                   <div className='cvBodyPosition'>
-                    <p>{companyStory.position}</p>
-                    <p>{companyStory.startDate} to {companyStory.isCurrent ? 'present' : companyStory.endDate}</p>
+                    <p>{workStory.position}</p>
+                    <p>{workStory.startDate} to {workStory.isCurrent ? 'present' : workStory.endDate}</p>
                   </div>
                   <p
                     dangerouslySetInnerHTML={{
-                      __html: replaceWithBr(companyStory.companyStory),
+                      __html: replaceWithBr(workStory.companyStory),
                     }}
                     className='cvBodyContent'
                   />
