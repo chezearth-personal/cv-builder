@@ -6,6 +6,7 @@
     margin: 0;
     padding: 0;
 }
+
  main {
    display: flex;
    flex-direction: column;
@@ -27,6 +28,11 @@ input {
   width: 20vw;
 }
 
+h1 {
+  font-style: bold;
+  font-size: 40px;
+}
+
 h3 {
   font-weight: 600;
   font-size: 20px;
@@ -45,115 +51,5 @@ button {
   font-size: 16px;
   font-weight: bold;
   border-radius: 3px;
-}
-
-.app {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 80px 30px 30px 30px;
-}
-
-.app > p {
-  margin-bottom: 30px;
-}
-
-.compositeContainer {
-  border: 1px solid #aad;
-  border-radius: 3px;
-  margin: 0 0 5px 0;
-}
-
-.inputContainer {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  padding: 5px;
-  margin: 0 0 5px 0;
-}
-
-.nestedContainer {
-  display: flex;
-  align-items: top;
-  justify-content: flex-left;
-  width: 50%;
-}
-
-#nestedCompanies {
-  width: 100%;
-}
-
-.text__group {
-  display: flex;
-  flex-direction: column;
-  align-items: left;
-}
-
-.check__group {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0 1.0vw 0 0;
-}
-
-.companies {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
-.company {
-  margin: 0 5px 5px 5px;
-}
-
-#photo {
-  width: 50%;
-}
-
-.text__company {
-  width: 14vw;
-}
-
-.check__company {
-  justify-content: space-between;
-  align-content: center;
-  text-align: center;
-  width: 10vw;
-  margin: 15px 0 0 0;
-  /* padding: 15px 0 15px 0; */
-}
-
-.btn__group {
-  display: flex;
-  align-items: right;
-  justify-content: space-between;
-  margin: 0 0 0 15px;
-}
-
-.addBtn {
-  background-color: green;
-}
-
-.deleteBtn {
-  background-color: red;
-  margin-left: 5px;
-}
-
-.container {
-  min-height: 100vh;
-  padding: 30px;
-}
-
-.header {
-  width: 80%;
-  margin: 0 auto;
-  min-height: 10vh;
-  padding: 30px;
-  border-radius: 3px 3px 0 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
 }
 

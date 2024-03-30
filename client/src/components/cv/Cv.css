@@ -186,6 +186,12 @@ h4 {
   /* border-bottom: 0 solid #e0e0ea; */
 }
 
+.cvBodyPosition {
+  display: flex;
+  flex-direction: row;
+  justify-content:space-between;
+}
+
 .cvBodyContent {
   text-align: justify;
   margin-bottom: 30px;

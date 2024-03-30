@@ -5,7 +5,7 @@ import Loading from '../placeholders/Loading';
 import ItemGroups from './item-group/ItemGroups';
 import Companies from './work-history/Companies';
 import logo from '../../logo.svg';
-import '../../index.css';
+import '../../App.css'
 
 const Home = ({ setResult }) => {
   const initCompany = {
@@ -78,7 +78,7 @@ const Home = ({ setResult }) => {
     return <Loading />;
   }
   return (
-    <div className='app'>
+    <div className='App'>
       <div className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
       </div>
@@ -169,6 +169,7 @@ const Home = ({ setResult }) => {
 }
 
 export default Home;
+
 
           // addCompany={handleAddCompany}
           // updateCompany={handleUpdateCompany}

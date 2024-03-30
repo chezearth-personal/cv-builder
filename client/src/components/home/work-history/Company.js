@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import ItemGroups from '../item-group/ItemGroups';
 
 export default function Company({
@@ -6,19 +6,19 @@ export default function Company({
   updateCompany,
   removeCompany,
   company,
-  setCompanies,
-  keywordGroups,
-  setKeywordGroups,
+  // keywordGroups,
+  // setKeywordGroups,
   ...props
 }) {
+  const [ keywordGroups, setKeywordGroups ] = useState([{ name: '', itemList: [] }]);
   // console.log('company =', company);
   // console.log('props.index =', props.index);
   // console.log('props.numCompanies =', props.numCompanies);
   const handleUpdateGroupItems = (list) => {
-    // console.log('list =', list);
+    console.log('list =', list);
     // console.log('deconstructed list =', [...list]);
-    setKeywordGroups(list);
-    company.keywordGroups = [ ...list ]; //
+    // setKeywordGroups(list);
+    company.keywordGroups = list; //
   }
   return (
     <div className='compositeContainer'>
@@ -86,12 +86,12 @@ export default function Company({
           )}
           <div className='btn__group'>
             {props.numCompanies - 1 === props.index && props.numCompanies < 4 && (
-              <button id='addBtn' onClick={addCompany}>
+              <button className='addBtn' id='addBtn' onClick={addCompany}>
                 Add
               </button>
             )}
             {props.numCompanies > 1 && (
-              <button id='deleteBtn' onClick={() => removeCompany(props.index)}>
+              <button className='deleteBtn' id='deleteBtn' onClick={() => removeCompany(props.index)}>
                 Delete
               </button>
             )}

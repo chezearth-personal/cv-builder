@@ -87,30 +87,23 @@ const Cv = ({ result }) => {
             </div>
             <div>
               <h4 className='cvBodyTitle cvHistoryTitle'>WORK HISTORY</h4>
-              {result.workHistory.map(work => (
-                <p className='cvBodyContent' key={work.name}>
-                  <span style={{ fontWeight: "bold" }}>{work.name}</span> -{" "}
-                  {work.position}
-                </p>
+              {result.companyStories.map((companyStory, index) => (
+                <div key={index} className='cvBodyContent'>
+                  <p className='cvBodyContent' key={index}>
+                    <span style={{ fontWeight: "bold" }}>{companyStory.name}</span>
+                  </p>
+                  <div className='cvBodyPosition'>
+                    <p>{companyStory.position}</p>
+                    <p>{companyStory.startDate} to {companyStory.isCurrent ? 'present' : companyStory.endDate}</p>
+                  </div>
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: replaceWithBr(companyStory.companyStory),
+                    }}
+                    className='cvBodyContent'
+                  />
+                </div>
               ))}
-            </div>
-            <div>
-              <h4 className='cvBodyTitle cvHistoryTitle'>JOB PROFILE</h4>
-              <p
-                dangerouslySetInnerHTML={{
-                  __html: replaceWithBr(result.jobResponsibilities),
-                }}
-                className='cvBodyContent'
-              />
-            </div>
-            <div>
-              <h4 className='cvBodyTitle cvHistoryTitle'>JOB RESPONSIBILITIES</h4>
-              <p
-                dangerouslySetInnerHTML={{
-                  __html: replaceWithBr(result.keyPoints),
-                }}
-                className='cvBodyContent'
-              />
             </div>
           </div>
         </div>
@@ -119,3 +112,22 @@ const Cv = ({ result }) => {
   );
 };
 export default Cv;
+
+            // <div>
+              // <h4 className='cvBodyTitle cvHistoryTitle'>JOB PROFILE</h4>
+              // <p
+                // dangerouslySetInnerHTML={{
+                  // __html: replaceWithBr(result.jobResponsibilities),
+                // }}
+                // className='cvBodyContent'
+              // />
+            // </div>
+            // <div>
+              // <h4 className='cvBodyTitle cvHistoryTitle'>JOB RESPONSIBILITIES</h4>
+              // <p
+                // dangerouslySetInnerHTML={{
+                  // __html: replaceWithBr(result.keyPoints),
+                // }}
+                // className='cvBodyContent'
+              // />
+            // </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+// import React, { useState } from 'react';
 import Company from './Company';
 
 export default function Companies({
@@ -11,10 +11,14 @@ export default function Companies({
   // setKeywordGroups,
   initCompany
 }) {
-  const [keywordGroups, setKeywordGroups] = useState([{ name: '', itemList: [] }]);
+  // console.log('initCompany =', initCompany);
+  // console.log('companies =', companies);
+  // const [keywordGroups, setKeywordGroups] = useState([{ name: '', itemList: [] }]);
   /** Updates the state with user's input */
-  const handleAddCompany = () => 
-    setCompanies([ ...companies, initCompany]);
+  const handleAddCompany = () => {
+    // console.log('handleAddCompany(): initCompany =', initCompany);
+    return setCompanies([ ...companies, initCompany]);
+  }
   /** Removes a selected item from the list */
   const handleRemoveCompany = (index) => {
     const list = [...companies];
@@ -30,11 +34,11 @@ export default function Companies({
     } else {
       list[index][name] = value;
     }
-    setKeywordGroups(keywordGroups);
+    // setKeywordGroups(keywordGroups);
     console.log('list[index] =' , list[index]);
-    console.log('keywordGroups =' , keywordGroups);
-    const listObj = Object.assign(list[index], { keywordGroups });
-    console.log('listObj =' , listObj);
+    // console.log('keywordGroups =' , keywordGroups);
+    // const listObj = Object.assign(list[index], { keywordGroups });
+    // console.log('listObj =' , listObj);
     setCompanies(list);
   }
   return (
@@ -46,9 +50,8 @@ export default function Companies({
               updateCompany={handleUpdateCompany}
               removeCompany={handleRemoveCompany}
               company={company}
-              setCompanies={setCompanies}
-              keywordGroups={keywordGroups}
-              setKeywordGroups={setKeywordGroups}
+              // keywordGroups={keywordGroups}
+              // setKeywordGroups={setKeywordGroups}
               index={index}
               numCompanies={companies.length}
             />

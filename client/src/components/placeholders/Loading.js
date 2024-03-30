@@ -1,9 +1,9 @@
 import React from "react";
-import '../../index.css';
+import '../../App.css';
 
 const Loading = () => {
   return (
-    <div className='app'>
+    <div className='App'>
       <h1>Loading, please wait...</h1>
     </div>
   );
