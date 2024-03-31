@@ -35,10 +35,14 @@ const Cv = ({ result }) => {
     documentTitle: `${result.fullName} CV`,
     onAfterPrint: () => alert('Print successful!')
   });
-  /** Function that replaces the new line with a break tag */
+  /** Function that replaces the new line with a single HTML break tag */
   const replaceWithBr = (string) => !string
     ? ''
-    : Array.from(new Set((string.replace(/\n/g, '<br />').split('<br />')))).map(e => e === '' ? '<br />' : e).join('');
+    : Array
+      .from(new Set((string.replace(/\n/g, '<br />')
+      .split('<br />'))))
+      .map(e => e === '' ? '<br />' : e)
+      .join('');
   /** Returns an error page if the result object is empty */
   if (JSON.stringify(result) === '{}') {
     return <ErrorPage />;
