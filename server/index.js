@@ -140,22 +140,19 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
         fullName
       }. I have the following skills: ${
         getStringFromArray(skillGroupsArray)
-      }. Can you write a 100 words description of my skills and technology experience for the top of the CV (first person writing)?`;
+      }. Can you write a 50 to 300 words description of my skills and technology experience for the top of the CV (first person writing)?`;
     /** Work history keyPhrases combined into a text string and appended */
     const companyKeyPhrases = companyDetailsArray.map(w => ({
-        ...w,
-        ...{ duration: duration(w.startDate, w.isCurrent, w. endDate) },
-        ...{ keyPhraseText: w.keyPhraseGroups.reduce((acc, keyPhraseGroup) => {
-            const res = acc
-              + getSeparator(acc, ';')
-              + keyPhraseGroup.name
-              + (!keyPhraseGroup.itemList
-                ? ''
-                : ': ' + keyPhraseGroup.itemList.reduce((acc, item) => acc + getSeparator(acc, ',') + item.name, ''));
-            return res;
-          }, '')
-        }
-      }));
+      ...w,
+      ...{ duration: duration(w.startDate, w.isCurrent, w. endDate) },
+      ...{ keyPhraseText: w.keyPhraseGroups.reduce((acc, keyPhraseGroup) => acc
+        + getSeparator(acc, ';')
+        + keyPhraseGroup.name
+        + (!keyPhraseGroup.itemList
+          ? ''
+          : + ' (' + keyPhraseGroup.itemList.reduce((acc, item) => acc + getSeparator(acc, ',') + item.name, '') + ')'
+        ), '') }
+    }));
     const companyPrompts = companyKeyPhrases.map(companyKeyPhrase => (
       { ...companyKeyPhrase, ...{ workPrompt: `I am writing a CV, my name is ${
           fullName
@@ -163,7 +160,7 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
           duration(companyKeyPhrase.startDate, companyKeyPhrase.isCurrent, companyKeyPhrase.endDate)
         }. My work involved the following points: ${
           companyKeyPhrase.keyPhraseText
-      }. Can you write 100 to 200 words for this company, using some bullet points and in an exciting, interesting tone (first person writing)?` } }));
+      }. Can you write 50 to 300 words for this company, using paragraphs and in an exciting, interesting tone (first person writing)?` } }));
     /** Generate the GPT-3 results: 1 - The Profile  */
     const profile = await gptFunction(profilePrompt);
     /** Generate the GPT-3 results: 2 - The work history sections, 1 for each company */
@@ -172,7 +169,7 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
     const chatGptData = { profile, workHistories };
     /** Log the result (nothing happens here... yet) */
     const data = { ...newEntry, ...chatGptData };
-    // console.log('data =\n', data);
+    console.log('data =\n', data);
     database.push(data);
     res.json({
       message: 'Request successful!',

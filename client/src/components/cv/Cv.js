@@ -38,11 +38,27 @@ const Cv = ({ result }) => {
   /** Function that replaces the new line with a single HTML break tag */
   const replaceWithBr = (string) => !string
     ? ''
-    : Array
-      .from(new Set((string.replace(/\n/g, '<br />')
-      .split('<br />'))))
-      .map(e => e === '' ? '<br />' : e)
-      .join('');
+    : string.replace(/(\n)\1+/, '$1').replace(/\n/g, '<br />');
+    // : Array
+      // .from(new Set((string.replace(/\n/g, '<br />').split('<br />'))))
+      // .map(e => e === '' ? '<br />' : e)
+      // .join('');
+  /** Looks for and creates bullet points */
+  const createBulletPoints = (string) => {
+    const arr = string.split('- ');
+    return arr
+      .map((txt, index) => {
+        if (index === 0) {
+          return `${txt}</p><ul><`
+        } else if (index === arr.length - 1) {
+          const fs = txt.indexOf('.');
+          return txt.substring(0, fs - 1) + '</li></ul><p>' + txt.substring(fs + 1);
+        } else {
+          return `>${txt}</li><`
+        }
+      })
+      .join('li');
+  }
   /** Returns an error page if the result object is empty */
   if (JSON.stringify(result) === '{}') {
     return <ErrorPage />;
