@@ -1,7 +1,12 @@
 import React from 'react';
 import ItemGroup from './ItemGroup';
 
-export default function ItemGroups({ itemGroups, setItemGroups, updateParent, ...props }) {
+const ItemGroups = ({
+  itemGroups,
+  setItemGroups,
+  updateParent,
+  ...props
+}) => {
   /** Updates the state with user's input */
   const handleAddItemGroup = () =>
     setItemGroups([ ...itemGroups, { name: '' }]);
@@ -43,3 +48,5 @@ export default function ItemGroups({ itemGroups, setItemGroups, updateParent, ..
     </div>
   );
 }
+
+export default ItemGroups;

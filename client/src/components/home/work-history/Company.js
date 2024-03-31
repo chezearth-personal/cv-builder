@@ -1,18 +1,15 @@
 import { useState } from 'react';
 import ItemGroups from '../item-group/ItemGroups';
 
-export default function Company({
+const Company = ({
   addCompany,
   updateCompany,
   removeCompany,
   company,
   ...props
-}) {
+}) => {
   const [ keyPhraseGroups, setkeyPhraseGroups ] = useState([{ name: '', itemList: [] }]);
-  const handleUpdateGroupItems = (list) => {
-    // console.log('list =', list);
-    company.keyPhraseGroups = list; //
-  }
+  const handleUpdateGroupItems = (list) => company.keyPhraseGroups = list;
   return (
     <div className='compositeContainer'>
       <div className='company'>
@@ -102,3 +99,5 @@ export default function Company({
     </div>
   );
 }
+
+export default Company;

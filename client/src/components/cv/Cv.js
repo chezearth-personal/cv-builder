@@ -123,22 +123,3 @@ const Cv = ({ result }) => {
   );
 };
 export default Cv;
-
-            // <div>
-              // <h4 className='cvBodyTitle cvHistoryTitle'>JOB PROFILE</h4>
-              // <p
-                // dangerouslySetInnerHTML={{
-                  // __html: replaceWithBr(result.jobResponsibilities),
-                // }}
-                // className='cvBodyContent'
-              // />
-            // </div>
-            // <div>
-              // <h4 className='cvBodyTitle cvHistoryTitle'>JOB RESPONSIBILITIES</h4>
-              // <p
-                // dangerouslySetInnerHTML={{
-                  // __html: replaceWithBr(result.keyPoints),
-                // }}
-                // className='cvBodyContent'
-              // />
-            // </div>

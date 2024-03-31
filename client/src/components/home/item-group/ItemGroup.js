@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import ItemPills from './item-pill/ItemPills';
 
-export default function ItemGroup({
+const ItemGroup = ({
   itemGroup,
   addItemGroup,
   updateItemGroup,
   removeItemGroup,
   ...props
-}) {
+}) => {
   const [items, setItems] = useState([]);
   const [item, setItem] = useState('');
   const addToItem = (item) => {
@@ -92,4 +92,5 @@ export default function ItemGroup({
     </div>
   );
 }
-        // name={`${props.name}_pills`}
+
+export default ItemGroup;

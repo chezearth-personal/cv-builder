@@ -36,10 +36,8 @@ const Home = ({ setResult }) => {
     formData.append('email', email);
     formData.append('skillGroups', JSON.stringify(skillGroups));
     formData.append('companyDetails', JSON.stringify(companies));
-    // console.log('skillGroups = ', skillGroups);
-    console.log('skillGroups JSON:', JSON.stringify(skillGroups));
-    // console.log('companyDetails = ', companies);
-    console.log('companies JSON:', JSON.stringify(companies));
+    // console.log('skillGroups JSON:', JSON.stringify(skillGroups));
+    // console.log('companies JSON:', JSON.stringify(companies));
     axios
       .post('http://localhost:4000/cv/create', formData, {})
       .then(res => {
@@ -142,34 +140,3 @@ const Home = ({ setResult }) => {
 }
 
 export default Home;
-
-        // <div className='listItems'>Enter your telephone numbers
-          // {tels.map((tel, index) => (
-            // <div className='nestedContainer' key={index}>
-              // <div className='listItem'>
-                // <div className='text__group'>
-                  // <label htmlFor={`telNumber_${index}`}>tel</label>
-                  // <input
-                    // type='tel'
-                    // required
-                    // name={`telNumber_${index}`}
-                    // id={`telNumber_${index}`}
-                    // onChange={e => handleUpdateTel(e, index)}
-                  // />
-                // </div>
-              // </div>
-              // <div className='btn__group'>
-                // {tels.length - 1 === index && tels.length < 4 && (
-                  // <button id='addBtn' onClick={handleAddTel}>
-                    // Add
-                  // </button>
-                // )}
-                // {tels.length > 1 && (
-                  // <button id='deleteBtn' onClick={() => handleRemoveTel(index)}>
-                    // Delete
-                  // </button>
-                // )}
-              // </div>
-            // </div>
-          // ))}
-        // </div>
