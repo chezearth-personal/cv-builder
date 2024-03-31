@@ -88,6 +88,7 @@ const getStringFromArray = (itemGroups) => !itemGroups || !Array.isArray(itemGro
 app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
     const {
       fullName,
+      occupation,
       tel,
       email,
       skillGroups,
@@ -99,6 +100,7 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
     const newEntry = {
       id: randomUUID(),
       fullName,
+      occupation,
       imageUrl: req.file && `http://localhost:4000/uploads/${req.file.filename}`,
       tel,
       email,

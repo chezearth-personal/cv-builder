@@ -2,6 +2,8 @@ import React, { useRef } from 'react';
 import { useReactToPrint } from 'react-to-print';
 import ErrorPage from '../placeholders/ErrorPage';
 import ItemGroups from './item-group/ItemGroups';
+import ImageEmail from '../../images/email-logo.png';
+import ImageTel from '../../images/tel-logo.jpeg';
 import './Cv.css';
 
 const Cv = ({ result }) => {
@@ -34,16 +36,13 @@ const Cv = ({ result }) => {
     onAfterPrint: () => alert('Print successful!')
   });
   /** Function that replaces the new line with a break tag */
-  const replaceWithBr = (string) => string.replace(/\n/g, '<br />');
+  const replaceWithBr = (string) => !string
+    ? ''
+    : Array.from(new Set((string.replace(/\n/g, '<br />').split('<br />')))).map(e => e === '' ? '<br />' : e).join('');
   /** Returns an error page if the result object is empty */
   if (JSON.stringify(result) === '{}') {
     return <ErrorPage />;
   }
-  // console.log('result.imageUrl =\n', result && result.imageUrl);
-  // console.log('result.objective =', result.objective);
-  // console.log('replaceWithBr() = ', replaceWithBr(result.objective));
-  // console.log('result.technologiesString =', result.technologies);
-  // console.log('replaceWithBr() = ', replaceWithBr(result.technologies));
   return (
     <>
       <button onClick={handlePrint}>Print page</button>
@@ -51,7 +50,7 @@ const Cv = ({ result }) => {
         <header className='header'>
           <div className='headingText'>
             <h1>{result.fullName.toUpperCase()}</h1>
-            <h2>SOFTWARE ENGINEER</h2>
+            <h2>{result.occupation.toUpperCase()}</h2>
             <p className='cvTitle'>
               {totalWorkYears} work experience
             </p>
@@ -68,9 +67,17 @@ const Cv = ({ result }) => {
         </header>
         <div className='cvBody'>
           <div className='cvKeyPoints'>
-            <div>
+            <div className='cvPoint'>
               <h4 className='cvBodyTitle cvHistoryTitle'>CONTACT</h4>
-              <div className='cvTechSkillGroup'>
+              <div className='cvContactList'>
+                  <div className='cvContact'>
+                    <img className='cvIcon' src={ImageEmail} alt='email' />
+                    <p>{result.email}</p>
+                  </div>
+                  <div className='cvContact'>
+                    <img className='cvIcon' src={ImageTel} alt='tel' />
+                    <p>{result.tel}</p>
+                  </div>
               </div>
             </div>
             <ItemGroups handleBr={replaceWithBr} itemGroups={result.skillGroups} headingText='TECHNICAL SKILLS' />
@@ -80,7 +87,7 @@ const Cv = ({ result }) => {
               <h4 className='cvBodyTitle cvHistoryTitle'>PROFILE SUMMARY</h4>
               <p
                 dangerouslySetInnerHTML={{
-                  __html: replaceWithBr(result.objective),
+                  __html: replaceWithBr(result.profile),
                 }}
                 className='cvBodyContent'
               />
@@ -89,8 +96,8 @@ const Cv = ({ result }) => {
               <h4 className='cvBodyTitle cvHistoryTitle'>WORK HISTORY</h4>
               {result.workHistories.map((workStory, index) => (
                 <div key={index} className='cvBodyContent'>
-                  <p className='cvBodyContent' key={index}>
-                    <span style={{ fontWeight: "bold" }}>{workStory.name}</span>
+                  <p className='cvBodyCompany' key={index}>
+                    {workStory.name}
                   </p>
                   <div className='cvBodyPosition'>
                     <p>{workStory.position}</p>

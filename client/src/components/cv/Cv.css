@@ -138,9 +138,13 @@ h4 {
   padding: 8px 20px 10px 10px;
 }
 
+.cvPoint {
+  margin: 0 0 10px 0;
+}
+
 .cvBodyTitle {
   margin: 0 0 10px 0;
-  padding: 0 0 8px 0;
+  /* padding: 0 0 8px 0; */
   text-align: center;
   border-bottom: 1.5px solid black;
 }
@@ -149,11 +153,31 @@ h4 {
   border-bottom: 0;
 }
 
+.cvContactList {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 0 0 10px 0;
+}
+
+.cvContact {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  padding: 5px 0 5px 0;
+}
+
+.cvIcon {
+  width: 20px;
+  height: 20px;
+  margin: 0 10px 0 0;
+}
+
 .cvTechSkillGroup {
   display: flex;
   flex-wrap: nowrap;
   justify-content: flex-start;
-  padding: 20px 0 20px 0;
+  padding: 10px 0 0 0;
 }
 
 .cvBullet {
@@ -192,7 +216,12 @@ h4 {
   justify-content:space-between;
 }
 
+.cvBodyCompany {
+  font-family: hk_groteskbold;
+  margin: 0 0 5px 0;
+}
+
 .cvBodyContent {
   text-align: justify;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }

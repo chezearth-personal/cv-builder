@@ -4,7 +4,7 @@ import axios from 'axios';
 import Loading from '../placeholders/Loading';
 import ItemGroups from './item-group/ItemGroups';
 import Companies from './work-history/Companies';
-import logo from '../../logo.svg';
+import logo from '../../images/logo.svg';
 import '../../App.css'
 
 const Home = ({ setResult }) => {
@@ -17,6 +17,7 @@ const Home = ({ setResult }) => {
     keyPhraseGroups: []
   };
   const [fullName, setFullName] = useState('');
+  const [occupation, setOccupation] = useState('');
   const [headShot, setHeadShot] = useState(null);
   const [tel, setTel] = useState('');
   const [email, setEmail] = useState('');
@@ -24,36 +25,21 @@ const Home = ({ setResult }) => {
   const [loading, setLoading] = useState(false);
   const [companies, setCompanies] = useState([initCompany]);
   const navigate = useNavigate();
-  /** Updates the state with user's input */
-  // const handleAddTel = () =>
-    // setTels([ ...tels, { telNumber: '', telType: '' }]);
-  /** Removes a selected item from the list */
-  // const handleRemoveTel = (index) => {
-    // const list = [...tels];
-    // list.splice(index, 1);
-    // setTels(list);
-  // }
-  /** Updates an item within the list */
-  // const handleUpdateTel = (e, index) => {
-    // const {name, value } = e.target;
-    // const list = [...tels];
-    // list[index][name] = value;
-    // setTels(list);
-  // }
   /** Submit the form */
   const handleFormSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData();
     headShot && formData.append('headshotImage', headShot, headShot.name);
     formData.append('fullName', fullName);
+    formData.append('occupation', occupation);
     formData.append('tel', tel);
     formData.append('email', email);
     formData.append('skillGroups', JSON.stringify(skillGroups));
     formData.append('companyDetails', JSON.stringify(companies));
-    console.log('skillGroups = ', skillGroups);
+    // console.log('skillGroups = ', skillGroups);
     console.log('skillGroups JSON:', JSON.stringify(skillGroups));
-    console.log('companyDetails = ', companies);
-    console.log('Companies JSON:', JSON.stringify(companies));
+    // console.log('companyDetails = ', companies);
+    console.log('companies JSON:', JSON.stringify(companies));
     axios
       .post('http://localhost:4000/cv/create', formData, {})
       .then(res => {
@@ -98,6 +84,15 @@ const Home = ({ setResult }) => {
           value={fullName}
           onChange={(e) => setFullName(e.target.value)}
         />
+        <label htmlFor='jobTitle'>Enter your occupation</label>
+        <input
+          type='text'
+          required
+          name='occupation'
+          id='occupation'
+          value={occupation}
+          onChange={(e) => setOccupation(e.target.value)}
+        />
         <label htmlFor='photo'>Upload your headshot image</label>
         <input
           type='file'
@@ -107,7 +102,7 @@ const Home = ({ setResult }) => {
           onChange={e => setHeadShot(e.target.files[0])}
         />
         <h3>Contact Information</h3>
-        <label htmlFor='{telNumber}'>tel</label>
+        <label htmlFor='{telNumber}'>Tel</label>
         <input
           type='tel'
           required
@@ -134,7 +129,7 @@ const Home = ({ setResult }) => {
           pillGroupLabel='Enter a skill group'
           pillItemLabel='Skill to be added'
         />
-        <h3>Companies you've worked at</h3>
+        <h3>{`Companies you've worked at`}</h3>
         <Companies
           companies={companies}
           setCompanies={setCompanies}
