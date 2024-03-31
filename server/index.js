@@ -88,20 +88,19 @@ const getStringFromArray = (itemGroups) => !itemGroups || !Array.isArray(itemGro
 app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
     const {
       fullName,
-      tels,
+      tel,
       email,
       skillGroups,
       companyDetails /** JSON format*/
     } = req.body;
     const companyDetailsArray = JSON.parse(companyDetails); /** an array */
-    const telsArray = JSON.parse(tels); /** an array */
     const skillGroupsArray = JSON.parse(skillGroups); /** an array */
     /** Group the values into an object */
     const newEntry = {
       id: randomUUID(),
       fullName,
       imageUrl: req.file && `http://localhost:4000/uploads/${req.file.filename}`,
-      tels: telsArray,
+      tel,
       email,
       skillGroups: skillGroupsArray,
       companyDetails: companyDetailsArray
@@ -134,58 +133,42 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
           // remMonths
         // } month${plurals(remMonths, '', 's')}).`
         // }, '').trim();
-    /** The job description message */
-    const companyKeywords = companyDetailsArray.map(w => ({
-        ...w,
-        ...{ duration: duration(w.startDate, w.isCurrent, w. endDate) },
-        ...{ keywordText: w.keywordGroups.reduce((acc, keywordGroup) => {
-            const res = acc
-              + getSeparator(acc, ';')
-              + keywordGroup.name
-              + (!keywordGroup.itemList
-                ? ''
-                : ': ' + keywordGroup.itemList.reduce((acc, item) => acc + getSeparator(acc, ',') + item.name, ''));
-            return res;
-          }, '')
-        }
-      }));
-    // console.log('companyWorkKeywords =\n', companyKeywords);
-    const prompt1 = `I am writing a CV, my name is ${
+    /** The profile prompt message */
+    const profilePrompt = `I am writing a CV, my name is ${
         fullName
       }. I have the following skills: ${
         getStringFromArray(skillGroupsArray)
       }. Can you write a 100 words description of my skills and technology experience for the top of the CV (first person writing)?`;
-    /** Work history */
-    const companyPrompts = companyKeywords.map(w => ({ ...w, ...{ prompt: `I am writing a CV, my name is ${
-        fullName
-      }. I worked at ${w.name} as a ${w.position} for ${
-        duration(w.startDate, w.isCurrent, w.endDate)
-      }. My work involved the following points: ${
-        w.keywordText
+    /** Work history keyPhrases combined into a text string and appended */
+    const companyKeyPhrases = companyDetailsArray.map(w => ({
+        ...w,
+        ...{ duration: duration(w.startDate, w.isCurrent, w. endDate) },
+        ...{ keyPhraseText: w.keyPhraseGroups.reduce((acc, keyPhraseGroup) => {
+            const res = acc
+              + getSeparator(acc, ';')
+              + keyPhraseGroup.name
+              + (!keyPhraseGroup.itemList
+                ? ''
+                : ': ' + keyPhraseGroup.itemList.reduce((acc, item) => acc + getSeparator(acc, ',') + item.name, ''));
+            return res;
+          }, '')
+        }
+      }));
+    const companyPrompts = companyKeyPhrases.map(companyKeyPhrase => (
+      { ...companyKeyPhrase, ...{ workPrompt: `I am writing a CV, my name is ${
+          fullName
+        }. I worked at ${companyKeyPhrase.name} as a ${companyKeyPhrase.position} for ${
+          duration(companyKeyPhrase.startDate, companyKeyPhrase.isCurrent, companyKeyPhrase.endDate)
+        }. My work involved the following points: ${
+          companyKeyPhrase.keyPhraseText
       }. Can you write 100 to 200 words for this company, using some bullet points and in an exciting, interesting tone (first person writing)?` } }));
-    /** The job responsibilities message */
-    // const prompt2 = `I am writing a CV, my details are name: ${
-        // fullName
-      // } . I work in the following skills: ${
-        // getStringFromArray(skillGroupsArray)
-      // }. Can you write 10 points for a CV on what I am good at?`;
-    /** The job achievements message */
-    // const prompt3 = `I am writing a CV, my details are name: ${
-        // fullName
-      // }. During my years I worked at ${
-        // companyDetailsArray.length
-      // } companiesr. ${
-        // remainderText
-      // } Can you write me 100 words for each company seperated in numbers of my succession in the company (in first person)?`;
-    /** Generate a GPT-3 result */
-    const objective = await gptFunction(prompt1);
-    // const keyPoints = await gptFunction(prompt2);
-    // const jobResponsibilities = await gptFunction(prompt3);
-    const workHistories = await Promise.all(companyPrompts.map(async (cp) => ({ ...cp, ...{ companyStory: await gptFunction(cp.prompt) } })));
-    // console.log('workHistories =\n', workHistories);
-    /** Put them into an object */
-    const chatGptData = { objective, workHistories };
-    /** Log the result */
+    /** Generate the GPT-3 results: 1 - The Profile  */
+    const profile = await gptFunction(profilePrompt);
+    /** Generate the GPT-3 results: 2 - The work history sections, 1 for each company */
+    const workHistories = await Promise.all(companyPrompts.map(async (cp) => ({ ...cp, ...{ companyStory: await gptFunction(cp.workPrompt) } })));
+    /** Combine the GPT-3 outputs into one object */
+    const chatGptData = { profile, workHistories };
+    /** Log the result (nothing happens here... yet) */
     const data = { ...newEntry, ...chatGptData };
     // console.log('data =\n', data);
     database.push(data);

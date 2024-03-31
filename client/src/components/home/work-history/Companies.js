@@ -2,21 +2,12 @@
 import Company from './Company';
 
 export default function Companies({
-  // addCompany,
-  // updateCompany,
-  // removeCompany,
   companies,
   setCompanies,
-  // keywordGroups,
-  // setKeywordGroups,
   initCompany
 }) {
-  // console.log('initCompany =', initCompany);
-  // console.log('companies =', companies);
-  // const [keywordGroups, setKeywordGroups] = useState([{ name: '', itemList: [] }]);
   /** Updates the state with user's input */
   const handleAddCompany = () => {
-    // console.log('handleAddCompany(): initCompany =', initCompany);
     return setCompanies([ ...companies, initCompany]);
   }
   /** Removes a selected item from the list */
@@ -34,11 +25,7 @@ export default function Companies({
     } else {
       list[index][name] = value;
     }
-    // setKeywordGroups(keywordGroups);
-    console.log('list[index] =' , list[index]);
-    // console.log('keywordGroups =' , keywordGroups);
-    // const listObj = Object.assign(list[index], { keywordGroups });
-    // console.log('listObj =' , listObj);
+    // console.log('list[index] =' , list[index]);
     setCompanies(list);
   }
   return (
@@ -50,8 +37,6 @@ export default function Companies({
               updateCompany={handleUpdateCompany}
               removeCompany={handleRemoveCompany}
               company={company}
-              // keywordGroups={keywordGroups}
-              // setKeywordGroups={setKeywordGroups}
               index={index}
               numCompanies={companies.length}
             />

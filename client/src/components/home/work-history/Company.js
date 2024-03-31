@@ -6,19 +6,12 @@ export default function Company({
   updateCompany,
   removeCompany,
   company,
-  // keywordGroups,
-  // setKeywordGroups,
   ...props
 }) {
-  const [ keywordGroups, setKeywordGroups ] = useState([{ name: '', itemList: [] }]);
-  // console.log('company =', company);
-  // console.log('props.index =', props.index);
-  // console.log('props.numCompanies =', props.numCompanies);
+  const [ keyPhraseGroups, setkeyPhraseGroups ] = useState([{ name: '', itemList: [] }]);
   const handleUpdateGroupItems = (list) => {
-    console.log('list =', list);
-    // console.log('deconstructed list =', [...list]);
-    // setKeywordGroups(list);
-    company.keywordGroups = list; //
+    // console.log('list =', list);
+    company.keyPhraseGroups = list; //
   }
   return (
     <div className='compositeContainer'>
@@ -64,7 +57,6 @@ export default function Company({
               <input
                 className='check__company'
                 type='checkbox'
-                // required
                 name='isCurrent'
                 id={`isCurrent_${props.index}`}
                 onChange={e => updateCompany(e, props.index)}
@@ -98,13 +90,13 @@ export default function Company({
           </div>
         </div>
         <ItemGroups
-          itemGroups={keywordGroups}
-          setItemGroups={setKeywordGroups}
+          itemGroups={keyPhraseGroups}
+          setItemGroups={setkeyPhraseGroups}
           updateParent={handleUpdateGroupItems}
-          name='keywordGroups'
-          description='Keywords grouped by topic, e.g. "company background", "situation", "task", "action", "result", "learning"'
-          pillGroupLabel='Enter a keyword topic'
-          pillItemLabel='Keyword to be added'
+          name='keyPhraseGroups'
+          description='keyPhrases grouped by topic, e.g. "company background", "situation", "task", "action", "result", "learning"'
+          pillGroupLabel='Enter a key phrase topic'
+          pillItemLabel='key phrase to be added'
         />
       </div>
     </div>

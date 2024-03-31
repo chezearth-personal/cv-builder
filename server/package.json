@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "mkdir -p ./uploads && touch .env && nodemon index.js"
   },
-  "keywords": [],
+  "keywords": [ "CV", "OpenAI", "Automate", "CV builder", "ChatGPT" ],
   "author": "",
   "license": "ISC",
   "dependencies": {

@@ -12,7 +12,6 @@ export default function ItemGroups({ itemGroups, setItemGroups, updateParent, ..
       const list = [...itemGroups];
       list[index]['name'] = value;
       setItemGroups(list);
-      console.log('updateParent =', updateParent);
       if (updateParent) {
         updateParent(list);
       }

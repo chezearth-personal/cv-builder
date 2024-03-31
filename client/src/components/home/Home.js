@@ -14,39 +14,39 @@ const Home = ({ setResult }) => {
     startDate: '',
     endDate: '',
     isCurrent: false,
-    keywordGroups: []
+    keyPhraseGroups: []
   };
   const [fullName, setFullName] = useState('');
   const [headShot, setHeadShot] = useState(null);
-  const [tels, setTels] = useState([{ telNumber: '', telType: '' }]);
+  const [tel, setTel] = useState('');
   const [email, setEmail] = useState('');
   const [skillGroups, setSkillGroups] = useState([{ name: '', itemList: [] }]);
   const [loading, setLoading] = useState(false);
   const [companies, setCompanies] = useState([initCompany]);
   const navigate = useNavigate();
   /** Updates the state with user's input */
-  const handleAddTel = () =>
-    setTels([ ...tels, { telNumber: '', telType: '' }]);
+  // const handleAddTel = () =>
+    // setTels([ ...tels, { telNumber: '', telType: '' }]);
   /** Removes a selected item from the list */
-  const handleRemoveTel = (index) => {
-    const list = [...tels];
-    list.splice(index, 1);
-    setTels(list);
-  }
+  // const handleRemoveTel = (index) => {
+    // const list = [...tels];
+    // list.splice(index, 1);
+    // setTels(list);
+  // }
   /** Updates an item within the list */
-  const handleUpdateTel = (e, index) => {
-    const {name, value } = e.target;
-    const list = [...tels];
-    list[index][name] = value;
-    setTels(list);
-  }
+  // const handleUpdateTel = (e, index) => {
+    // const {name, value } = e.target;
+    // const list = [...tels];
+    // list[index][name] = value;
+    // setTels(list);
+  // }
   /** Submit the form */
   const handleFormSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData();
     headShot && formData.append('headshotImage', headShot, headShot.name);
     formData.append('fullName', fullName);
-    formData.append('tels', JSON.stringify(tels));
+    formData.append('tel', tel);
     formData.append('email', email);
     formData.append('skillGroups', JSON.stringify(skillGroups));
     formData.append('companyDetails', JSON.stringify(companies));
@@ -107,36 +107,14 @@ const Home = ({ setResult }) => {
           onChange={e => setHeadShot(e.target.files[0])}
         />
         <h3>Contact Information</h3>
-        <div className='listItems'>Enter your telephone numbers
-          {tels.map((tel, index) => (
-            <div className='nestedContainer' key={index}>
-              <div className='listItem'>
-                <div className='text__group'>
-                  <label htmlFor={`telNumber_${index}`}>tel</label>
-                  <input
-                    type='tel'
-                    required
-                    name={`telNumber_${index}`}
-                    id={`telNumber_${index}`}
-                    onChange={e => handleUpdateTel(e, index)}
-                  />
-                </div>
-              </div>
-              <div className='btn__group'>
-                {tels.length - 1 === index && tels.length < 4 && (
-                  <button id='addBtn' onClick={handleAddTel}>
-                    Add
-                  </button>
-                )}
-                {tels.length > 1 && (
-                  <button id='deleteBtn' onClick={() => handleRemoveTel(index)}>
-                    Delete
-                  </button>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
+        <label htmlFor='{telNumber}'>tel</label>
+        <input
+          type='tel'
+          required
+          name='telNumber'
+          id='telNumber'
+          onChange={(e) => setTel(e.target.value)}
+        />
         <label htmlFor='email'>Email address</label>
         <input
           type='email'
@@ -170,10 +148,33 @@ const Home = ({ setResult }) => {
 
 export default Home;
 
-
-          // addCompany={handleAddCompany}
-          // updateCompany={handleUpdateCompany}
-          // removeCompany={handleRemoveCompany}
-
-          // keywordGroups={keywordGroups}
-          // setKeywordGroups={setKeywordGroups}
+        // <div className='listItems'>Enter your telephone numbers
+          // {tels.map((tel, index) => (
+            // <div className='nestedContainer' key={index}>
+              // <div className='listItem'>
+                // <div className='text__group'>
+                  // <label htmlFor={`telNumber_${index}`}>tel</label>
+                  // <input
+                    // type='tel'
+                    // required
+                    // name={`telNumber_${index}`}
+                    // id={`telNumber_${index}`}
+                    // onChange={e => handleUpdateTel(e, index)}
+                  // />
+                // </div>
+              // </div>
+              // <div className='btn__group'>
+                // {tels.length - 1 === index && tels.length < 4 && (
+                  // <button id='addBtn' onClick={handleAddTel}>
+                    // Add
+                  // </button>
+                // )}
+                // {tels.length > 1 && (
+                  // <button id='deleteBtn' onClick={() => handleRemoveTel(index)}>
+                    // Delete
+                  // </button>
+                // )}
+              // </div>
+            // </div>
+          // ))}
+        // </div>
