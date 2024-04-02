@@ -44,7 +44,7 @@ const gptFunction = async (text) => {
       model: 'gpt-3.5-turbo-instruct',
       prompt: text,
       temperature: 0.6,
-      max_tokens: 250,
+      max_tokens: 400,
       top_p: 1,
       frequency_penalty: 1,
     });
