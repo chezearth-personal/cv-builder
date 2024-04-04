@@ -2,12 +2,17 @@ import 'dotenv/config'
 import express from 'express';
 import cors from 'cors';
 import multer from 'multer';
-import path from 'path';
+// import path from 'path';
 import OpenAI from 'openai';
+import Morgan from 'morgan';
+import { createLogger, transports } from 'winston';
 import { randomUUID } from 'crypto';
 import { exit } from 'process';
+// import logger from './logging/logger';
 
-/** OpenAI won't work without a secret key */
+/** OpenAI won't work without a secret key so
+  * don't start the server without it 
+  */
 if (!process.env.OPENAI_API_SECRET_KEY) {
   exit(1);
 }
@@ -26,10 +31,26 @@ const plurals = (n, singular, plural) => n === 1 ? singular : plural;
 /** Database. For now, just an array*/
 let database = [];
 
+const logger = createLogger({
+  transports: new transports.Console
+});
+
+const logRequest = (req, res, next) => {
+  logger.info(req.url);
+  next();
+}
+
+const logError = (err, req, res, next) => {
+  logger.error(err);
+  next();
+}
+
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
+app.use(logRequest);
+app.use(logError);
 app.use('/uploads', express.static('uploads'));
 
 app.get('/api', (req, res) => {
@@ -46,7 +67,7 @@ const gptFunction = async (text) => {
       temperature: 0.6,
       max_tokens: 400,
       top_p: 1,
-      frequency_penalty: 1,
+      frequency_penalty: 1
     });
     return response.choices && response.choices.length > 0 ? response.choices[0]?.text : 'No response from ChatGPT';
   } catch(err) {
@@ -115,26 +136,7 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
       const remMonths = elapsedMonths % 12;
       return `${elapsedYears} year${plurals(elapsedYears, '', 's')} ${remMonths} month${plurals(remMonths, '', 's')}`
     }
-    const getSeparator = (s, char) => s === '' ? '' :  `${char} `;
-    // const remainderText = companyDetailsArray
-      // .reduce((res, e) => {
-        // const elapsedMillis = Date.parse(!e.isCurrent
-          // ? e.endDate 
-          // : (new Date).toDateString()
-        // ) - Date.parse(e.startDate);
-        // const elapsedMonths = Math.floor(elapsedMillis / (3600000 * 24 * 30.4375) + 1);
-        // const elapsedYears = Math.floor(elapsedMonths / 12)
-        // const remMonths = elapsedMonths % 12;
-        // return res + ` ${e.name} as a ${e.position}, starting in ${
-          // e.startDate
-        // } until ${
-          // !e.isCurrent ? e.endDate : 'now'
-        // } (${
-          // elapsedYears
-        // } year${plurals(elapsedYears, '', 's')} ${
-          // remMonths
-        // } month${plurals(remMonths, '', 's')}).`
-        // }, '').trim();
+    const getSeparator = (s, c) => s === '' ? '' :  `${c} `;
     /** The profile prompt message */
     const profilePrompt = `I am writing a CV, my name is ${
         fullName
@@ -150,9 +152,10 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
         + keyPhraseGroup.name
         + (!keyPhraseGroup.itemList
           ? ''
-          : + ' (' + keyPhraseGroup.itemList.reduce((acc, item) => acc + getSeparator(acc, ',') + item.name, '') + ')'
+          : ' (' + keyPhraseGroup.itemList.reduce((acc, item) => acc + getSeparator(acc, ',') + item.name, '') + ')'
         ), '') }
     }));
+    console.log('companyKeyPhrases =', companyKeyPhrases);
     const companyPrompts = companyKeyPhrases.map(companyKeyPhrase => (
       { ...companyKeyPhrase, ...{ workPrompt: `I am writing a CV, my name is ${
           fullName
@@ -169,7 +172,7 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
     const chatGptData = { profile, workHistories };
     /** Log the result (nothing happens here... yet) */
     const data = { ...newEntry, ...chatGptData };
-    console.log('data =\n', data);
+    // console.log('data =\n', data);
     database.push(data);
     res.json({
       message: 'Request successful!',
