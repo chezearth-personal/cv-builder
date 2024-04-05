@@ -2,13 +2,13 @@ import 'dotenv/config'
 import express from 'express';
 import cors from 'cors';
 import multer from 'multer';
-// import path from 'path';
+import morgan from 'morgan';
 import OpenAI from 'openai';
-import Morgan from 'morgan';
-import { createLogger, transports } from 'winston';
+// import { createLogger, transports } from 'winston';
 import { randomUUID } from 'crypto';
 import { exit } from 'process';
-// import logger from './logging/logger';
+import logger from './common/logger.js';
+import { successHandler, errorHandler } from './common/morganMiddleware.js';
 
 /** OpenAI won't work without a secret key so
   * don't start the server without it 
@@ -31,26 +31,14 @@ const plurals = (n, singular, plural) => n === 1 ? singular : plural;
 /** Database. For now, just an array*/
 let database = [];
 
-const logger = createLogger({
-  transports: new transports.Console
-});
-
-const logRequest = (req, res, next) => {
-  logger.info(req.url);
-  next();
-}
-
-const logError = (err, req, res, next) => {
-  logger.error(err);
-  next();
-}
-
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
-app.use(logRequest);
-app.use(logError);
+/** Set up http logging */
+app.use(successHandler);
+app.use(errorHandler);
+/** file uploads for images */
 app.use('/uploads', express.static('uploads'));
 
 app.get('/api', (req, res) => {
@@ -72,9 +60,10 @@ const gptFunction = async (text) => {
     return response.choices && response.choices.length > 0 ? response.choices[0]?.text : 'No response from ChatGPT';
   } catch(err) {
     if (err) {console.log('err =\n', err.error)}
+    logger.error(err);
     return err && err.error && err.error.message
       ? `Status: ${err.status}, ${err.error.message}`
-      :'Error from ChatGPT means we dunno.';
+      : 'Error from ChatGPT means we dunno.';
   }
 }
 
@@ -112,6 +101,7 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
       occupation,
       tel,
       email,
+      website,
       skillGroups,
       companyDetails /** JSON format*/
     } = req.body;
@@ -125,6 +115,7 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
       imageUrl: req.file && `http://localhost:4000/uploads/${req.file.filename}`,
       tel,
       email,
+      website,
       skillGroups: skillGroupsArray,
       companyDetails: companyDetailsArray
     };
@@ -155,7 +146,8 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
           : ' (' + keyPhraseGroup.itemList.reduce((acc, item) => acc + getSeparator(acc, ',') + item.name, '') + ')'
         ), '') }
     }));
-    console.log('companyKeyPhrases =', companyKeyPhrases);
+    logger.debug('companyKeyPhrases = ' + companyKeyPhrases);
+    // console.log('companyKeyPhrases =', companyKeyPhrases);
     const companyPrompts = companyKeyPhrases.map(companyKeyPhrase => (
       { ...companyKeyPhrase, ...{ workPrompt: `I am writing a CV, my name is ${
           fullName
