@@ -8,7 +8,7 @@ const Company = ({
   company,
   ...props
 }) => {
-  const [ keyPhraseTopics, setkeyPhraseTopics ] = useState([{ name: '', topicList: [] }]);
+  const [ keyPhraseTopics, setkeyPhraseTopics ] = useState([{ name: '', itemList: [] }]);
   const handleUpdateHomeTopics = (list) => company.keyPhraseTopics = list;
   return (
     <div className='compositeContainer'>

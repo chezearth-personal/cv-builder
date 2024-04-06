@@ -6,34 +6,37 @@ const HomeTopic = ({
   addHomeTopic,
   updateHomeTopic,
   removeHomeTopic,
+  // items,
+  // setItems,
   ...props
 }) => {
-  const [topics, setTopics] = useState([]);
-  const [topic, setTopic] = useState('');
-  const addToTopic = (topic) => {
-    setTopic(topic);
+  const [items, setItems] = useState([]);
+  const [item, setItem] = useState('');
+  const addToItem = (item) => {
+    setItem(item);
   };
   const handleAddPill = () => {
-    const newTopic = topic.trim();
-    const numSame = topics.filter(t => t.name === topic).length; 
-    setTopic('');
-    if (newTopic !== '' && numSame === 0) {
-      const newTopicsList = [...topics, { name: newTopic }];
-      updateHomeTopic(Object.assign(homeTopic, { itemList: newTopicsList }));
-      setTopics(() => newTopicsList);
+    const newItem = item.trim();
+    const numSame = items.filter(i => i.name === item).length; 
+    setItem('');
+    if (newItem !== '' && numSame === 0) {
+      setItems(items => [ ...items, { name: newItem } ]);
+      // const newItemsList = [...items, { name: newItem }];
+      updateHomeTopic(Object.assign(homeTopic, { itemList: items }));
     } else {
       if (numSame > 0) {
         alert('Item already exists');
       }
-      setTopics(() => [...topics]);
+      setItems(() => [...items]);
     }
   }
   const handleRemovePill = (index) => {
-    const newTopics = [ ...topics ];
-    newTopics.splice(index, 1);
-    updateHomeTopic(Object.assign(homeTopic, { topicList: newTopics }));
-    setTopics(newTopics);
+    const newItems = [ ...items ];
+    newItems.splice(index, 1);
+    updateHomeTopic(Object.assign(homeTopic, { itemList: newItems }));
+    setItems(newItems);
   };
+  console.log('props.index =', props.index, 'props.name=', props.name);
   return (
     <div className='compositeContainer subContainer'>
       <div className='inputContainer'>
@@ -46,6 +49,7 @@ const HomeTopic = ({
                 required
                 name='homeTopic'
                 id={`${props.name}_${props.index}`}
+                value={homeTopic.name}
                 onChange={e => updateHomeTopic(e, props.index)}
               />
             </div>
@@ -70,8 +74,8 @@ const HomeTopic = ({
               id={`${props.name}_input_${props.index}`}
               name='inputItem'
               type='text'
-              value={topic}
-              onChange={(e) => addToTopic(e.target.value)}
+              value={item}
+              onChange={(e) => addToItem(e.target.value)}
             />
           </div>
           <div className='btn__group'>
@@ -80,10 +84,10 @@ const HomeTopic = ({
         </div>
       </div>
       <ItemPills
-        addToItem={addToTopic}
+        addToItem={addToItem}
         removePill={handleRemovePill}
-        items={topics}
-        item={topic}
+        items={items}
+        item={item}
         index={props.index}
         name={props.name}
         pillGroupLabel={props.pillGroupLabel}
