@@ -83,9 +83,9 @@ const upload = multer({
 /** Create strings from arrays for returning as lists to document */
 const commaSep = (t) => !t.length ? '' : ', ';
 const testArray = (arr, trueStr, falseStr) => { return arr  && arr.length > 0 ? trueStr : falseStr; }
-const getStringFromArray = (itemGroups) => !itemGroups || !Array.isArray(itemGroups)
+const getStringFromArray = (homeTopics) => !homeTopics || !Array.isArray(homeTopics)
   ? ''
-  : itemGroups.reduce(
+  : homeTopics.reduce(
       (res, itemGroup) => `${res}${commaSep(res)}${itemGroup.name}${
           testArray(itemGroup.itemList, ' (', '')
         }${
@@ -102,11 +102,11 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
       tel,
       email,
       website,
-      skillGroups,
+      skillTopics,
       companyDetails /** JSON format*/
     } = req.body;
     const companyDetailsArray = JSON.parse(companyDetails); /** an array */
-    const skillGroupsArray = JSON.parse(skillGroups); /** an array */
+    const skillTopicsArray = JSON.parse(skillTopics); /** an array */
     /** Group the values into an object */
     const newEntry = {
       id: randomUUID(),
@@ -116,7 +116,7 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
       tel,
       email,
       website,
-      skillGroups: skillGroupsArray,
+      skillTopics: skillTopicsArray,
       companyDetails: companyDetailsArray
     };
     /** Calculates the duration */
@@ -132,18 +132,18 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
     const profilePrompt = `I am writing a CV, my name is ${
         fullName
       }. I have the following skills: ${
-        getStringFromArray(skillGroupsArray)
+        getStringFromArray(skillTopicsArray)
       }. Can you write a 50 to 300 words description of my skills and technology experience for the top of the CV (first person writing)?`;
     /** Work history keyPhrases combined into a text string and appended */
-    const companyKeyPhrases = companyDetailsArray.map(w => ({
-      ...w,
-      ...{ duration: duration(w.startDate, w.isCurrent, w. endDate) },
-      ...{ keyPhraseText: w.keyPhraseGroups.reduce((acc, keyPhraseGroup) => acc
+    const companyKeyPhrases = companyDetailsArray.map(companyDetail => ({
+      ...companyDetail,
+      ...{ duration: duration(companyDetail.startDate, companyDetail.isCurrent, companyDetail.endDate) },
+      ...{ keyPhraseText: companyDetail.keyPhraseTopics.reduce((acc, keyPhraseTopic) => acc
         + getSeparator(acc, ';')
-        + keyPhraseGroup.name
-        + (!keyPhraseGroup.itemList
+        + keyPhraseTopic.name
+        + (!keyPhraseTopic.itemList || keyPhraseTopic.itemList.length === 0
           ? ''
-          : ' (' + keyPhraseGroup.itemList.reduce((acc, item) => acc + getSeparator(acc, ',') + item.name, '') + ')'
+          : ' (' + keyPhraseTopic.itemList.reduce((acc, item) => acc + getSeparator(acc, ',') + item.name, '') + ')'
         ), '') }
     }));
     logger.debug('companyKeyPhrases = ' + companyKeyPhrases);
@@ -156,6 +156,7 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
         }. My work involved the following points: ${
           companyKeyPhrase.keyPhraseText
       }. Can you write 50 to 300 words for this company, using paragraphs and in an exciting, interesting tone (first person writing)?` } }));
+    // console.log('companyPrompts =', companyPrompts);
     /** Generate the GPT-3 results: 1 - The Profile  */
     const profile = await gptFunction(profilePrompt);
     /** Generate the GPT-3 results: 2 - The work history sections, 1 for each company */
@@ -173,5 +174,5 @@ app.post('/cv/create', upload.single('headshotImage'), async (req, res) => {
 });
 
 app.listen(port, host, () => {
-  console.log(`Server listening on ${host}:${port}`);
+  logger.info(`Server listening on ${host}:${port}`);
 });
