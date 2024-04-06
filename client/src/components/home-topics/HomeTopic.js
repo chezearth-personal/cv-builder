@@ -1,38 +1,38 @@
 import React, { useState } from 'react';
 import ItemPills from './item-pill/ItemPills';
 
-const ItemGroup = ({
-  itemGroup,
-  addItemGroup,
-  updateItemGroup,
-  removeItemGroup,
+const HomeTopic = ({
+  homeTopic,
+  addHomeTopic,
+  updateHomeTopic,
+  removeHomeTopic,
   ...props
 }) => {
-  const [items, setItems] = useState([]);
-  const [item, setItem] = useState('');
-  const addToItem = (item) => {
-    setItem(item);
+  const [topics, setTopics] = useState([]);
+  const [topic, setTopic] = useState('');
+  const addToTopic = (topic) => {
+    setTopic(topic);
   };
   const handleAddPill = () => {
-    const newItem = item.trim();
-    const numSame = items.filter(i => i.name === item).length; 
-    setItem('');
-    if (newItem !== '' && numSame === 0) {
-      const newItemsList = [...items, { name: newItem }];
-      updateItemGroup(Object.assign(itemGroup, { itemList: newItemsList }));
-      setItems(() => newItemsList);
+    const newTopic = topic.trim();
+    const numSame = topics.filter(t => t.name === topic).length; 
+    setTopic('');
+    if (newTopic !== '' && numSame === 0) {
+      const newTopicsList = [...topics, { name: newTopic }];
+      updateHomeTopic(Object.assign(homeTopic, { itemList: newTopicsList }));
+      setTopics(() => newTopicsList);
     } else {
       if (numSame > 0) {
         alert('Item already exists');
       }
-      setItems(() => [...items]);
+      setTopics(() => [...topics]);
     }
   }
   const handleRemovePill = (index) => {
-    const newItems = [...items];
-    newItems.splice(index, 1);
-    updateItemGroup(Object.assign(itemGroup, { itemList: newItems }));
-    setItems(newItems);
+    const newTopics = [ ...topics ];
+    newTopics.splice(index, 1);
+    updateHomeTopic(Object.assign(homeTopic, { topicList: newTopics }));
+    setTopics(newTopics);
   };
   return (
     <div className='compositeContainer subContainer'>
@@ -44,7 +44,7 @@ const ItemGroup = ({
               <input
                 type='text'
                 required
-                name='itemGroup'
+                name='homeTopic'
                 id={`${props.name}_${props.index}`}
                 onChange={e => updateItemGroup(e, props.index)}
               />
