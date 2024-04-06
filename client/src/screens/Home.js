@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Loading from '../placeholders/Loading';
-import ItemGroups from './item-group/ItemGroups';
-import Companies from './work-history/Companies';
+import Loading from '../components/placeholders/Loading';
+import ItemGroups from '../components/home-topics/HomeTopics';
+import Companies from '../components/companies/Companies';
 import logo from '../../images/logo.svg';
 import '../../App.css'
 
@@ -21,6 +21,7 @@ const Home = ({ setResult }) => {
   const [headShot, setHeadShot] = useState(null);
   const [tel, setTel] = useState('');
   const [email, setEmail] = useState('');
+  const [website, setWebsite] = useState('');
   const [skillGroups, setSkillGroups] = useState([{ name: '', itemList: [] }]);
   const [loading, setLoading] = useState(false);
   const [companies, setCompanies] = useState([initCompany]);
@@ -34,6 +35,7 @@ const Home = ({ setResult }) => {
     formData.append('occupation', occupation);
     formData.append('tel', tel);
     formData.append('email', email);
+    formData.append('website', website);
     formData.append('skillGroups', JSON.stringify(skillGroups));
     formData.append('companyDetails', JSON.stringify(companies));
     // console.log('skillGroups JSON:', JSON.stringify(skillGroups));
@@ -67,13 +69,13 @@ const Home = ({ setResult }) => {
         <img src={logo} className="App-logo" alt="logo" />
       </div>
       <h1>CV Builder</h1>
-      <p>Generate a CV with chatGPT in a few seconds</p>
+      <p>Generate a CV with chatGPT in a few minutes</p>
       <form
         onSubmit={handleFormSubmit}
         method='POST'
         encType='multipart/form-data'
       >
-        <label htmlFor='fullName'>Enter your full name</label>
+        <label htmlFor='fullName'>Enter your full name <span className='req'>*</span></label>
         <input
           type='text'
           required
@@ -82,7 +84,7 @@ const Home = ({ setResult }) => {
           value={fullName}
           onChange={(e) => setFullName(e.target.value)}
         />
-        <label htmlFor='jobTitle'>Enter your occupation</label>
+        <label htmlFor='jobTitle'>Enter your occupation <span className='req'>*</span></label>
         <input
           type='text'
           required
@@ -100,7 +102,7 @@ const Home = ({ setResult }) => {
           onChange={e => setHeadShot(e.target.files[0])}
         />
         <h3>Contact Information</h3>
-        <label htmlFor='{telNumber}'>Tel</label>
+        <label htmlFor='{telNumber}'>Tel <span className='req'>*</span></label>
         <input
           type='tel'
           required
@@ -108,7 +110,7 @@ const Home = ({ setResult }) => {
           id='telNumber'
           onChange={(e) => setTel(e.target.value)}
         />
-        <label htmlFor='email'>Email address</label>
+        <label htmlFor='email'>Email address <span className='req'>*</span></label>
         <input
           type='email'
           required
@@ -117,6 +119,14 @@ const Home = ({ setResult }) => {
           value={email}
           autoComplete='email'
           onChange={e => setEmail(e.target.value)}
+        />
+        <label htmlFor='website'>Website or online portfolio</label>
+        <input
+          type='url'
+          name='website'
+          id='website'
+          placeholder='https://'
+          onChange={(e) => setWebsite(e.target.value)}
         />
         <h3 className='listItems'>General skills (across whole work history)</h3>
         <ItemGroups

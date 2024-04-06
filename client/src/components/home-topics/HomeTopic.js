@@ -35,12 +35,12 @@ const ItemGroup = ({
     setItems(newItems);
   };
   return (
-    <div className='compositeContainer'>
+    <div className='compositeContainer subContainer'>
       <div className='inputContainer'>
         <div className='nestedContainer'>
           <div className='listItem'>
             <div className='text__group'>
-              <label htmlFor={`${props.name}_${props.index}`}>{props.pillGroupLabel}</label>
+              <label htmlFor={`${props.name}_${props.index}`}>{props.pillGroupLabel} <span className='req'>*</span></label>
               <input
                 type='text'
                 required

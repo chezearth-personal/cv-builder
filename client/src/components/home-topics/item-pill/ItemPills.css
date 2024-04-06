@@ -21,7 +21,7 @@
   margin: 5px;
   min-height: 50%;
   width: 100%;
-  border: 1px  solid #ddd;
+  border: 1px hidden #ddd;
 }
 .itemPillsList:empty {
   border: hidden;

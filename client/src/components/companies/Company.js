@@ -15,7 +15,7 @@ const Company = ({
       <div className='company'>
         <div className='nestedContainer' id="nestedCompanies">
           <div className='companies'>
-            <label htmlFor={`name_${props.index}`}>Company name</label>
+            <label htmlFor={`name_${props.index}`}>Company name <span className='req'>*</span></label>
             <input
               className='text__company'
               type='text'
@@ -27,7 +27,7 @@ const Company = ({
             />
           </div>
           <div className='companies'>
-            <label htmlFor={`position_${props.index}`}>Position held</label>
+            <label htmlFor={`position_${props.index}`}>Position held <span className='req'>*</span></label>
             <input
               className='text__company'
               type='text'
@@ -38,7 +38,7 @@ const Company = ({
             />
           </div>
           <div className='companies'>
-            <label htmlFor={`startDate_${props.index}`}>Start date</label>
+            <label htmlFor={`startDate_${props.index}`}>Start date <span className='req'>*</span></label>
             <input
               className='text__company'
               type='month'
@@ -62,7 +62,7 @@ const Company = ({
           )}
           {!company.isCurrent && (
             <div className='companies'>
-              <label htmlFor={`endDate_${props.index}`}>End date</label>
+              <label htmlFor={`endDate_${props.index}`}>End date <span className='req'>*</span></label>
               <input
                 className='text__company'
                 type='month'
@@ -91,9 +91,9 @@ const Company = ({
           setItemGroups={setkeyPhraseGroups}
           updateParent={handleUpdateGroupItems}
           name='keyPhraseGroups'
-          description='keyPhrases grouped by topic, e.g. "company background", "situation", "task", "action", "result", "learning"'
+          description='Topics (e.g. "company background", "situation", "task", "action", "result", "learning") and key phrases'
           pillGroupLabel='Enter a key phrase topic'
-          pillItemLabel='key phrase to be added'
+          pillItemLabel='Key phrase to be added'
         />
       </div>
     </div>

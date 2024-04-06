@@ -4,6 +4,7 @@ import ErrorPage from '../placeholders/ErrorPage';
 import ItemGroups from './item-group/ItemGroups';
 import ImageEmail from '../../images/email-logo.png';
 import ImageTel from '../../images/tel-logo.jpeg';
+import ImageWeb from '../../images/web-logo.jpeg';
 import './Cv.css';
 
 const Cv = ({ result }) => {
@@ -97,6 +98,10 @@ const Cv = ({ result }) => {
                   <div className='cvContact'>
                     <img className='cvIcon' src={ImageTel} alt='tel' />
                     <p>{result.tel}</p>
+                  </div>
+                  <div className='cvContact'>
+                    <img className='cvIcon' src={ImageWeb} alt='website' />
+                    <p>{result.website}</p>
                   </div>
               </div>
             </div>
