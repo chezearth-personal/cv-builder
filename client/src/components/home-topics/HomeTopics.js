@@ -8,7 +8,7 @@ const HomeTopics = ({
   ...props
 }) => {
   /** Updates the state with user's input */
-  const handleAddItemGroup = () =>
+  const handleAddHomeTopic = () =>
     setHomeTopics([ ...homeTopics, { name: '' }]);
   /** Updates an item within the list */
   const handleUpdateHomeTopic = (e, index) => {

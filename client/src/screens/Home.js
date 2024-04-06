@@ -130,8 +130,8 @@ const Home = ({ setResult }) => {
         />
         <h3 className='listItems'>General skills (across whole work history)</h3>
         <HomeTopics
-          itemGroups={skillTopics}
-          setItemGroups={setSkillTopics}
+          homeTopics={skillTopics}
+          setHomeTopics={setSkillTopics}
           description=''
           name='skillTopic'
           pillGroupLabel='Enter a skill topic'

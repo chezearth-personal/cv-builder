@@ -1,10 +1,9 @@
 import { useForm } from 'react-hook-form';
-import { logger } from '../../utils/logger';
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
   const submitForm = (data) => {
-    logger.info(data);
+    console.log('login form data =', data);
   }
   return (
     <form onSubmit={handleSubmit(submitForm)}>

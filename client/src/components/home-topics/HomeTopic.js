@@ -46,18 +46,18 @@ const HomeTopic = ({
                 required
                 name='homeTopic'
                 id={`${props.name}_${props.index}`}
-                onChange={e => updateItemGroup(e, props.index)}
+                onChange={e => updateHomeTopic(e, props.index)}
               />
             </div>
           </div>
           <div className='btn__group'>
-            {props.numItemGroups - 1 === props.index && props.numItemGroups < 20 && (
-              <button type='button' className='addBtn' onClick={addItemGroup}>
+            {props.numHomeTopics - 1 === props.index && props.numHomeTopics < 20 && (
+              <button type='button' className='addBtn' onClick={addHomeTopic}>
                 Add
               </button>
             )}
-            {props.numItemGroups > 1 && (
-              <button type='button' className='deleteBtn' onClick={() => removeItemGroup(props.index)}>
+            {props.numHomeTopics > 1 && (
+              <button type='button' className='deleteBtn' onClick={() => removeHomeTopic(props.index)}>
                 Delete
               </button>
             )}
@@ -70,8 +70,8 @@ const HomeTopic = ({
               id={`${props.name}_input_${props.index}`}
               name='inputItem'
               type='text'
-              value={item}
-              onChange={(e) => addToItem(e.target.value)}
+              value={topic}
+              onChange={(e) => addToTopic(e.target.value)}
             />
           </div>
           <div className='btn__group'>
@@ -80,10 +80,10 @@ const HomeTopic = ({
         </div>
       </div>
       <ItemPills
-        addToItem={addToItem}
+        addToItem={addToTopic}
         removePill={handleRemovePill}
-        items={items}
-        item={item}
+        items={topics}
+        item={topic}
         index={props.index}
         name={props.name}
         pillGroupLabel={props.pillGroupLabel}
@@ -93,4 +93,4 @@ const HomeTopic = ({
   );
 }
 
-export default ItemGroup;
+export default HomeTopic;
