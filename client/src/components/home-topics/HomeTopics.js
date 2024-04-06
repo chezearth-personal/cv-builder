@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React from 'react';
 import HomeTopic from './HomeTopic';
 
 const HomeTopics = ({
@@ -7,7 +7,6 @@ const HomeTopics = ({
   updateParent,
   ...props
 }) => {
-  // const [homeTopic, setHomeTopic] = useState({ name: '' });
   /** Updates the state with user's input */
   const handleAddHomeTopic = () =>
     setHomeTopics([ ...homeTopics, { name: '' }]);
@@ -28,16 +27,11 @@ const HomeTopics = ({
     console.log('HomeTopic index =', index);
     // const list = [...homeTopics];
     setHomeTopics(homeTopics => {
-      console.log('list =', homeTopics);
+      // console.log('list =', homeTopics);
       const newHomeTopics = homeTopics.filter((homeTopic, i) => i !== index)
-      console.log('list after splice =', newHomeTopics);
-      // newHomeTopics.forEach((homeTopic) => {
-        // setItems(homeTopic.itemList);
-      // });
+      // console.log('list after splice =', newHomeTopics);
       return newHomeTopics;
     });
-    // list.splice(index, 1);
-    // setHomeTopics(list);
     // console.log('homeTopics after set =', homeTopics);
   }
   return (
@@ -50,34 +44,12 @@ const HomeTopics = ({
             addHomeTopic={handleAddHomeTopic}
             updateHomeTopic={handleUpdateHomeTopic}
             removeHomeTopic={handleRemoveHomeTopic}
-            // items={items}
-            // setItems={setItems}
             index={index}
             numHomeTopics={homeTopics.length}
             name={props.name}
             pillGroupLabel={props.pillGroupLabel}
             pillItemLabel={props.pillItemLabel}
           />
-          <div>{homeTopic.name}</div>
-          <div className='compositeContainer subContainer'>
-            <div className='inputContainer'>
-              <div className='nestedContainer'>
-                <div className='listItem'>
-                  <div className='text__group'>
-                    <label htmlFor={`${props.name}_${props.index}`}>{props.pillGroupLabel} <span className='req'>*</span></label>
-                    <input
-                      type='text'
-                      required
-                      name='homeTopic'
-                      id={`${props.name}_${props.index}`}
-                      value={homeTopic.name}
-                      onChange={e => handleUpdateHomeTopic(e, index)}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       ))}
     </div>

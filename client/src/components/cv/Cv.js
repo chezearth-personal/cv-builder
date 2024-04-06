@@ -7,10 +7,11 @@ import ImageTel from '../../images/tel-logo.jpeg';
 import ImageWeb from '../../images/web-logo.jpeg';
 import './Cv.css';
 
+const possesive = (num) => num > 1 ? 's\'' : 'year\'s';
+
 const Cv = ({ result }) => {
   const componentRef = useRef();
-  const possesive = (num) => num > 1 ? 's\'' : 'year\'s';
-  console.log('companyDetails = ', result.companyDetails);
+  // console.log('companyDetails = ', result.companyDetails);
   const totalWorkMonths = !result.companyDetails
     ? 0
     : result.companyDetails
@@ -40,10 +41,7 @@ const Cv = ({ result }) => {
   const replaceWithBr = (string) => !string
     ? ''
     : string.replace(/(\n)\1+/, '$1').replace(/\n/g, '<br />');
-    // : Array
-      // .from(new Set((string.replace(/\n/g, '<br />').split('<br />'))))
-      // .map(e => e === '' ? '<br />' : e)
-      // .join('');
+  // console.log('result =', result);
   /** Looks for and creates bullet points */
   // const createBulletPoints = (string) => {
     // const arr = string.split('- ');
@@ -91,21 +89,21 @@ const Cv = ({ result }) => {
             <div className='cvPoint'>
               <h4 className='cvBodyTitle cvHistoryTitle'>CONTACT</h4>
               <div className='cvContactList'>
-                  <div className='cvContact'>
-                    <img className='cvIcon' src={ImageEmail} alt='email' />
-                    <p>{result.email}</p>
-                  </div>
-                  <div className='cvContact'>
-                    <img className='cvIcon' src={ImageTel} alt='tel' />
-                    <p>{result.tel}</p>
-                  </div>
-                  <div className='cvContact'>
-                    <img className='cvIcon' src={ImageWeb} alt='website' />
-                    <p>{result.website}</p>
-                  </div>
+                <div className='cvContact'>
+                  <img className='cvIcon' src={ImageEmail} alt='email' />
+                  <p>{result.email}</p>
+                </div>
+                <div className='cvContact'>
+                  <img className='cvIcon' src={ImageTel} alt='tel' />
+                  <p>{result.tel}</p>
+                </div>
+                <div className='cvContact'>
+                  <img className='cvIcon' src={ImageWeb} alt='website' />
+                  <p>{result.website}</p>
+                </div>
               </div>
             </div>
-            <ItemGroups handleBr={replaceWithBr} itemGroups={result.skillGroups} headingText='TECHNICAL SKILLS' />
+            <ItemGroups handleBr={replaceWithBr} itemGroups={result.skillTopics} headingText='TECHNICAL SKILLS' />
           </div>
           <div className='cvStory'>
             <div>
@@ -119,18 +117,18 @@ const Cv = ({ result }) => {
             </div>
             <div>
               <h4 className='cvBodyTitle cvHistoryTitle'>WORK HISTORY</h4>
-              {result.workHistories.map((workStory, index) => (
+              {result.workHistories.map((companyDetail, index) => (
                 <div key={index} className='cvBodyContent'>
                   <p className='cvBodyCompany' key={index}>
-                    {workStory.name}
+                    {companyDetail.name}
                   </p>
                   <div className='cvBodyPosition'>
-                    <p>{workStory.position}</p>
-                    <p>{workStory.startDate} to {workStory.isCurrent ? 'present' : workStory.endDate}</p>
+                    <p>{companyDetail.position}</p>
+                    <p>{companyDetail.startDate} to {companyDetail.isCurrent ? 'present' : companyDetail.endDate}</p>
                   </div>
                   <p
                     dangerouslySetInnerHTML={{
-                      __html: replaceWithBr(workStory.companyStory),
+                      __html: replaceWithBr(companyDetail.companyStory),
                     }}
                     className='cvBodyContent'
                   />

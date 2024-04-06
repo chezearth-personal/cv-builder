@@ -14,7 +14,7 @@ const Home = ({ setResult }) => {
     startDate: '',
     endDate: '',
     isCurrent: false,
-    keyPhraseGroups: []
+    keyPhraseTopics: []
   };
   const [fullName, setFullName] = useState('');
   const [occupation, setOccupation] = useState('');
@@ -39,7 +39,7 @@ const Home = ({ setResult }) => {
     formData.append('skillTopics', JSON.stringify(skillTopics));
     formData.append('companyDetails', JSON.stringify(companies));
     // console.log('skillGroups JSON:', JSON.stringify(skillGroups));
-    // console.log('companies JSON:', JSON.stringify(companies));
+    console.log('companies JSON:', JSON.stringify(companies));
     axios
       .post('http://localhost:4000/cv/create', formData, {})
       .then(res => {

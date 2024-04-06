@@ -6,8 +6,6 @@ const HomeTopic = ({
   addHomeTopic,
   updateHomeTopic,
   removeHomeTopic,
-  // items,
-  // setItems,
   ...props
 }) => {
   const [items, setItems] = useState([]);
@@ -16,13 +14,17 @@ const HomeTopic = ({
     setItem(item);
   };
   const handleAddPill = () => {
+    // console.log('item =', item);
+    // console.log('items =', items);
     const newItem = item.trim();
-    const numSame = items.filter(i => i.name === item).length; 
+    const numSame = items.filter(i => i.name === newItem).length; 
+    // console.log('numSame =', numSame);
     setItem('');
     if (newItem !== '' && numSame === 0) {
       setItems(items => [ ...items, { name: newItem } ]);
+      // console.log('after update items =', items);
       // const newItemsList = [...items, { name: newItem }];
-      updateHomeTopic(Object.assign(homeTopic, { itemList: items }));
+      updateHomeTopic(Object.assign(homeTopic, { itemList: [ ...items, { name: newItem } ] }));
     } else {
       if (numSame > 0) {
         alert('Item already exists');
@@ -36,7 +38,7 @@ const HomeTopic = ({
     updateHomeTopic(Object.assign(homeTopic, { itemList: newItems }));
     setItems(newItems);
   };
-  console.log('props.index =', props.index, 'props.name=', props.name);
+  // console.log('props.index =', props.index, 'props.name=', props.name);
   return (
     <div className='compositeContainer subContainer'>
       <div className='inputContainer'>
@@ -86,7 +88,7 @@ const HomeTopic = ({
       <ItemPills
         addToItem={addToItem}
         removePill={handleRemovePill}
-        items={items}
+        items={homeTopic.itemList}
         item={item}
         index={props.index}
         name={props.name}

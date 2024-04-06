@@ -5,6 +5,7 @@ import './ItemPills.css';
 
 const ItemPills = ({ addToItem, addPill, removePill, items, item }) => {
   // console.log('props =', props);
+  if (items) {
   return (
     <div className='itemPills'>
       <div className='itemPillsList'>
@@ -19,6 +20,10 @@ const ItemPills = ({ addToItem, addPill, removePill, items, item }) => {
       </div>
     </div>
   );
+  }
+  return (
+    <></>
+  )
 }
 
 export default ItemPills;
