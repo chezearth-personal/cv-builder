@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import ItemGroups from '../item-group/ItemGroups';
+import HomeTopics from '../home-topics/HomeTopics';
 
 const Company = ({
   addCompany,
@@ -8,8 +8,8 @@ const Company = ({
   company,
   ...props
 }) => {
-  const [ keyPhraseGroups, setkeyPhraseGroups ] = useState([{ name: '', itemList: [] }]);
-  const handleUpdateGroupItems = (list) => company.keyPhraseGroups = list;
+  const [ keyPhraseTopics, setkeyPhraseTopics ] = useState([{ name: '', topicList: [] }]);
+  const handleUpdateHomeTopics = (list) => company.keyPhraseTopics = list;
   return (
     <div className='compositeContainer'>
       <div className='company'>
@@ -86,11 +86,11 @@ const Company = ({
             )}
           </div>
         </div>
-        <ItemGroups
-          itemGroups={keyPhraseGroups}
-          setItemGroups={setkeyPhraseGroups}
-          updateParent={handleUpdateGroupItems}
-          name='keyPhraseGroups'
+        <HomeTopics
+          homeTopics={keyPhraseTopics}
+          setHomeTopics={setkeyPhraseTopics}
+          updateParent={handleUpdateHomeTopics}
+          name='keyPhraseTopics'
           description='Topics (e.g. "company background", "situation", "task", "action", "result", "learning") and key phrases'
           pillGroupLabel='Enter a key phrase topic'
           pillItemLabel='Key phrase to be added'

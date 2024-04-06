@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Loading from '../components/placeholders/Loading';
-import ItemGroups from '../components/home-topics/HomeTopics';
+import HomeTopics from '../components/home-topics/HomeTopics';
 import Companies from '../components/companies/Companies';
-import logo from '../../images/logo.svg';
-import '../../App.css'
+import logo from '../images/logo.svg';
+import '../App.css'
 
 const Home = ({ setResult }) => {
   const initCompany = {
@@ -22,7 +22,7 @@ const Home = ({ setResult }) => {
   const [tel, setTel] = useState('');
   const [email, setEmail] = useState('');
   const [website, setWebsite] = useState('');
-  const [skillGroups, setSkillGroups] = useState([{ name: '', itemList: [] }]);
+  const [skillTopics, setSkillTopics] = useState([{ name: '', itemList: [] }]);
   const [loading, setLoading] = useState(false);
   const [companies, setCompanies] = useState([initCompany]);
   const navigate = useNavigate();
@@ -36,7 +36,7 @@ const Home = ({ setResult }) => {
     formData.append('tel', tel);
     formData.append('email', email);
     formData.append('website', website);
-    formData.append('skillGroups', JSON.stringify(skillGroups));
+    formData.append('skillTopics', JSON.stringify(skillTopics));
     formData.append('companyDetails', JSON.stringify(companies));
     // console.log('skillGroups JSON:', JSON.stringify(skillGroups));
     // console.log('companies JSON:', JSON.stringify(companies));
@@ -129,12 +129,12 @@ const Home = ({ setResult }) => {
           onChange={(e) => setWebsite(e.target.value)}
         />
         <h3 className='listItems'>General skills (across whole work history)</h3>
-        <ItemGroups
-          itemGroups={skillGroups}
-          setItemGroups={setSkillGroups}
+        <HomeTopics
+          itemGroups={skillTopics}
+          setItemGroups={setSkillTopics}
           description=''
-          name='skillGroup'
-          pillGroupLabel='Enter a skill group'
+          name='skillTopic'
+          pillGroupLabel='Enter a skill topic'
           pillItemLabel='Skill to be added'
         />
         <h3>{`Companies you've worked at`}</h3>

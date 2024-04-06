@@ -1,45 +1,45 @@
 import React from 'react';
-import ItemGroup from './ItemGroup';
+import HomeTopic from './HomeTopic';
 
-const ItemGroups = ({
-  itemGroups,
-  setItemGroups,
+const HomeTopics = ({
+  homeTopics,
+  setHomeTopics,
   updateParent,
   ...props
 }) => {
   /** Updates the state with user's input */
   const handleAddItemGroup = () =>
-    setItemGroups([ ...itemGroups, { name: '' }]);
+    setHomeTopics([ ...homeTopics, { name: '' }]);
   /** Updates an item within the list */
-  const handleUpdateItemGroup = (e, index) => {
+  const handleUpdateHomeTopic = (e, index) => {
     if (e && e.target) {
       const { value } = e.target;
-      const list = [...itemGroups];
+      const list = [...homeTopics];
       list[index]['name'] = value;
-      setItemGroups(list);
+      setHomeTopics(list);
       if (updateParent) {
         updateParent(list);
       }
     }
   }
   /** Removes a selected item from the list */
-  const handleRemoveItemGroup = (index) => {
-    const list = [...itemGroups];
+  const handleRemoveHomeTopic = (index) => {
+    const list = [...homeTopics];
     list.splice(index, 1);
-    setItemGroups(list);
+    setHomeTopics(list);
   }
   return (
     <div>
       <p>{props.description}</p>
-      {itemGroups.map((itemGroup, index) => (
-          <ItemGroup
+      {homeTopics.map((homeTopic, index) => (
+          <HomeTopic
             key={index}
-            itemGroup={itemGroup}
-            addItemGroup={handleAddItemGroup}
-            updateItemGroup={handleUpdateItemGroup}
-            removeItemGroup={handleRemoveItemGroup}
+            homeTopic={homeTopic}
+            addHomeTopic={handleAddHomeTopic}
+            updateHomeTopic={handleUpdateHomeTopic}
+            removeHomeTopic={handleRemoveHomeTopic}
             index={index}
-            numItemGroups={itemGroups.length}
+            numHomeTopics={homeTopics.length}
             name={props.name}
             pillGroupLabel={props.pillGroupLabel}
             pillItemLabel={props.pillItemLabel}
@@ -49,4 +49,4 @@ const ItemGroups = ({
   );
 }
 
-export default ItemGroups;
+export default HomeTopics;
