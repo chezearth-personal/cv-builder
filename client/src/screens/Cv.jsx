@@ -7,9 +7,10 @@ import ImageTel from '../resources/images/tel-logo.png';
 import ImageWeb from '../resources/images/web-logo.png';
 import './Cv.css';
 
-const possesive = (num) => num > 1 ? 's\'' : 'year\'s';
+export { Cv };
 
-const Cv = ({ result }) => {
+function Cv({ result }) {
+  const possesive = (num) => num > 1 ? 's\'' : 'year\'s';
   const componentRef = useRef();
   const totalWorkMonths = !result.companyDetails
     ? 0
@@ -140,4 +141,3 @@ const Cv = ({ result }) => {
     </>
   );
 };
-export default Cv;

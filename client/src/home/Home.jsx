@@ -7,7 +7,9 @@ import Companies from '../_components/companies/Companies';
 import logo from '../resources/images/logo.svg';
 import '../App.css'
 
-const Home = ({ setResult }) => {
+export { Home };
+
+function Home({ setResult }) {
   const initCompany = {
     name: '',
     position: '',
@@ -160,5 +162,3 @@ const Home = ({ setResult }) => {
     </div>
   );
 }
-
-export default Home;
