@@ -1,32 +1,32 @@
 /** Font faces, imported from Font Squirrel */
 @font-face {
   font-family: 'hk_groteskbold';
-  src: url('../../fonts/hkgrotesk-bold-webfont.woff') format('woff'),
-       url('../../fonts/hkgrotesk-bold-webfont.woff2') format('woff2');
+  src: url('../resources/fonts/hkgrotesk-bold-webfont.woff') format('woff'),
+       url('../resources/fonts/hkgrotesk-bold-webfont.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'hk_groteskbold_italic';
-  src: url('../../fonts/hkgrotesk-bolditalic-webfont.woff') format('woff'),
-       url('../../fonts/hkgrotesk-bolditalic-webfont.woff2') format('woff2');
+  src: url('../resources/fonts/hkgrotesk-bolditalic-webfont.woff') format('woff'),
+       url('../resources/fonts/hkgrotesk-bolditalic-webfont.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
     font-family: 'hk_groteskitalic';
-    src: url('../../fonts/hkgrotesk-italic-webfont.woff') format('woff'),
-         url('../../fonts/hkgrotesk-italic-webfont.woff2') format('woff2');
+    src: url('../resources/fonts/hkgrotesk-italic-webfont.woff') format('woff'),
+         url('../resources/fonts/hkgrotesk-italic-webfont.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
   font-family: "hk_groteskmedium";
-  src: url('../../fonts/hkgrotesk-medium-webfont.woff') format('woff'),
-       url('../../fonts/hkgrotesk-medium-webfont.woff2') format('woff2');
+  src: url('../resources/fonts/hkgrotesk-medium-webfont.woff') format('woff'),
+       url('../resources/fonts/hkgrotesk-medium-webfont.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
   font-stretch: expanded;
@@ -34,8 +34,8 @@
 
 @font-face {
   font-family: 'hk_groteskregular';
-  src: url('../../fonts/hkgrotesk-regular-webfont.woff'),
-       url("../../fonts/hkgrotesk-bolditalic-webfont.woff2");
+  src: url('../resources/fonts/hkgrotesk-regular-webfont.woff'),
+       url("../resources/fonts/hkgrotesk-bolditalic-webfont.woff2");
   font-weight: normal;
   font-style: normal;
   font-stretch: normal;
@@ -43,8 +43,8 @@
 
 @font-face {
   font-family: 'pragati_narrowregular';
-  src: url('../../fonts/pragatinarrow-regular-webfont.woff'),
-       url('../../fonts/pragatinarrow-regular-webfont.woff2');
+  src: url('../resources/fonts/pragatinarrow-regular-webfont.woff'),
+       url('../resources/fonts/pragatinarrow-regular-webfont.woff2');
   font-weight: normal;
   font-style: normal;
   font-stretch: normal;
@@ -52,8 +52,8 @@
 
 @font-face {
   font-family: 'pragati_narrowbold';
-  src: url('../../fonts/pragatinarrow-bold-webfont.woff'),
-       url('../../fonts/pragatinarrow-bold-webfont.woff2');
+  src: url('../resources/fonts/pragatinarrow-bold-webfont.woff'),
+       url('../resources/fonts/pragatinarrow-bold-webfont.woff2');
   font-weight: normal;
   font-style: normal;
   font-stretch: normal;

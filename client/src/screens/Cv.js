@@ -1,17 +1,16 @@
 import React, { useRef } from 'react';
 import { useReactToPrint } from 'react-to-print';
-import ErrorPage from '../placeholders/ErrorPage';
-import ItemGroups from './item-group/ItemGroups';
-import ImageEmail from '../../images/email-logo.png';
-import ImageTel from '../../images/tel-logo.png';
-import ImageWeb from '../../images/web-logo.png';
+import ErrorPage from '../_components/placeholders/ErrorPage';
+import ItemGroups from '../_components/cv/item-group/ItemGroups';
+import ImageEmail from '../resources/images/email-logo.png';
+import ImageTel from '../resources/images/tel-logo.png';
+import ImageWeb from '../resources/images/web-logo.png';
 import './Cv.css';
 
 const possesive = (num) => num > 1 ? 's\'' : 'year\'s';
 
 const Cv = ({ result }) => {
   const componentRef = useRef();
-  // console.log('companyDetails = ', result.companyDetails);
   const totalWorkMonths = !result.companyDetails
     ? 0
     : result.companyDetails

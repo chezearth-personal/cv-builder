@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Loading from '../components/placeholders/Loading';
-// import Spinner from '../components/placeholders/Spinner';
-import HomeTopics from '../components/home-topics/HomeTopics';
-import Companies from '../components/companies/Companies';
-import logo from '../images/logo.svg';
+import Loading from '../_components/placeholders/Loading';
+import HomeTopics from '../_components/home-topics/HomeTopics';
+import Companies from '../_components/companies/Companies';
+import logo from '../resources/images/logo.svg';
 import '../App.css'
 
 const Home = ({ setResult }) => {
@@ -32,7 +31,6 @@ const Home = ({ setResult }) => {
     e.preventDefault();
     /** Check the text input for adding pill items have all been cleared */
     const inputItems = e.target.querySelectorAll('input[name="inputItem"]');
-    // console.log('inputItems:', [ ...inputItems]);
     const sendForm = [ ...inputItems].reduce((acc, item) => {
       if (item.value !== '') {
         alert(`Please click the 'Add item' button next to '${item.value}' to add it to the list`);
@@ -57,7 +55,7 @@ const Home = ({ setResult }) => {
           if (res.data.message) {
             /** Update the result object */
             setResult(res.data.data);
-            // navigate('/cv');
+            navigate('/cv');
           }
         })
         .catch(err => {
@@ -77,7 +75,6 @@ const Home = ({ setResult }) => {
     // return <Loading />;
   // }
   return (
-    <>
     <div className='App'>
       {loading ? <Loading /> : null}
       <div className="App-header">
@@ -161,7 +158,6 @@ const Home = ({ setResult }) => {
         <button type='submit'>Create Your CV!</button>
       </form>
     </div>
-    </>
   );
 }
 

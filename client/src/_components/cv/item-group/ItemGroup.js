@@ -1,6 +1,6 @@
 import React from 'react';
 import Items from './Items';
-import tick from '../../../images/tick.png';
+import tick from '../../../resources/images/tick.png';
 
 export default function ItemGroup({ handleBr, itemGroup}) {
   // console.log('ItemGroup.js - itemGroup:', itemGroup);
