@@ -3,8 +3,8 @@ import { useReactToPrint } from 'react-to-print';
 import ErrorPage from '../placeholders/ErrorPage';
 import ItemGroups from './item-group/ItemGroups';
 import ImageEmail from '../../images/email-logo.png';
-import ImageTel from '../../images/tel-logo.jpeg';
-import ImageWeb from '../../images/web-logo.jpeg';
+import ImageTel from '../../images/tel-logo.png';
+import ImageWeb from '../../images/web-logo.png';
 import './Cv.css';
 
 const possesive = (num) => num > 1 ? 's\'' : 'year\'s';

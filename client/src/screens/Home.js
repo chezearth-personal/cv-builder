@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Loading from '../components/placeholders/Loading';
+// import Spinner from '../components/placeholders/Spinner';
 import HomeTopics from '../components/home-topics/HomeTopics';
 import Companies from '../components/companies/Companies';
 import logo from '../images/logo.svg';
@@ -29,42 +30,56 @@ const Home = ({ setResult }) => {
   /** Submit the form */
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    headShot && formData.append('headshotImage', headShot, headShot.name);
-    formData.append('fullName', fullName);
-    formData.append('occupation', occupation);
-    formData.append('tel', tel);
-    formData.append('email', email);
-    formData.append('website', website);
-    formData.append('skillTopics', JSON.stringify(skillTopics));
-    formData.append('companyDetails', JSON.stringify(companies));
-    // console.log('skillGroups JSON:', JSON.stringify(skillGroups));
-    console.log('companies JSON:', JSON.stringify(companies));
-    axios
-      .post('http://localhost:4000/cv/create', formData, {})
-      .then(res => {
-        if (res.data.message) {
-          /** Update the result object */
-          setResult(res.data.data);
-          navigate('/cv');
-        }
-      })
-      .catch(err => {
-        if (err && err.response && /<pre>MulterError: File too large<br>/.test(err.response.data.toString())) {
-          console.error('navigate to \'ErrorPage/\'');
-        } else {
-          console.error(err);
-        }
-      });
-    setLoading(true);
+    /** Check the text input for adding pill items have all been cleared */
+    const inputItems = e.target.querySelectorAll('input[name="inputItem"]');
+    // console.log('inputItems:', [ ...inputItems]);
+    const sendForm = [ ...inputItems].reduce((acc, item) => {
+      if (item.value !== '') {
+        alert(`Please click the 'Add item' button next to '${item.value}' to add it to the list`);
+      }
+      return acc && item.value === '';
+    }, true)
+    if (sendForm) {
+      const formData = new FormData();
+      headShot && formData.append('headshotImage', headShot, headShot.name);
+      formData.append('fullName', fullName);
+      formData.append('occupation', occupation);
+      formData.append('tel', tel);
+      formData.append('email', email);
+      formData.append('website', website);
+      formData.append('skillTopics', JSON.stringify(skillTopics));
+      formData.append('companyDetails', JSON.stringify(companies));
+      // console.log('skillGroups JSON:', JSON.stringify(skillGroups));
+      // console.log('companies JSON:', JSON.stringify(companies));
+      axios
+        .post('http://localhost:4000/cv/create', formData, {})
+        .then(res => {
+          if (res.data.message) {
+            /** Update the result object */
+            setResult(res.data.data);
+            // navigate('/cv');
+          }
+        })
+        .catch(err => {
+          if (err && err.response && /<pre>MulterError: File too large<br>/.test(err.response.data.toString())) {
+            console.error('navigate to \'ErrorPage/\'');
+          } else {
+            console.error(err);
+          }
+        });
+      setLoading(true);
+    }
+    // return;
     return <div></div>;
   }
   /** Renders the loading component you submit the form */
-  if (loading) {
-    return <Loading />;
-  }
+  // if (loading) {
+    // return <Loading />;
+  // }
   return (
+    <>
     <div className='App'>
+      {loading ? <Loading /> : null}
       <div className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
       </div>
@@ -143,9 +158,10 @@ const Home = ({ setResult }) => {
           setCompanies={setCompanies}
           initCompany={initCompany}
         />
-        <button>CREATE CV</button>
+        <button type='submit'>Create Your CV!</button>
       </form>
     </div>
+    </>
   );
 }
 

@@ -1,10 +1,12 @@
 import React from "react";
-import '../../App.css';
+import './Spinner.css';
 
 const Loading = () => {
   return (
-    <div className='App'>
-      <h1>Loading, please wait...</h1>
+    <div className='spinner'>
+      <div className='spinner__circle'>
+        <h1 className='loader'>Loading, please wait...</h1>
+      </div>
     </div>
   );
 }
