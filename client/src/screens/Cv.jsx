@@ -1,7 +1,7 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { useReactToPrint } from 'react-to-print';
-import ErrorPage from '../_components/placeholders/ErrorPage';
-import ItemGroups from '../_components/cv/item-group/ItemGroups';
+import { ErrorPage } from '../_components/placeholders/ErrorPage';
+import { CvTopics } from '../_components/cv-topics/CvTopics';
 import ImageEmail from '../resources/images/email-logo.png';
 import ImageTel from '../resources/images/tel-logo.png';
 import ImageWeb from '../resources/images/web-logo.png';
@@ -103,7 +103,7 @@ function Cv({ result }) {
                 </div>
               </div>
             </div>
-            <ItemGroups handleBr={replaceWithBr} itemGroups={result.skillTopics} headingText='TECHNICAL SKILLS' />
+            <CvTopics handleBr={replaceWithBr} cvTopics={result.skillTopics} headingText='TECHNICAL SKILLS' />
           </div>
           <div className='cvStory'>
             <div>

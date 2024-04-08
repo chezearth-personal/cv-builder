@@ -1,7 +1,8 @@
-import React from "react";
 import './Loading.css';
 
-const Loading = () => {
+export { Loading };
+
+function Loading() {
   return (
     <div className='spinner'>
       <div className='spinner__circle'>
@@ -10,5 +11,3 @@ const Loading = () => {
     </div>
   );
 }
-
-export default Loading;

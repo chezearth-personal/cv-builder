@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Loading from '../_components/placeholders/Loading';
-import HomeTopics from '../_components/home-topics/HomeTopics';
-import Companies from '../_components/companies/Companies';
+import { Loading } from '../_components/placeholders/Loading';
+import { HomeTopics } from '../_components/home-topics/HomeTopics';
+import { Companies } from '../_components/companies/Companies';
 import logo from '../resources/images/logo.svg';
 import '../App.css'
 
@@ -72,10 +72,6 @@ function Home({ setResult }) {
     // return;
     return <div></div>;
   }
-  /** Renders the loading component you submit the form */
-  // if (loading) {
-    // return <Loading />;
-  // }
   return (
     <div className='App'>
       {loading ? <Loading /> : null}

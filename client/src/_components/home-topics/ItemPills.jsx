@@ -2,11 +2,10 @@ import React from "react";
 import ItemPill from './ItemPill';
 import './ItemPills.css';
 
+export { ItemPills };
 
-const ItemPills = ({ addToItem, addPill, removePill, items, item }) => {
-  // console.log('props =', props);
-  if (items) {
-  return (
+function ItemPills({ removePill, items }) {
+  return items && (
     <div className='itemPills'>
       <div className='itemPillsList'>
         {items.map((item, index) => (
@@ -20,10 +19,4 @@ const ItemPills = ({ addToItem, addPill, removePill, items, item }) => {
       </div>
     </div>
   );
-  }
-  return (
-    <></>
-  )
 }
-
-export default ItemPills;

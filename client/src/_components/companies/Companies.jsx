@@ -1,11 +1,12 @@
-// import React, { useState } from 'react';
-import Company from './Company';
+import { Company } from './Company';
 
-const Companies = ({
+export { Companies };
+
+function Companies({
   companies,
   setCompanies,
   initCompany
-}) => {
+}) {
   /** Updates the state with user's input */
   const handleAddCompany = () => {
     return setCompanies([ ...companies, initCompany]);
@@ -43,5 +44,3 @@ const Companies = ({
     </div>
   );
 }
-
-export default Companies;

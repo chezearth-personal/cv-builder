@@ -1,13 +1,15 @@
 import { useState } from 'react';
-import HomeTopics from '../home-topics/HomeTopics';
+import { HomeTopics } from '../home-topics/HomeTopics';
 
-const Company = ({
+export { Company };
+
+function Company({
   addCompany,
   updateCompany,
   removeCompany,
   company,
   ...props
-}) => {
+}) {
   const [ keyPhraseTopics, setkeyPhraseTopics ] = useState([{ name: '', itemList: [] }]);
   const handleUpdateHomeTopics = (list) => company.keyPhraseTopics = list;
   return (
@@ -99,5 +101,3 @@ const Company = ({
     </div>
   );
 }
-
-export default Company;

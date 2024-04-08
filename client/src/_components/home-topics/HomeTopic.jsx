@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
-import ItemPills from './item-pill/ItemPills';
+import { useState } from 'react';
+import { ItemPills } from './ItemPills';
 
-const HomeTopic = ({
+export { HomeTopic };
+
+function HomeTopic ({
   homeTopic,
   addHomeTopic,
   updateHomeTopic,
   removeHomeTopic,
   ...props
-}) => {
+}) {
   const [items, setItems] = useState([]);
   const [item, setItem] = useState('');
   const addToItem = (item) => {
@@ -86,17 +88,9 @@ const HomeTopic = ({
         </div>
       </div>
       <ItemPills
-        addToItem={addToItem}
         removePill={handleRemovePill}
         items={homeTopic.itemList}
-        item={item}
-        index={props.index}
-        name={props.name}
-        pillGroupLabel={props.pillGroupLabel}
-        pillItemLabel={props.pillItemLabel}
       />
     </div>
   );
 }
-
-export default HomeTopic;
