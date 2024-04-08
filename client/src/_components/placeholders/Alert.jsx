@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-
+import { alertActions } from '_store';
 
 export { Alert };
 
@@ -13,7 +13,7 @@ function Alert() {
   useEffect(() => {
     /** clear alert on location change */
     dispatch(alertActions.clear());
-  }, [location]);
+  }, [location, dispatch]);
   if (!alert) return null;
   return (
     <div className='container'>
