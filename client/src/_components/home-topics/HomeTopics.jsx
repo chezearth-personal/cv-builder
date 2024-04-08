@@ -1,4 +1,3 @@
-// import { useState } from 'react';
 import { HomeTopic } from './HomeTopic';
 // import ItemPills from './item-pill/ItemPills';
 

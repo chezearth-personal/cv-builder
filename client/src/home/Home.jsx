@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Loading, HomeTopics, Companies } from '../_components';
-import { logo } from '../resources/images';
-import '../App.css'
+import { Loading, HomeTopics, Companies } from '_components';
+import { logo } from 'resources/images';
+import 'App.css'
 
 export { Home };
 

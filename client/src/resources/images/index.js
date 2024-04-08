@@ -1,5 +1,5 @@
-export * as imageEmail from './email-logo.png';
-export * as logo from './logo.svg';
-export * as imageTel from './tel-logo.png';
-export * as tick from './tick.png';
-export * as imageWeb from './web-logo.png';
+export { default as imageEmail } from './email-logo.png';
+export { default as logo } from './logo.svg';
+export { default as imageTel } from './tel-logo.png';
+export { default as tick } from './tick.png';
+export { default as imageWeb } from './web-logo.png';

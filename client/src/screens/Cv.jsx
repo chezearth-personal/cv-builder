@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { useReactToPrint } from 'react-to-print';
-import { ErrorPage, CvTopics } from '../_components';
-import { imageEmail, imageTel, imageWeb } from '../resources/images';
+import { ErrorPage, CvTopics } from '_components';
+import { imageEmail, imageTel, imageWeb } from 'resources/images';
 import './Cv.css';
 
 export { Cv };

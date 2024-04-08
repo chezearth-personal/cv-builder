@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { HomeTopics } from '../home-topics/HomeTopics';
+import { HomeTopics } from '_components';
 
 export { Company };
 

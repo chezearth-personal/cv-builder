@@ -1,5 +1,5 @@
 import { Items } from './Items';
-import { tick } from '../../resources/images';
+import { tick } from 'resources/images';
 
 export { CvTopic };
 
