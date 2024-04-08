@@ -1,10 +1,7 @@
 import { useRef } from 'react';
 import { useReactToPrint } from 'react-to-print';
-import { ErrorPage } from '../_components/placeholders/ErrorPage';
-import { CvTopics } from '../_components/cv-topics/CvTopics';
-import ImageEmail from '../resources/images/email-logo.png';
-import ImageTel from '../resources/images/tel-logo.png';
-import ImageWeb from '../resources/images/web-logo.png';
+import { ErrorPage, CvTopics } from '../_components';
+import { imageEmail, imageTel, imageWeb } from '../resources/images';
 import './Cv.css';
 
 export { Cv };
@@ -90,15 +87,15 @@ function Cv({ result }) {
               <h4 className='cvBodyTitle cvHistoryTitle'>CONTACT</h4>
               <div className='cvContactList'>
                 <div className='cvContact'>
-                  <img className='cvIcon' src={ImageEmail} alt='email' />
+                  <img className='cvIcon' src={imageEmail} alt='email' />
                   <p>{result.email}</p>
                 </div>
                 <div className='cvContact'>
-                  <img className='cvIcon' src={ImageTel} alt='tel' />
+                  <img className='cvIcon' src={imageTel} alt='tel' />
                   <p>{result.tel}</p>
                 </div>
                 <div className='cvContact'>
-                  <img className='cvIcon' src={ImageWeb} alt='website' />
+                  <img className='cvIcon' src={imageWeb} alt='website' />
                   <p>{result.website}</p>
                 </div>
               </div>

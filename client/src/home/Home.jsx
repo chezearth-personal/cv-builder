@@ -1,10 +1,8 @@
+import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { Loading } from '../_components/placeholders/Loading';
-import { HomeTopics } from '../_components/home-topics/HomeTopics';
-import { Companies } from '../_components/companies/Companies';
-import logo from '../resources/images/logo.svg';
+import { Loading, HomeTopics, Companies } from '../_components';
+import { logo } from '../resources/images';
 import '../App.css'
 
 export { Home };

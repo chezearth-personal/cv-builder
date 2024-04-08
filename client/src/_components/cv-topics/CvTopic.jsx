@@ -1,6 +1,5 @@
-import React from 'react';
-import Items from './Items';
-import tick from '../../resources/images/tick.png';
+import { Items } from './Items';
+import { tick } from '../../resources/images';
 
 export { CvTopic };
 

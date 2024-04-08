@@ -1,6 +1,6 @@
-import React from 'react';
+export { Items };
 
-export default function Items({ items }) {
+function Items({ items }) {
   // console.log('items =', items);
   const itemsList = items.reduce((res, item) => (res.length === 0 ? res : res + ', ') + item.name, '');
   // console.log(itemsList);
