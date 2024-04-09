@@ -10,7 +10,7 @@ const extraReducers = createExtraReducers();
 const slice = createSlice({ name, initialState, extraReducers });
 
 /** Exports */
-export const usersActions = { ...slice.actions, ...extraActions };
+export const userActions = { ...slice.actions, ...extraActions };
 export const usersReducer = slice.reducer;
 
 /** Implementation */

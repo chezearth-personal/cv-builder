@@ -1,19 +1,26 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-// import { Provider } from 'react-redux';
+import { createRoot } from 'react-dom/client';
+import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-// import store from './app/store';
+import { store } from '_store';
 import { App } from 'App';
 import reportWebVitals from './reportWebVitals';
-import 'index.css';
+import './index.css';
 import '@csstools/normalize.css'
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+/** Set up fake backend */
+import { fakeBackend } from './_helpers/fake-backend';
+fakeBackend();
+
+const container = document.getElementById('root');
+const root = createRoot(container);
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>
 );
 
@@ -22,6 +29,4 @@ root.render(
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
 
-    // <Provider store={store}>
       // <App />
-    // </Provider>

@@ -11,7 +11,7 @@ function HomeTopics({
 }) {
   /** Updates the state with user's input */
   const handleAddHomeTopic = () =>
-    setHomeTopics([ ...homeTopics, { name: '' }]);
+    setHomeTopics([ ...homeTopics, { name: '', itemList: []}]);
   /** Updates an item within the list */
   const handleUpdateHomeTopic = (e, index) => {
     if (e && e.target) {

@@ -13,7 +13,7 @@ function Alert() {
   useEffect(() => {
     /** clear alert on location change */
     dispatch(alertActions.clear());
-  }, [location, dispatch]);
+  }, [location]);
   if (!alert) return null;
   return (
     <div className='container'>

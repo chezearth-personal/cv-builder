@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { Loading, HomeTopics, Companies } from '_components';
 import { logo } from 'resources/images';
 import 'App.css'
@@ -26,6 +27,7 @@ function Home({ setResult }) {
   const [loading, setLoading] = useState(false);
   const [companies, setCompanies] = useState([initCompany]);
   const navigate = useNavigate();
+  const auth = useSelector(x => x.auth.value);
   /** Submit the form */
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -72,6 +74,11 @@ function Home({ setResult }) {
   }
   return (
     <div className='App'>
+      <div className='nav'>
+        <h4>Hi {auth?.firstName}!</h4>
+        <p>You're logged in with React 18 + Redux & JWT</p>
+        <p><Link to='/users'>Manage users</Link></p>
+      </div>
       {loading ? <Loading /> : null}
       <div className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
