@@ -8,13 +8,13 @@
     padding: 0;
 }
 
- main {
-   display: flex;
-   flex-direction: column;
- }
+main {
+  display: flex;
+  flex-direction: column;
+}
 
 nav {
-
+  padding: 5px 20px;
 }
 
 form {
@@ -116,7 +116,6 @@ button {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  padding: 5px 20px;
 }
 
 .nav__item {
