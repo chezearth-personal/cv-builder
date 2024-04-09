@@ -44,7 +44,7 @@ function Register() {
 
   return (
     <div className='card m__3'>
-      <h4 className='card__header'>Register</h4>
+      <h3 className='card__header'>Register</h3>
       <div className='card__body'>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className='mb__3'>

@@ -77,7 +77,7 @@ function Company({
           )}
           <div className='btn__group'>
             {props.numCompanies - 1 === props.index && props.numCompanies < 4 && (
-              <button className='addBtn' id='addBtn' onClick={addCompany}>
+              <button className='btn__add' id='add_btn_{props.index}' onClick={addCompany}>
                 Add
               </button>
             )}

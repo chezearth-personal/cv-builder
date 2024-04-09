@@ -13,6 +13,10 @@
    flex-direction: column;
  }
 
+nav {
+
+}
+
 form {
   padding: 10px;
   width: 80%;
@@ -27,6 +31,7 @@ input {
   outline: none;
   border: 1px solid #aad;
   width: 20vw;
+  height: 3em;
 }
 
 h1 {
@@ -42,7 +47,7 @@ h3 {
 
 button {
   /* margin: 2.5px 0 2.5px 0; */
-  margin: 18px 0 15px 0;
+  margin: 12px 0 10px 0;
   padding: 8px;
   cursor: pointer;
   outline: none;
@@ -52,6 +57,7 @@ button {
   font-size: 16px;
   font-weight: bold;
   border-radius: 3px;
+  height: 2.7em;
 }
 
 .App {
@@ -73,7 +79,7 @@ button {
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
-  padding: 80px 30px 80px 30px;
+  padding: 0 30px 80px 30px;
 }
 
 .App-logo {
@@ -106,6 +112,17 @@ button {
   /* min-height: 100vh; */
 /* } */
 
+.navbar__nav {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 5px 20px;
+}
+
+.nav__item {
+  margin: 0 10px;
+}
+
 .req {
   color: red;
 }
@@ -135,7 +152,8 @@ button {
 
 .nestedContainer {
   display: flex;
-  align-items: top;
+  flex-direction: row;
+  align-items: center;
   justify-content: flex-left;
   width: 50%;
 }
@@ -154,7 +172,7 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 0 1.0vw 0 0;
+  margin: 0 0.8vw 0 0.2vw;
 }
 
 .companies {
@@ -172,7 +190,7 @@ button {
 }
 
 .text__company {
-  width: 14vw;
+  width: 13.5vw;
 }
 
 .check__company {
@@ -180,7 +198,8 @@ button {
   align-content: center;
   text-align: center;
   width: 10vw;
-  margin: 15px 0 0 0;
+  height: 1.2em;
+  margin: 14px 0 26px 0;
   /* padding: 15px 0 15px 0; */
 }
 
@@ -191,7 +210,7 @@ button {
   margin: 0 0 0 15px;
 }
 
-.addBtn {
+.btn__add {
   background-color: green;
 }
 

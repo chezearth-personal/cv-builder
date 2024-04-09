@@ -25,7 +25,7 @@ function Login() {
 
   return (
     <div className='card m__3'>
-      <h4 className='card__header'>Login</h4>
+      <h3 className='card__header'>Login</h3>
       <div className='card__body'>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className='mb__3'>

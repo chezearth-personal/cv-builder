@@ -77,7 +77,7 @@ function HomeTopics({
           // </div>
           // <div className='btn__group'>
             // {props.numHomeTopics - 1 === props.index && props.numHomeTopics < 20 && (
-              // <button type='button' className='addBtn' onClick={handleAddHomeTopic}>
+              // <button type='button' className='btn__add' onClick={handleAddHomeTopic}>
                 // Add
               // </button>
             // )}

@@ -1,4 +1,6 @@
-import { CvTopic } from './CvTopic';
+// import { CvTopic } from './CvTopic';
+import { Items } from './';
+import { tick } from 'resources/images';
 
 export { CvTopics };
 
@@ -7,9 +9,16 @@ function CvTopics({ handleBr, cvTopics, ...props }) {
     <div className='cvPoint'>
       <h4 className='cvBodyTitle'>{props.headingText}</h4>
       {cvTopics.map((cvTopic, index) => (
-        <CvTopic key={index} handleBr={handleBr} cvTopic={cvTopic} />
+        <div key={index} className='cvTechSkillGroup'>
+          <img src={tick} alt=' - ' className='cvBullet'/>
+          <div className='cvBulletedItem'>
+            <h4 className='cvBulletHeading'>{cvTopic.name}</h4>
+            <Items handleBr={handleBr} items={cvTopic.itemList} />
+          </div>
+        </div>
       ))}
     </div>
   )
 }
 
+        // <CvTopic key={index} handleBr={handleBr} cvTopic={cvTopic} />

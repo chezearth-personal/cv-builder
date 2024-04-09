@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ItemPills } from './ItemPills';
+import { ItemPills } from './';
 
 export { HomeTopic };
 
@@ -15,6 +15,7 @@ function HomeTopic ({
   const addToItem = (item) => {
     setItem(item);
   };
+
   const handleAddPill = () => {
     // console.log('item =', item);
     // console.log('items =', items);
@@ -40,7 +41,7 @@ function HomeTopic ({
     updateHomeTopic(Object.assign(homeTopic, { itemList: newItems }));
     setItems(newItems);
   };
-  // console.log('props.index =', props.index, 'props.name=', props.name);
+
   return (
     <div className='compositeContainer subContainer'>
       <div className='inputContainer'>
@@ -60,7 +61,7 @@ function HomeTopic ({
           </div>
           <div className='btn__group'>
             {props.numHomeTopics - 1 === props.index && props.numHomeTopics < 20 && (
-              <button type='button' className='addBtn' onClick={addHomeTopic}>
+              <button type='button' className='btn__add' onClick={addHomeTopic}>
                 Add
               </button>
             )}

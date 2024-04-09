@@ -1,5 +1,5 @@
 import React from "react";
-import ItemPill from './ItemPill';
+// import ItemPill from './ItemPill';
 import './ItemPills.css';
 
 export { ItemPills };
@@ -9,12 +9,15 @@ function ItemPills({ removePill, items }) {
     <div className='itemPills'>
       <div className='itemPillsList'>
         {items.map((item, index) => (
-          <ItemPill
-            key={index}
-            index={index}
-            itemName={item.name}
-            removePill={removePill}
-          />
+          <div key={index} className='pill'>
+            <p className='pillText'>{item.name}</p>
+            <div
+              className='pillRemove'
+              onClick={() => removePill(index)}
+            >
+              {'\u00D7'}
+            </div>
+          </div>
         ))}
       </div>
     </div>
