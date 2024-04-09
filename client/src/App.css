@@ -14,12 +14,14 @@ main {
 }
 
 nav {
+  position: fixed;
   padding: 5px 20px;
+  width: 100vw;
 }
 
 form {
   padding: 10px;
-  width: 80%;
+  width: 90%;
   display: flex;
   flex-direction: column;
 }
@@ -65,7 +67,7 @@ button {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding: 80px 30px 30px 30px;
+  padding: 0 0px 0px 30px;
 }
 
 .App-header {
@@ -111,6 +113,11 @@ button {
 /* .app { */
   /* min-height: 100vh; */
 /* } */
+
+.nav {
+  position: fixed;
+  left: 30px;
+}
 
 .navbar__nav {
   display: flex;
@@ -189,7 +196,7 @@ button {
 }
 
 .text__company {
-  width: 13.5vw;
+  width: 16.5vw;
 }
 
 .check__company {
