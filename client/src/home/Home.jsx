@@ -75,9 +75,9 @@ function Home({ setResult }) {
   return (
     <div className='App'>
       <div className='nav'>
-        <h3>Hi {auth?.firstName}!</h3>
+        <h3>{!auth ? `Not logged in` : `Hi ${auth?.firstName}!`}</h3>
         {/**<p>You're logged in with React 18 + Redux & JWT</p>*/}
-        <p><Link to='/users'>Manage users</Link></p>
+        <p>{auth && <Link to='/users'>Manage users</Link>}</p>
       </div>
       {loading ? <Loading /> : null}
       <div className="App-header">

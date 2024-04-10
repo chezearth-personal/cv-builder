@@ -1,4 +1,5 @@
-import { NavLink } from 'react-router-dom';
+import { useEffect } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { authActions } from '_store';
 
@@ -8,9 +9,24 @@ function Nav() {
   const auth = useSelector(x => x.auth.value);
   const dispatch = useDispatch();
   const logout = () => dispatch(authActions.logout());
+  const navigate = useNavigate();
+  const login = () => navigate('account/login');
+  // const login = () => navigate('/login');
+  // useEffect(() => {
+    // login();
+  // }, [login]);
+  // const login = () => navigate('/login');
 
   /** Only show Nav when logged in! */
-  if (!auth) return null;
+  // if (!auth) return null;
+  if (!auth) return (
+    <nav className='navbar navbar__expand navbar__dark bg__dark px__3'>
+      <div className='navbar__nav'>
+        {/* <NavLink to='/' className='nav__item nav__link'>Home</NavLink> */}
+        <button onClick={login} className='btn btn__link nav__item nav__link'>Login</button>
+      </div>    
+    </nav>
+  )
 
   return (
     <nav className='navbar navbar__expand navbar__dark bg__dark px__3'>

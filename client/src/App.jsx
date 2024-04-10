@@ -23,11 +23,11 @@ function App() {
         <Routes>
           {/** Private */}
           <Route element={<PrivateRoute />} >
-            <Route path='/' element={<Home setResult={setResult} />} />
             <Route path='users/*' element={<UsersLayout />} />
             <Route path='/cv' element={<Cv result={result} />} />
           </Route>
           {/** Public */}
+            <Route path='/' element={<Home setResult={setResult} />} />
           <Route path='account/*' element={<AccountLayout />} />
           <Route path='*' element={<Navigate to='/' />} />
         </Routes>

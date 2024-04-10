@@ -2,9 +2,7 @@ import 'dotenv/config'
 import express from 'express';
 import cors from 'cors';
 import multer from 'multer';
-// import morgan from 'morgan';
 import OpenAI from 'openai';
-// import { createLogger, transports } from 'winston';
 import { randomUUID } from 'crypto';
 import { exit } from 'process';
 import logger from './common/logger.js';
