@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "You enter some basic info on a web form and ChatGPT (OpenAI) creates your CV for you.",
   "private": true,
+  "license": "MIT",
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
     "@reduxjs/toolkit": "^2.2.3",

@@ -4,6 +4,7 @@
   "description": "You enter some basic info on a web form and ChatGPT (OpenAI) creates your CV for you.",
   "main": "index.js",
   "type": "module",
+  "license": "MIT",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "mkdir -p ./uploads && touch .env && nodemon index.js"

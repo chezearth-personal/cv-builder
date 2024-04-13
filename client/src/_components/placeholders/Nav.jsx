@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { authActions } from '_store';
@@ -8,8 +8,11 @@ export { Nav };
 function Nav() {
   const auth = useSelector(x => x.auth.value);
   const dispatch = useDispatch();
-  const logout = () => dispatch(authActions.logout());
   const navigate = useNavigate();
+  const logout = () => {
+    // navigate('/');
+    return dispatch(authActions.logout());
+  }
   const login = () => navigate('account/login');
   // const login = () => navigate('/login');
   // useEffect(() => {
