@@ -29,9 +29,9 @@ const logger = createLogger({
         ? format.colorize()
         : format.uncolorize(),
       format.splat(),
-      format.printf(({ level, timestamp, message }) => `${level}: ${
+      format.printf(({ level, timestamp, message }) => `[${(`${level}`)}] ${
         (`${level}`).length - 20 === 4 ? ' ' : ''
-      }[${timestamp}] ${message}`)
+      }${timestamp} ${message}`)
     ),
     transports: [ new transports.Console() ]
   });
