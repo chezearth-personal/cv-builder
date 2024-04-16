@@ -5,8 +5,7 @@ import multer from 'multer';
 import OpenAI from 'openai';
 import { randomUUID } from 'crypto';
 import { exit } from 'process';
-import logger from './common/logger.js';
-import { successHandler, errorHandler } from './common/morganMiddleware.js';
+import { logger, successHandler, errorHandler } from './utils/logger.js';
 
 /** OpenAI won't work without a secret key so
   * don't start the server without it 
