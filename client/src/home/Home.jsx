@@ -6,7 +6,7 @@ import { Loading } from '_components/placeholders/Loading';
 import { HomeTopics } from '_components/home-topics/HomeTopics';
 import { Companies } from '_components/companies/Companies';
 import { logo } from 'resources/images';
-import 'App.css'
+import 'App.css';
 
 export { Home };
 
@@ -82,7 +82,7 @@ function Home({ setResult }) {
         <p>{auth && <Link to='/users'>Manage users</Link>}</p>
       </div>
       {loading ? <Loading /> : null}
-      <div className="App-header">
+      <div className='App-header'>
         <img src={logo} className="App-logo" alt="logo" />
       </div>
       <h1>CV Builder</h1>

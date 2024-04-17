@@ -29,7 +29,7 @@ function App() {
             <Route path='/cv' element={<Cv result={result} />} />
           </Route>
           {/** Public */}
-            <Route path='/' element={<Home setResult={setResult} />} />
+          <Route path='/' element={<Home setResult={setResult} />} />
           <Route path='account/*' element={<AccountLayout />} />
           <Route path='*' element={<Navigate to='/' />} />
         </Routes>
