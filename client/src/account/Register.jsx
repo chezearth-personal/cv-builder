@@ -3,12 +3,11 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
-import { history } from '_helpers';
-import { userActions, alertActions } from '_store';
+import { history } from '_helpers/history';
+import { alertActions } from '_store/alert.slice';
+import { userActions } from '_store/users.slice';
 
-export { Register };
-
-function Register() {
+export function Register() {
   const dispatch = useDispatch();
   /** Form validation rules */
   const validationSchema = Yup.object().shape({

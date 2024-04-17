@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { alertActions } from '_store';
-import { history, fetchWrapper } from '_helpers';
+import { alertActions } from '_store/alert.slice';
+import { fetchWrapper } from '_helpers/fetch-wrapper';
+import { history } from '_helpers/history';
 
 /** Create slice */
 const name = 'auth';

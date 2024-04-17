@@ -1,9 +1,8 @@
 import { Routes, Route } from 'react-router-dom';
-import { List, AddEdit } from './';
+import { AddEdit } from './AddEdit';
+import { List } from './List';
 
-export { UsersLayout };
-
-function UsersLayout() {
+export function UsersLayout() {
   return (
     <div className='p__4'>
       <div className='container'>

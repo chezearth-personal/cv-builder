@@ -3,11 +3,9 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
-import { authActions } from '_store';
+import { authActions } from '_store/auth.slice';
 
-export { Login };
-
-function Login() {
+export function Login() {
   const dispatch = useDispatch();
   /** Form violation rules */
   const validationSchema = Yup.object().shape({

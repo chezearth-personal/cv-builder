@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { userActions } from '_store';
+import { userActions } from '_store/users.slice';
 
 export { List };
 

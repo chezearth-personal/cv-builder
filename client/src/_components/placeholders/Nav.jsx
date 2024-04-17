@@ -1,7 +1,7 @@
 // import { useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { authActions } from '_store';
+import { authActions } from '_store/auth.slice';
 
 export function Nav() {
   const auth = useSelector(x => x.auth.value);

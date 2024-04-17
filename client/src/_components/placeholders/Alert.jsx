@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { alertActions } from '_store';
+import { alertActions } from '_store/alert.slice';
 
 export function Alert() {
   const dispatch = useDispatch();

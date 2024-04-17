@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
-import { history } from '_helpers';
 import { PrivateRoute } from '_components/placeholders/PrivateRoute';
 import { Nav } from '_components/placeholders/Nav';
 import { Alert } from '_components/placeholders/Alert';
+import { history } from '_helpers/history';
 import { Home } from 'home/Home';
-import { AccountLayout } from 'account';
-import { UsersLayout } from 'users';
-import { Cv } from 'screens';
+import { AccountLayout } from 'account/AccountLayout';
+import { UsersLayout } from 'users/UsersLayout';
+import { Cv } from 'screens/Cv';
 import 'App.css';
 
 export { App };
