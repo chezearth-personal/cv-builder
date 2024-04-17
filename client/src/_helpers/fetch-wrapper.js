@@ -19,6 +19,7 @@ function request(method) {
       requestOptions.body = JSON.stringify(body);
     }
     console.log('url =', url);
+    console.log('requestOptions =', requestOptions);
     return fetch(url, requestOptions).then(handleResponse);
   }
 }

@@ -17,7 +17,7 @@ export function Alert() {
     <div className='container'>
       <div className='m-3'>
         <div className={`alert alert-dismissable ${alert.type}`}>
-          {alert.message}
+          {`${alert.message} `}
           <button
             type='button'
             className='btn__close'

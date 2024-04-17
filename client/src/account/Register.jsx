@@ -46,54 +46,55 @@ export const Register = () => {
       <h3 className='card__header'>Register</h3>
       <div className='card__body'>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className='mb__3'>
-            <label htmlFor='firstname'>
-              First Name <span className='req'>*</span>
-            </label>
-            <input
-              name='firstname'
-              type='text'
-              { ...register('firstname') }
-              className={`form__control ${errors.firstname ? 'is-invalid' : ''}`}
-            />
-            <div className='invalid-feedback'>{errors.firstname?.message}</div>
-          </div>
-          <div className='mb__3'>
-            <label htmlFor='lastname'>
-              Last Name <span className='req'>*</span>
-            </label>
-            <input
-              name='lastname'
-              type='text'
-              { ...register('lastname') }
-              className={`form__control ${errors.lastname ? 'is-invalid' : ''}`}
-            />
-            <div className='invalid-feedback'>{errors.lastname?.message}</div>
-          </div>
-          <div className='mb__3'>
-            <label htmlFor='email'>
-              email <span className='req'>*</span>
-            </label>
-            <input
-              name='email'
-              type='email'
-              { ...register('email') }
-              className={`form__control ${errors.email ? 'is-invalid' : ''}`}
-            />
-            <div className='invalid-feedback'>{errors.email?.message}</div>
-          </div>
-          <div className='mb__3'>
-            <label htmlFor='password'>
-              Password <span className='req'>*</span>
-            </label>
-            <input
-              name='password'
-              type='password'
-              { ...register('password') }
-              className={`form__control ${errors.password ? 'is-invalid' : ''}`}
-            />
-            <div className='invalid-feedback'>{errors.password?.message}</div>
-          </div>
+          <label htmlFor='firstname'>
+            First Name <span className='req'>*</span>
+          </label>
+          <input
+            name='firstname'
+            type='text'
+            { ...register('firstname') }
+            className={`form__control ${errors.firstname ? 'is-invalid' : ''}`}
+          />
+          <div className='invalid-feedback'>{errors.firstname?.message}</div>
+          <label htmlFor='lastname'>
+            Last Name <span className='req'>*</span>
+          </label>
+          <input
+            name='lastname'
+            type='text'
+            { ...register('lastname') }
+            className={`form__control ${errors.lastname ? 'is-invalid' : ''}`}
+          />
+          <div className='invalid-feedback'>{errors.lastname?.message}</div>
+          <label htmlFor='email'>
+            email <span className='req'>*</span>
+          </label>
+          <input
+            name='email'
+            type='email'
+            { ...register('email') }
+            className={`form__control ${errors.email ? 'is-invalid' : ''}`}
+          />
+          <div className='invalid-feedback'>{errors.email?.message}</div>
+          <label htmlFor='password'>
+            Password <span className='req'>*</span>
+          </label>
+          <input
+            name='password'
+            type='password'
+            { ...register('password') }
+            className={`form__control ${errors.password ? 'is-invalid' : ''}`}
+          />
+          <div className='invalid-feedback'>{errors.password?.message}</div>
+          <label htmlFor='confirmPassword'>
+            Confirm Password <span className='req'>*</span>
+          </label>
+          <input
+            name='confirmPassword'
+            type='password'
+            { ...register('confirmPassword') }
+            className={`form__control ${errors.confirmPassword ? 'is-invalid' : ''}`}
+          />
           <button disabled={isSubmitting} className='btn btn__primary'>
             {isSubmitting && <span className='spinner__border spinner__border__sm me__1'></span>}
             Register
@@ -104,3 +105,20 @@ export const Register = () => {
     </div>
   )
 }  
+
+
+          //<div className='mb__3'>
+
+          // </div>
+          // <div className='mb__3'>
+
+          // </div>
+          // <div className='mb__3'>
+
+          // </div>
+          // <div className='mb__3'>
+
+          // </div>
+          // <div className='mb__3'>
+
+          // </div>
