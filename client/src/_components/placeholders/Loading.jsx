@@ -1,8 +1,6 @@
 import './Loading.css';
 
-export { Loading };
-
-function Loading() {
+export function Loading() {
   return (
     <div className='spinner'>
       <div className='spinner__circle'>

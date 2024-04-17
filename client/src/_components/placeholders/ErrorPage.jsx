@@ -1,9 +1,7 @@
 import { Link } from "react-router-dom";
 import 'App.css';
 
-export { ErrorPage };
-
-function ErrorPage() {
+export function ErrorPage() {
   return (
     <div className='App'>
       <h3>

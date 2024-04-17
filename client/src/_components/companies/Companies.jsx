@@ -1,8 +1,6 @@
 import { Company } from './Company';
 
-export { Companies };
-
-function Companies({
+export function Companies({
   companies,
   setCompanies,
   initCompany

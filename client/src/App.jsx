@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { history } from '_helpers';
-import { Nav, Alert, PrivateRoute } from '_components';
-import { Home } from 'home';
+import { PrivateRoute } from '_components/placeholders/PrivateRoute';
+import { Nav } from '_components/placeholders/Nav';
+import { Alert } from '_components/placeholders/Alert';
+import { Home } from 'home/Home';
 import { AccountLayout } from 'account';
 import { UsersLayout } from 'users';
 import { Cv } from 'screens';

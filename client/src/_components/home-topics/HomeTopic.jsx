@@ -1,9 +1,7 @@
 import { useState } from 'react';
-import { ItemPills } from './';
+import { ItemPills } from './ItemPills';
 
-export { HomeTopic };
-
-function HomeTopic ({
+export function HomeTopic ({
   homeTopic,
   addHomeTopic,
   updateHomeTopic,

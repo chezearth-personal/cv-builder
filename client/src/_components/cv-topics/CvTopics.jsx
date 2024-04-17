@@ -1,10 +1,7 @@
-// import { CvTopic } from './CvTopic';
-import { Items } from './';
+import { Items } from './Items';
 import { tick } from 'resources/images';
 
-export { CvTopics };
-
-function CvTopics({ handleBr, cvTopics, ...props }) {
+export function CvTopics({ handleBr, cvTopics, ...props }) {
   return (
     <div className='cvPoint'>
       <h4 className='cvBodyTitle'>{props.headingText}</h4>
@@ -20,5 +17,3 @@ function CvTopics({ handleBr, cvTopics, ...props }) {
     </div>
   )
 }
-
-        // <CvTopic key={index} handleBr={handleBr} cvTopic={cvTopic} />

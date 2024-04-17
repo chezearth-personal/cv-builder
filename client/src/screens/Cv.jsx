@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { useReactToPrint } from 'react-to-print';
-import { ErrorPage, CvTopics } from '_components';
+import { ErrorPage } from '_components/placeholders/ErrorPage';
+import { CvTopics } from '_components/cv-topics/CvTopics';
 import { imageEmail, imageTel, imageWeb } from 'resources/images';
 import './Cv.css';
 

@@ -1,9 +1,7 @@
 import { useState } from 'react';
-import { HomeTopics } from '_components';
+import { HomeTopics } from '_components/home-topics/HomeTopics';
 
-export { Company };
-
-function Company({
+export function Company({
   addCompany,
   updateCompany,
   removeCompany,

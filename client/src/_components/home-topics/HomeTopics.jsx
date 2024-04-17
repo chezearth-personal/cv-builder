@@ -1,9 +1,6 @@
 import { HomeTopic } from './HomeTopic';
-// import ItemPills from './item-pill/ItemPills';
 
-export { HomeTopics };
-
-function HomeTopics({
+export function HomeTopics({
   homeTopics,
   setHomeTopics,
   updateParent,

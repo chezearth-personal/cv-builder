@@ -3,9 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { authActions } from '_store';
 
-export { Nav };
-
-function Nav() {
+export function Nav() {
   const auth = useSelector(x => x.auth.value);
   const dispatch = useDispatch();
   const navigate = useNavigate();

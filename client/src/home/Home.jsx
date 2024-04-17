@@ -2,7 +2,9 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { Loading, HomeTopics, Companies } from '_components';
+import { Loading } from '_components/placeholders/Loading';
+import { HomeTopics } from '_components/home-topics/HomeTopics';
+import { Companies } from '_components/companies/Companies';
 import { logo } from 'resources/images';
 import 'App.css'
 

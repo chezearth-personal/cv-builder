@@ -1,10 +1,7 @@
-import React from "react";
-// import ItemPill from './ItemPill';
+// import React from "react";
 import './ItemPills.css';
 
-export { ItemPills };
-
-function ItemPills({ removePill, items }) {
+export function ItemPills({ removePill, items }) {
   return items && (
     <div className='itemPills'>
       <div className='itemPillsList'>
