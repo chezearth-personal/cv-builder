@@ -22,7 +22,7 @@ export function Alert() {
             type='button'
             className='btn__close'
             onClick={() => dispatch(alertActions.clear())}
-          ></button>
+          >Close</button>
         </div>
       </div>
     </div>

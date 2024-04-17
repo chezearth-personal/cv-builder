@@ -77,7 +77,7 @@ function Home({ setResult }) {
   return (
     <div className='App'>
       <div className='nav'>
-        <h3>{!auth ? `Not logged in` : `Hi ${auth?.firstName}!`}</h3>
+        <h3>{!auth ? `Not logged in` : `Hi ${auth?.firstname}!`}</h3>
         {/**<p>You're logged in with React 18 + Redux & JWT</p>*/}
         <p>{auth && <Link to='/users'>Manage users</Link>}</p>
       </div>

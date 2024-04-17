@@ -12,12 +12,12 @@ function Register() {
   const dispatch = useDispatch();
   /** Form validation rules */
   const validationSchema = Yup.object().shape({
-    firstName: Yup.string()
+    firstname: Yup.string()
       .required('First Name is required'),
-    lastName: Yup.string()
+    lastname: Yup.string()
       .required('Last Name is required'),
-    username: Yup.string()
-      .required('Username is required'),
+    email: Yup.string()
+      .required('Email is required'),
     password: Yup.string()
       .required('Password is required')
       .min(6, 'Password must be at least 6 characters')
@@ -34,7 +34,7 @@ function Register() {
       /** Redirect to login page and display success alert */
       history.navigate('/account/login');
       dispatch(alertActions.success({
-        message: 'Registration successful',
+        message: 'Registration successful ',
         showAfterRedirect: true
       }));
     } catch (error) {
@@ -48,40 +48,40 @@ function Register() {
       <div className='card__body'>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className='mb__3'>
-            <label htmlFor='firstName'>
+            <label htmlFor='firstname'>
               First Name <span className='req'>*</span>
             </label>
             <input
-              name='firstName'
+              name='firstname'
               type='text'
-              { ...register('firstName') }
-              className={`form__control ${errors.firstName ? 'is-invalid' : ''}`}
+              { ...register('firstname') }
+              className={`form__control ${errors.firstname ? 'is-invalid' : ''}`}
             />
-            <div className='invalid-feedback'>{errors.firstName?.message}</div>
+            <div className='invalid-feedback'>{errors.firstname?.message}</div>
           </div>
           <div className='mb__3'>
-            <label htmlFor='lastName'>
+            <label htmlFor='lastname'>
               Last Name <span className='req'>*</span>
             </label>
             <input
-              name='lastName'
+              name='lastname'
               type='text'
-              { ...register('lastName') }
-              className={`form__control ${errors.lastName ? 'is-invalid' : ''}`}
+              { ...register('lastname') }
+              className={`form__control ${errors.lastname ? 'is-invalid' : ''}`}
             />
-            <div className='invalid-feedback'>{errors.lastName?.message}</div>
+            <div className='invalid-feedback'>{errors.lastname?.message}</div>
           </div>
           <div className='mb__3'>
-            <label htmlFor='username'>
-              Username <span className='req'>*</span>
+            <label htmlFor='email'>
+              email <span className='req'>*</span>
             </label>
             <input
-              name='username'
-              type='text'
-              { ...register('username') }
-              className={`form__control ${errors.username ? 'is-invalid' : ''}`}
+              name='email'
+              type='email'
+              { ...register('email') }
+              className={`form__control ${errors.email ? 'is-invalid' : ''}`}
             />
-            <div className='invalid-feedback'>{errors.username?.message}</div>
+            <div className='invalid-feedback'>{errors.email?.message}</div>
           </div>
           <div className='mb__3'>
             <label htmlFor='password'>

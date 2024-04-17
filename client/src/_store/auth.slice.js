@@ -39,12 +39,12 @@ function createExtraActions() {
   function login() {
     return createAsyncThunk(
       `${name}/login`,
-      async function ({ username, password }, { dispatch }) {
+      async function ({ email, password }, { dispatch }) {
         dispatch(alertActions.clear());
         try {
           const user = await fetchWrapper.post(
             `${baseUrl}/authenticate`,
-            { username, password }
+            { email, password }
           );
           /** Set auth user in Redux state */
           dispatch(authActions.setAuth(user));

@@ -16,12 +16,12 @@ function AddEdit() {
   const user = useSelector(x => x.users?.item);
   /** Form validation rules */
   const validationSchema = yup.object().shape({
-    firstName: yup.string()
+    firstname: yup.string()
       .required('First Name is required'),
-    lastName: yup.string()
+    lastname: yup.string()
       .required('Last Name is required'),
-    username: yup.string()
-      .required('Username is required'),
+    email: yup.string()
+      .required('Email is required'),
     password: yup.string()
       .transform(x => x === '' ? undefined : x)
       .concat(id ? null : yup.string().required('Password is required'))
@@ -73,38 +73,38 @@ function AddEdit() {
                 First Name <span className='req'>*</span>
               </label>
               <input
-                name='firstName'
+                name='firstname'
                 type='text'
-                {...register('firstName')}
-                className={`form__input ${errors.firstName ? 'is-invalid' : ''}`}
+                {...register('firstname')}
+                className={`form__input ${errors.firstname ? 'is-invalid' : ''}`}
               />
-              <div className='invalid-feedback'>{errors.firstName?.message}</div>
+              <div className='invalid-feedback'>{errors.firstname?.message}</div>
             </div>
             <div className='mb__3 col'>
               <label className='form__label'>
                 Last Name <span className='req'>*</span>
               </label>
               <input
-                name='lastName'
+                name='lastname'
                 type='text'
-                {...register('lastName')}
-                className={`form__input ${errors.lastName ? 'is-invalid' : ''}`}
+                {...register('lastname')}
+                className={`form__input ${errors.lastname ? 'is-invalid' : ''}`}
               />
-              <div className='invalid-feedback'>{errors.lastName?.message}</div>
+              <div className='invalid-feedback'>{errors.lastname?.message}</div>
             </div>
           </div>
           <div className='row'>
             <div className='mb__3 col'>
               <label className='form__label'>
-                Username <span className='req'>*</span>
+                Email <span className='req'>*</span>
               </label>
               <input
-                name='username'
-                type='text'
-                {...register('username')}
-                className={`form__input ${errors.username ? 'is-invalid' : ''}`}
+                name='email'
+                type='email'
+                {...register('email')}
+                className={`form__input ${errors.email ? 'is-invalid' : ''}`}
               />
-              <div className='invalid-feedback'>{errors.username?.message}</div>
+              <div className='invalid-feedback'>{errors.email?.message}</div>
             </div>
             <div className='mb__3 col'>
               <label className='form__label'>

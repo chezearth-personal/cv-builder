@@ -28,9 +28,9 @@ function List() {
         <tbody>
           {users?.value?.map(user =>
             <tr key={user.id}>
-              <td>{user.firstName}</td>
-              <td>{user.lastName}</td>
-              <td>{user.username}</td>
+              <td>{user.firstname}</td>
+              <td>{user.lastname}</td>
+              <td>{user.email}</td>
               <td style={{ whiteSpace: 'nowrap' }}>
                 <Link to={`edit/${user.id}`} className='btn btn__sm btn__primary me__1'>Edit</Link>
                 <button

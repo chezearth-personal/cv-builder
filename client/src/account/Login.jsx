@@ -11,7 +11,7 @@ function Login() {
   const dispatch = useDispatch();
   /** Form violation rules */
   const validationSchema = Yup.object().shape({
-    username: Yup.string().required('Username is required'),
+    email: Yup.string().required('Email is required'),
     password: Yup.string().required('Password is required')
   });
   const formOptions = { resolver: yupResolver(validationSchema) };
@@ -19,8 +19,8 @@ function Login() {
   const { register, handleSubmit, formState } = useForm(formOptions);
   const { errors, isSubmitting } = formState;
   
-  function onSubmit({ username, password }) {
-    return dispatch(authActions.login({ username, password }));
+  function onSubmit({ email, password }) {
+    return dispatch(authActions.login({ email, password }));
   }
 
   return (
@@ -29,16 +29,16 @@ function Login() {
       <div className='card__body'>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className='mb__3'>
-            <label htmlFor='username'>
+            <label htmlFor='email'>
               User name <span className='req'>*</span>
             </label>
             <input
-              name='username'
-              type='text'
-              {...register('username')}
-              className={`form__control ${errors.username ? 'is__ivalid' : ''}`}
+              name='email'
+              type='email'
+              {...register('email')}
+              className={`form__control ${errors.email ? 'is__ivalid' : ''}`}
             />
-            <div className='invalid__feedback'>{errors.username?.message}</div>
+            <div className='invalid__feedback'>{errors.email?.message}</div>
           </div>
           <div className='mb__3'>
             <label htmlFor='password'>
