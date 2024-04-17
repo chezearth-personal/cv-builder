@@ -32,7 +32,7 @@ function createReducers() {
 }
 
 function createExtraActions() {
-  const baseUrl = `${process.env.REACT_APP_API_URL}/users`;
+  const baseUrl = `${process.env.REACT_APP_API_URL}/api/v1`;
   return {
     login: login(),
     logout: logout()
@@ -44,7 +44,7 @@ function createExtraActions() {
         dispatch(alertActions.clear());
         try {
           const user = await fetchWrapper.post(
-            `${baseUrl}/authenticate`,
+            `${baseUrl}/auth/login`,
             { email, password }
           );
           /** Set auth user in Redux state */
@@ -63,7 +63,7 @@ function createExtraActions() {
   }
   function logout() {
     return createAsyncThunk(
-      `${name}/logout`,
+      `${name}/auth/logout`,
       function (arg, { dispatch }) {
         dispatch(authActions.setAuth(null));
         localStorage.removeItem('auth');

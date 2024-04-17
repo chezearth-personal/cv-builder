@@ -22,7 +22,7 @@ function createInitialState() {
 }
 
 function createExtraActions() {
-  const baseUrl = `${process.env.REACT_APP_API_URL}/users`;
+  const baseUrl = `${process.env.REACT_APP_API_URL}/api/v1`;
   return {
     register: register(),
     getAll: getAll(),
@@ -34,7 +34,7 @@ function createExtraActions() {
   function register() {
     return createAsyncThunk(
       `${name}/register`,
-      async (user) => await fetchWrapper.post(`${baseUrl}/register`, user)
+      async (user) => await fetchWrapper.post(`${baseUrl}/auth/register`, user)
     );
   }
   function getAll() {
@@ -46,7 +46,7 @@ function createExtraActions() {
   function getById() {
     return createAsyncThunk(
       `${name}/getById`,
-      async (id) => await fetchWrapper.get(`${baseUrl}/${id}`)
+      async (id) => await fetchWrapper.get(`${baseUrl}/users/me`)
     );
   }
   function update() {

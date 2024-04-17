@@ -7,7 +7,7 @@ import { history } from '_helpers/history';
 import { alertActions } from '_store/alert.slice';
 import { userActions } from '_store/users.slice';
 
-export function Register() {
+export const Register = () => {
   const dispatch = useDispatch();
   /** Form validation rules */
   const validationSchema = Yup.object().shape({
