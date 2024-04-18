@@ -22,7 +22,8 @@ function createInitialState() {
 }
 
 function createExtraActions() {
-  const baseUrl = `${process.env.REACT_APP_API_URL}/api/v1`;
+  const baseUrl = `${process.env.REACT_APP_AUTH_API_BASE_URL}/api/v1`;
+  // console.log(`createExtraActions():baseUrl: ${baseUrl}`);
   return {
     register: register(),
     getAll: getAll(),
@@ -32,6 +33,7 @@ function createExtraActions() {
   };
 
   function register() {
+    // console.log(`createExtraActions():register(): baseUrl: ${baseUrl}`);
     return createAsyncThunk(
       `${name}/register`,
       async (user) => await fetchWrapper.post(`${baseUrl}/auth/register`, user)

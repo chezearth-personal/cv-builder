@@ -136,6 +136,9 @@ button {
   color: red;
 }
 
+.alert {
+  margin: 2.3em 0 0 0;
+}
 /* :required:invalid { */
   /* border: 2px solid red; */
 /* } */

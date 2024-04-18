@@ -4584,6 +4584,7 @@ __metadata:
     eslint-plugin-react-hooks: "npm:^4.6.0"
     normalize.css: "npm:^8.0.1"
     react: "npm:^18.2.0"
+    react-app-rewired: "npm:^2.2.1"
     react-dom: "npm:^18.2.0"
     react-hook-form: "npm:^7.51.2"
     react-redux: "npm:^9.1.0"
@@ -11117,6 +11118,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-app-rewired@npm:^2.2.1":
+  version: 2.2.1
+  resolution: "react-app-rewired@npm:2.2.1"
+  dependencies:
+    semver: "npm:^5.6.0"
+  peerDependencies:
+    react-scripts: ">=2.1.3"
+  bin:
+    react-app-rewired: bin/index.js
+  checksum: 10c0/722e20f5e5691b61e8c13da014c4fe38d87d8843715270484aa0b0e1d6605faf1c8961f18bde41ca82493975cb69f5259d943e5a40a79b0c80536a3dde057b3d
+  languageName: node
+  linkType: hard
+
 "react-dev-utils@npm:^12.0.1":
   version: 12.0.1
   resolution: "react-dev-utils@npm:12.0.1"
@@ -11894,6 +11908,15 @@ __metadata:
     "@types/node-forge": "npm:^1.3.0"
     node-forge: "npm:^1"
   checksum: 10c0/521829ec36ea042f7e9963bf1da2ed040a815cf774422544b112ec53b7edc0bc50a0f8cc2ae7aa6cc19afa967c641fd96a15de0fc650c68651e41277d2e1df09
+  languageName: node
+  linkType: hard
+
+"semver@npm:^5.6.0":
+  version: 5.7.2
+  resolution: "semver@npm:5.7.2"
+  bin:
+    semver: bin/semver
+  checksum: 10c0/e4cf10f86f168db772ae95d86ba65b3fd6c5967c94d97c708ccb463b778c2ee53b914cd7167620950fc07faf5a564e6efe903836639e512a1aa15fbc9667fa25
   languageName: node
   linkType: hard
 

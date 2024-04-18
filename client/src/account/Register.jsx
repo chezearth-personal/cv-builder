@@ -86,14 +86,14 @@ export const Register = () => {
             className={`form__control ${errors.password ? 'is-invalid' : ''}`}
           />
           <div className='invalid-feedback'>{errors.password?.message}</div>
-          <label htmlFor='confirmPassword'>
+          <label htmlFor='passwordConfirm'>
             Confirm Password <span className='req'>*</span>
           </label>
           <input
-            name='confirmPassword'
+            name='passwordConfirm'
             type='password'
-            { ...register('confirmPassword') }
-            className={`form__control ${errors.confirmPassword ? 'is-invalid' : ''}`}
+            { ...register('passwordConfirm') }
+            className={`form__control ${errors.passwordConfirm ? 'is-invalid' : ''}`}
           />
           <button disabled={isSubmitting} className='btn btn__primary'>
             {isSubmitting && <span className='spinner__border spinner__border__sm me__1'></span>}

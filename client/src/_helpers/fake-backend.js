@@ -6,16 +6,18 @@ let users = JSON.parse(localStorage.getItem(usersKey)) || [];
 
 function fakeBackend() {
     let realFetch = window.fetch;
+    // console.log(`realFetch = ${realFetch}`);
     window.fetch = function (url, opts) {
         return new Promise((resolve, reject) => {
             // wrap in timeout to simulate server api call
+            console.log(`url=${url} opts=${!opts ? opts : opts.method}`);
             setTimeout(handleRoute, 500);
 
             function handleRoute() {
                 switch (true) {
                     case url.endsWith('/users/authenticate') && opts.method === 'POST':
                         return authenticate();
-                    case url.endsWith('/users/register') && opts.method === 'POST':
+                    case url.endsWith('/api/v1/register') && opts.method === 'POST':
                         return register();
                     case url.endsWith('/users') && opts.method === 'GET':
                         return getUsers();
@@ -27,6 +29,7 @@ function fakeBackend() {
                         return deleteUser();
                     default:
                         // pass through any requests not handled above
+                        console.log(`Passing fetch out of fakeBackend to url=${url} opts=${opts}`);
                         return realFetch(url, opts)
                             .then(response => resolve(response))
                             .catch(error => reject(error));

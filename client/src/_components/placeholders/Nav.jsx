@@ -8,8 +8,8 @@ export function Nav() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  console.log('location =', location);
-  console.log('!auth =', !auth);
+  // console.log('location =', location);
+  // console.log('!auth =', !auth);
   const logout = () => {
     // navigate('/');
     return dispatch(authActions.logout());
