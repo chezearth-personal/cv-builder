@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
+import { Routes, Route, Navigate, useNavigate, useLocation, useParams } from 'react-router-dom';
 import { PrivateRoute } from '_components/placeholders/PrivateRoute';
 import { Nav } from '_components/placeholders/Nav';
 import { Alert } from '_components/placeholders/Alert';
+import { VerifyEmail } from '_components/placeholders/VerifyEmail';
 import { history } from '_helpers/history';
 import { Home } from 'home/Home';
 import { AccountLayout } from 'account/AccountLayout';
@@ -17,6 +18,8 @@ function App() {
   history.navigate = useNavigate();
   history.location = useLocation();
 
+  const { token } = useParams();
+
   return (
     <div className='app__container bg__light'>
       <Nav />
@@ -30,6 +33,7 @@ function App() {
           </Route>
           {/** Public */}
           <Route path='/' element={<Home setResult={setResult} />} />
+          <Route path='/verifyemail/:verificationcode/*' element={<VerifyEmail token={token} />} />
           <Route path='account/*' element={<AccountLayout />} />
           <Route path='*' element={<Navigate to='/' />} />
         </Routes>

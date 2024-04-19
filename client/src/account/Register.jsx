@@ -29,11 +29,11 @@ export const Register = () => {
   async function onSubmit(data) {
     dispatch(alertActions.clear());
     try {
-      await dispatch(userActions.register(data)).unwrap();
+      const response = await dispatch(userActions.register(data)).unwrap();
       /** Redirect to login page and display success alert */
       history.navigate('/account/login');
       dispatch(alertActions.success({
-        message: 'Registration successful ',
+        message: `${response.message} `,
         showAfterRedirect: true
       }));
     } catch (error) {

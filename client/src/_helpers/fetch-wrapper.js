@@ -1,4 +1,4 @@
-import axios from 'axios';
+// import axios from 'axios';
 import { authActions } from '_store/auth.slice';
 import { store } from '_store/store';
 
@@ -16,7 +16,6 @@ function request(method) {
       method,
       url
     };
-    console.log('request():requestOptions =', requestOptions);
     if (body) {
       requestOptions.headers['Content-Type'] = 'application/json'
       requestOptions.body = JSON.stringify(body);
@@ -32,8 +31,8 @@ function authHeader(url) {
   /** return auth header with jwt if user is logged in and request is to the api url */
   const token = authToken();
   const isLoggedIn = !!token;
-  console.log('url =', url);
-  console.log('fetchWrapper:authHeader():authServer.url =', process.env.REACT_APP_AUTH_API_BASE_URL);
+  // console.log('url =', url);
+  // console.log('fetchWrapper:authHeader():authServer.url =', process.env.REACT_APP_AUTH_API_BASE_URL);
   const isApiUrl = url.startsWith(process.env.REACT_APP_AUTH_API_BASE_URL);
   if (isLoggedIn && isApiUrl) {
     return { Authorization: `Bearer ${token}` };
