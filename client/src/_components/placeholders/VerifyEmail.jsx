@@ -36,14 +36,14 @@ export const VerifyEmail = () => {
         console.log('2. doneVerifying =', doneVerifying);
         const response = await fetchWrapper.get(url);
         console.log('API call completed.');
-        console.log('response =', response);
+        console.log('response.status =', response && response.status);
         // console.log('5. verified =', verified);
         // console.log('5. doneVerifying =', doneVerifying);
         setResponse({ ...initialResponse, ...(response || {}) });
       }
     } catch (error) {
       console.error('error =', error);
-      return error.message;
+      setResponse({ ...initialResponse, message: error.message });
     }
   }
   // console.log('6. verified =', verified);
@@ -80,12 +80,13 @@ export const VerifyEmail = () => {
       <h1>{response.message}</h1>
       {response.status === 'unknown'
         ? null
-        : <div>
+        : <div className='alert'>
             <h3>Verification Complete</h3>
-            {response.statusCode === '200'
+            {response.status === 'success'
               ? <div className='alert'>
-                  <p>`Congratulations! Your ${(response.message).toLowerCase()}.`</p>
-                  <p>'You may login to your account'</p>
+                  <p>{`Congratulations! Your ${response.message.toLowerCase()}.`}</p>
+                  <br></br>
+                  <p>You may login to your account</p>
                 </div>
               : <div className='alert'>
                   <p>{response.message}</p>

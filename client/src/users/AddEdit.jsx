@@ -67,7 +67,7 @@ export function AddEdit() {
       {!(user?.loading || user?.error) &&
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className='row'>
-            <div className='mb__3 col'>
+        {/*<div className='mb__3 col'>*/}
               <label className='form__label'>
                 First Name <span className='req'>*</span>
               </label>
@@ -78,8 +78,8 @@ export function AddEdit() {
                 className={`form__input ${errors.firstname ? 'is-invalid' : ''}`}
               />
               <div className='invalid-feedback'>{errors.firstname?.message}</div>
-            </div>
-            <div className='mb__3 col'>
+        {/*</div>*/}
+        {/*<div className='mb__3 col'>*/}
               <label className='form__label'>
                 Last Name <span className='req'>*</span>
               </label>
@@ -90,7 +90,7 @@ export function AddEdit() {
                 className={`form__input ${errors.lastname ? 'is-invalid' : ''}`}
               />
               <div className='invalid-feedback'>{errors.lastname?.message}</div>
-            </div>
+        {/*</div>*/}
           </div>
           <div className='row'>
             <div className='mb__3 col'>

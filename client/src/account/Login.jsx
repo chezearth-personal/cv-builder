@@ -26,30 +26,26 @@ export function Login() {
       <h3 className='card__header'>Login</h3>
       <div className='card__body'>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className='mb__3'>
-            <label htmlFor='email'>
-              User name <span className='req'>*</span>
-            </label>
-            <input
-              name='email'
-              type='email'
-              {...register('email')}
-              className={`form__control ${errors.email ? 'is__ivalid' : ''}`}
-            />
-            <div className='invalid__feedback'>{errors.email?.message}</div>
-          </div>
-          <div className='mb__3'>
-            <label htmlFor='password'>
-              Password <span className='req'>*</span>
-            </label>
-            <input
-              name='password'
-              type='password'
-              {...register('password')}
-              className={`form__control ${errors.password ? 'is__ivalid' : ''}`}
-            />
-            <div className='invalid__feedback'>{errors.password?.message}</div>
-          </div>
+          <label htmlFor='email'>
+            Email <span className='req'>*</span>
+          </label>
+          <input
+            name='email'
+            type='email'
+            {...register('email')}
+            className={`form__control ${errors.email ? 'is__ivalid' : ''}`}
+          />
+          <div className='invalid__feedback'>{errors.email?.message}</div>
+          <label htmlFor='password'>
+            Password <span className='req'>*</span>
+          </label>
+          <input
+            name='password'
+            type='password'
+            {...register('password')}
+            className={`form__control ${errors.password ? 'is__ivalid' : ''}`}
+          />
+          <div className='invalid__feedback'>{errors.password?.message}</div>
           <button disabled={isSubmitting} className='btn btn__primary'>
             {isSubmitting && <span className='spinner__border spinner__border__sm me__1'></span>}
             Login
@@ -60,3 +56,9 @@ export function Login() {
     </div>
   );
 }
+
+
+          // <div className='mb__3'>
+          // </div>
+          // <div className='mb__3'>
+          // </div>

@@ -39,7 +39,7 @@ export function Nav() {
         {!auth
           ? <></>
           : <>
-              <NavLink to='/users' className='nav__item nav__link'>Users</NavLink>
+          {/*<NavLink to='/users' className='nav__item nav__link'>Users</NavLink>*/}
               <button onClick={logout} className='btn btn__link nav__item nav__link'>Logout</button>
             </>
         }

@@ -43,10 +43,21 @@ function createExtraActions() {
       async function ({ email, password }, { dispatch }) {
         dispatch(alertActions.clear());
         try {
-          const user = await fetchWrapper.post(
+          const auth = await fetchWrapper.post(
             `${baseUrl}/auth/login`,
             { email, password }
           );
+          console.log(`createExtraActions():login():user = ${JSON.stringify(auth)}`);
+          /** Store access token in auth object of local store */
+          // localStorage.setItem('auth', JSON.stringify({access_token: auth.access_token}));
+          dispatch(authActions.setAuth({token: auth.access_token}));
+          const userDetails = await fetchWrapper.get(`${baseUrl}/users/me`);
+          console.log(`userDetails = ${JSON.stringify(userDetails)}`);
+          const user = userDetails
+            && userDetails.data
+            && userDetails.data.user
+            && { ...userDetails.data.user, ...{token: auth.access_token} };
+          console.log(`user = ${JSON.stringify(user)}`);
           /** Set auth user in Redux state */
           dispatch(authActions.setAuth(user));
           /** Store user details and jwt token in local storage  to keep user logged */
