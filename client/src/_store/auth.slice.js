@@ -50,7 +50,6 @@ function createExtraActions() {
           console.log(`createExtraActions():login():user = ${JSON.stringify(auth)}`);
           /** Store access token in auth object of local store */
           // localStorage.setItem('auth', JSON.stringify({access_token: auth.access_token}));
-          dispatch(authActions.setAuth({token: auth.access_token}));
           const userDetails = await fetchWrapper.get(`${baseUrl}/users/me`);
           console.log(`userDetails = ${JSON.stringify(userDetails)}`);
           const user = userDetails
