@@ -1,10 +1,13 @@
-import axios from 'axios';
-import { useState } from 'react';
+// import axios from 'axios';
+import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { useIdleTimer } from 'react-idle-timer';
 import { Loading } from '_components/placeholders/Loading';
 import { HomeTopics } from '_components/home-topics/HomeTopics';
 import { Companies } from '_components/companies/Companies';
+import { fetchWrapper } from '_helpers/fetch-wrapper';
+import { authActions } from '_store/auth.slice';
 import { logo } from 'resources/images';
 import 'App.css';
 
@@ -19,22 +22,66 @@ function Home({ setResult }) {
     isCurrent: false,
     keyPhraseTopics: []
   };
-  const [fullName, setFullName] = useState('');
-  const [occupation, setOccupation] = useState('');
-  const [headShot, setHeadShot] = useState(null);
-  const [tel, setTel] = useState('');
-  const [email, setEmail] = useState('');
-  const [website, setWebsite] = useState('');
-  const [skillTopics, setSkillTopics] = useState([{ name: '', itemList: [] }]);
-  const [loading, setLoading] = useState(false);
-  const [companies, setCompanies] = useState([initCompany]);
+  const [ state, setState ] = useState('Active');
+  const [ count, setCount ] = useState(0);
+  const [ remainingTime, setRemainingTime ] = useState(0);
+  const [ fullName, setFullName ] = useState('');
+  const [ occupation, setOccupation ] = useState('');
+  const [ headShot, setHeadShot ] = useState(null);
+  const [ tel, setTel ] = useState('');
+  const [ email, setEmail ] = useState('');
+  const [ website, setWebsite ] = useState('');
+  const [ skillTopics, setSkillTopics ] = useState([{ name: '', itemList: [] }]);
+  const [ loading, setLoading ] = useState(false);
+  const [ companies, setCompanies ] = useState([initCompany]);
   const navigate = useNavigate();
   const auth = useSelector(x => x.auth.value);
-  /** Submit the form */
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
+  const dispatch = useDispatch();
+  /** Idle timer functions */
+  const onIdle = () => {
+    console.log('user is idle');
+    setState('Idle');
+    if (auth) {
+      console.log('logging out');
+      dispatch(authActions.logout());
+    } else {
+      console.log('user not logged in');
+    }
+  }
+  const onActive = () => {
+    setState('Active');
+  }
+  const onAction = () => {
+    setCount(count + 1);
+  }
+  const { getRemainingTime } = useIdleTimer({
+    onIdle,
+    onActive,
+    onAction,
+    timeout: 60_000 * (process.env.REACT_APP_IDLE_TIMEOUT_MINUTES || 10),
+    throttle: 500
+  });
+  /** Handle Form Success & Errors, Submit the form */
+  const handleFormSuccess = res => {
+    if (res.data.message) {
+      /** Update the result object */
+      setResult(res.data.data);
+      navigate('/cv');
+    }
+    setLoading(true);
+  }
+  const handleFormError = err => {
+    if (err && err.response && /<pre>MulterError: File too large<br>/.test(err.response.data.toString())) {
+      console.error('navigate to \'ErrorPage/\'');
+    } else {
+      console.error(err);
+    }
+    setLoading(true);
+  }
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
     /** Check the text input for adding pill items have all been cleared */
-    const inputItems = e.target.querySelectorAll('input[name="inputItem"]');
+    const inputItems = event.target.querySelectorAll('input[name="inputItem"]');
     const sendForm = [ ...inputItems].reduce((acc, item) => {
       if (item.value !== '') {
         alert(`Please click the 'Add item' button next to '${item.value}' to add it to the list`);
@@ -51,35 +98,48 @@ function Home({ setResult }) {
       formData.append('website', website);
       formData.append('skillTopics', JSON.stringify(skillTopics));
       formData.append('companyDetails', JSON.stringify(companies));
-      // console.log('skillGroups JSON:', JSON.stringify(skillGroups));
-      // console.log('companies JSON:', JSON.stringify(companies));
-      axios
-        .post('http://localhost:4000/cv/create', formData, {})
-        .then(res => {
-          if (res.data.message) {
-            /** Update the result object */
-            setResult(res.data.data);
-            navigate('/cv');
-          }
-        })
-        .catch(err => {
-          if (err && err.response && /<pre>MulterError: File too large<br>/.test(err.response.data.toString())) {
-            console.error('navigate to \'ErrorPage/\'');
-          } else {
-            console.error(err);
-          }
-        });
-      setLoading(true);
+      fetchWrapper.post(
+        'http://localhost:4000/cv/create',
+        formData,
+        handleFormSuccess,
+        handleFormError
+      );
+      // axios
+        // .post('http://localhost:4000/cv/create', formData, {})
+        // .then(res => {
+          // if (res.data.message) {
+            // /** Update the result object */
+            // setResult(res.data.data);
+            // navigate('/cv');
+          // }
+        // })
+        // .catch(err => {
+          // if (err && err.response && /<pre>MulterError: File too large<br>/.test(err.response.data.toString())) {
+            // console.error('navigate to \'ErrorPage/\'');
+          // } else {
+            // console.error(err);
+          // }
+        // });
+      // setLoading(true);
     }
     // return;
     return <div></div>;
   }
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRemainingTime(Math.ceil(getRemainingTime() / 1000));
+    }, 500);
+    return () => clearInterval(interval);
+  });
+
   return (
     <div className='App'>
       <div className='nav'>
         <h3>{!auth ? `Not logged in` : `Hi ${auth?.firstname}!`}</h3>
         {/**<p>You're logged in with React 18 + Redux & JWT</p>*/}
         <p>{auth && <Link to='/users'>My account</Link>}</p>
+        <p>Idle timer: current state - {state} | Action events - {count} | {remainingTime} seconds remaining</p>
       </div>
       {loading ? <Loading /> : null}
       <div className='App-header'>

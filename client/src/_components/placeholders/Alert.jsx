@@ -7,7 +7,6 @@ export function Alert() {
   const dispatch = useDispatch();
   const location = useLocation();
   const alert = useSelector(x => x.alert.value);
-
   useEffect(() => {
     /** clear alert on location change */
     dispatch(alertActions.clear());

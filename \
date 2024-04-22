@@ -1,5 +1,4 @@
 import axios from 'axios';
-import Cookies from 'js-cookie';
 import { authActions } from '_store/auth.slice';
 import { store } from '_store/store';
 
@@ -16,8 +15,8 @@ function request(method) {
       method,
       url,
       headers: authHeader(url),
+      cookies: true
     };
-    console.log('request():requestOptions =', requestOptions);
     if (body) {
       requestOptions.headers['Content-Type'] = 'application/json'
       requestOptions.data = body;
@@ -33,12 +32,8 @@ function request(method) {
 
 function authHeader(url) {
   /** return auth header with jwt if user is logged in and request is to the api url */
-  const { access_token, refresh_token, logged_in } = authToken();
-  console.log(`authHeader():access_token = ${access_token}`);
-  console.log(`authHeader():refresh_token = ${refresh_token}`);
-  console.log(`authHeader():logged_in = ${logged_in}`);
+  const access_token = authToken();
   const isLoggedIn = !!access_token;
-  // console.log(`authHeader():isLoggedIn = ${isLoggedIn}`);
   const isApiUrl = url.startsWith(process.env.REACT_APP_AUTH_API_BASE_URL);
   if (isLoggedIn && isApiUrl) {
     return { Authorization: `Bearer ${access_token}` };
@@ -48,19 +43,15 @@ function authHeader(url) {
 }
 
 function authToken() {
-  return {
-    access_token: Cookies.get('access_token'),
-    refresh_token: Cookies.get('refresh_token'),
-    logged_in: Cookies.get('logged_in')
-  };
+  return store.getState().auth.value?.access_token;
 }
 
 async function handleResponse( response ) {
-  console.log('handleResponse():response =', response);
-  console.log('handleResponse():response.data =', response.data);
-  console.log('handleResponse():response.headers =', response.headers);
-  const data = response.data;
+  // const isJson = response.headers?.get('Content-Type')?.includes('application/json');
+  // const data = isJson ? await response.json() : null;
+  const { data, cookies } = { ...response.data, ...response.cookies };
   /** check for error response */
+  // if (!response.ok) {
   if (response.statusText !== 'OK') {
     if ([401, 403].includes(response.status) && authToken()) {
       /** auto logout if 401 Unauthorized or 403 Forbidden response from api */

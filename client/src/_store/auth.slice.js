@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import Cookies from 'js-cookie';
 import { alertActions } from '_store/alert.slice';
 import { fetchWrapper } from '_helpers/fetch-wrapper';
 import { history } from '_helpers/history';
@@ -32,7 +33,7 @@ function createReducers() {
 }
 
 function createExtraActions() {
-  const baseUrl = `${process.env.REACT_APP_AUTH_API_BASE_URL}/api/v1`;
+  const BASE_URL = `${process.env.REACT_APP_AUTH_API_BASE_URL}/api/v1`;
   return {
     login: login(),
     logout: logout()
@@ -43,19 +44,24 @@ function createExtraActions() {
       async function ({ email, password }, { dispatch }) {
         dispatch(alertActions.clear());
         try {
-          const auth = await fetchWrapper.post(
-            `${baseUrl}/auth/login`,
+          const login = await fetchWrapper.post(
+            `${BASE_URL}/auth/login`,
             { email, password }
           );
-          console.log(`createExtraActions():login():user = ${JSON.stringify(auth)}`);
+          console.log(`login = ${login}`);
+          console.log(`login = ${JSON.stringify(login)}`);
           /** Store access token in auth object of local store */
-          // localStorage.setItem('auth', JSON.stringify({access_token: auth.access_token}));
-          const userDetails = await fetchWrapper.get(`${baseUrl}/users/me`);
+          Cookies.set('access_token', login.access_token);
+          // dispatch(authActions.setAuth({ access_token: accessToken, refresh_token: refreshToken}));
+          const userDetails = await fetchWrapper.get(`${BASE_URL}/users/me`);
           console.log(`userDetails = ${JSON.stringify(userDetails)}`);
           const user = userDetails
             && userDetails.data
             && userDetails.data.user
-            && { ...userDetails.data.user, ...{token: auth.access_token} };
+            && {
+              ...userDetails.data.user,
+              // ...{ access_token: accessToken, refresh_token: refreshToken }
+            };
           console.log(`user = ${JSON.stringify(user)}`);
           /** Set auth user in Redux state */
           dispatch(authActions.setAuth(user));
@@ -73,8 +79,17 @@ function createExtraActions() {
   }
   function logout() {
     return createAsyncThunk(
-      `${name}/auth/logout`,
-      function (arg, { dispatch }) {
+      `${name}/logout`,
+      async function (arg, { dispatch }) {
+        try {
+          const logout = await fetchWrapper.post(`${BASE_URL}/auth/logout`, {});
+          if (logout.status === 204) {
+            console.log(`Log out successful.`);
+          }
+        } catch (error) {
+          dispatch(alertActions.error(error));
+        }
+        Cookies.remove('access_token');
         dispatch(authActions.setAuth(null));
         localStorage.removeItem('auth');
         history.navigate('/');
