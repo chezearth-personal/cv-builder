@@ -51,7 +51,14 @@ function createExtraActions() {
           console.log(`login = ${login}`);
           console.log(`login = ${JSON.stringify(login)}`);
           /** Store access token in auth object of local store */
-          Cookies.set('access_token', login.access_token);
+          Cookies.set(
+            'access_token',
+            login.access_token,
+            { expires: 1 }, 
+            { httpOnly: true },
+            { secure: true },
+            { sameSite: 'strict' }
+          );
           // dispatch(authActions.setAuth({ access_token: accessToken, refresh_token: refreshToken}));
           const userDetails = await fetchWrapper.get(`${BASE_URL}/users/me`);
           console.log(`userDetails = ${JSON.stringify(userDetails)}`);
