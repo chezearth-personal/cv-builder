@@ -12,7 +12,8 @@ export function AddEdit() {
   const { id } = useParams();
   const [ title, setTitle ] = useState();
   const dispatch = useDispatch();
-  const user = useSelector(x => x.users?.item);
+  const user = localStorage.getItem('user');
+  // const user = useSelector(x => x.users?.item);
   /** Form validation rules */
   const validationSchema = yup.object().shape({
     firstname: yup.string()
@@ -91,7 +92,7 @@ export function AddEdit() {
               />
               <div className='invalid-feedback'>{errors.lastname?.message}</div>
         {/*</div>*/}
-          </div>
+        {/*</div>*/}
           <div className='row'>
             <div className='mb__3 col'>
               <label className='form__label'>
@@ -104,8 +105,8 @@ export function AddEdit() {
                 className={`form__input ${errors.email ? 'is-invalid' : ''}`}
               />
               <div className='invalid-feedback'>{errors.email?.message}</div>
-            </div>
-            <div className='mb__3 col'>
+        {/*</div>*/}
+        {/*<div className='mb__3 col'>*/
               <label className='form__label'>
                 Password
                 {id && <em className='ml__1'>(leave blank to keep the same password)</em>}
@@ -117,7 +118,7 @@ export function AddEdit() {
                 className={`form__input ${errors.password ? 'is-invalid' : ''}`}
               />
               <div className='invalid-feedback'>{errors.password?.message}</div>
-            </div>
+        {/*</div>*/}
           </div>
           <div className='mb__3'>
             <button

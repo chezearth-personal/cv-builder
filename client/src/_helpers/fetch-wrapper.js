@@ -10,6 +10,8 @@ export const fetchWrapper = {
   delete: request('DELETE')
 }
 
+const authPath = `${process.env.REACT_APP_AUTH_API_BASE_URL}/api/v1/auth`;
+
 // const initConfig = {
   // url: null,
   // method: null,
@@ -22,6 +24,7 @@ export const fetchWrapper = {
 
 function request(method) {
   return (url, data, handleSuccess, handleError) => {
+    /** Response interceptor, used to catch 401 (unauthorized) responses and renew access_tokens*/
     axios.interceptors.response.use(
       (response) => {
         console.log('response interceptor:response =', response);
@@ -42,7 +45,7 @@ function request(method) {
             try {
               const response = axios.request({
                 method: 'GET',
-                url: `${process.env.REACT_APP_AUTH_API_BASE_URL}/api/v1/auth/refresh`,
+                url: `${authPath}/refresh`,
                 withCredentials: true
               });
               console.log('response interceptor:result =', response);
@@ -56,7 +59,7 @@ function request(method) {
         return Promise.reject(error);
       }
     );
-    const isUseCredentials = url => !url.startsWith(`${process.env.REACT_APP_AUTH_API_BASE_URL}/api/v1/auth`)
+    const isUseCredentials = url => !url.startsWith(authPath)
       || (!url.endsWith('/register')
         && !url.includes('/verifyemail/')
         && !url.endsWith('/login')
