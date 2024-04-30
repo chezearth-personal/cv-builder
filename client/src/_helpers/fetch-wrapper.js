@@ -10,7 +10,6 @@ export const fetchWrapper = {
   delete: request('DELETE')
 }
 
-const authPath = `${process.env.REACT_APP_AUTH_API_BASE_URL}/api/v1/auth`;
 
 // const initConfig = {
   // url: null,
@@ -20,62 +19,33 @@ const authPath = `${process.env.REACT_APP_AUTH_API_BASE_URL}/api/v1/auth`;
   // },
   // data: null
 // }
-// const instance = axios.create(initConfig);
 
 function request(method) {
   return (url, data, handleSuccess, handleError) => {
-    /** Response interceptor, used to catch 401 (unauthorized) responses and renew access_tokens*/
-    axios.interceptors.response.use(
-      (response) => {
-        console.log('response interceptor:response =', response);
-        return response;
-      },
-      async (error) => {
-        const originalConfig = error.config;
-        console.log('originalConfig.url =', originalConfig.url);
-        console.log('isUseCredentials(originalConfig.url)?', isUseCredentials(originalConfig.url));
-        console.log('error.response?', !!error.response);
-        console.log('error.response.status === 401?', error.response.status === 401);
-        console.log('!originalConfig._retry?', !originalConfig._retry);
-        if (isUseCredentials(originalConfig.url) && error.response) {
-          if (error.response.status === 401 && !originalConfig._retry) {
-            originalConfig._retry = true;
-            console.log('originalConfig._retry?', originalConfig._retry);
-            console.log('!originalConfig._retry?', !originalConfig._retry);
-            try {
-              const response = axios.request({
-                method: 'GET',
-                url: `${authPath}/refresh`,
-                withCredentials: true
-              });
-              console.log('response interceptor:result =', response);
-              handleResponse(response);
-            } catch (error) {
-              console.log('error.response?', !!error.response);
-              handleResponse(error.response);
-            }
-          }
-        }
-        return Promise.reject(error);
-      }
-    );
-    const isUseCredentials = url => !url.startsWith(authPath)
+    /** Path for auth endpoints */
+    const authPath = `${process.env.REACT_APP_AUTH_API_BASE_URL}/api/v1/auth`;
+    /** function to check url is not a login, register or veirfy email auth path, */
+    /** which do not require credentials (all other paths do) */
+    const isRequireCredentials = url => !url.startsWith(authPath)
       || (!url.endsWith('/register')
         && !url.includes('/verifyemail/')
-        && !url.endsWith('/login')
+        // && !url.endsWith('/login')
       );
-    const requestOptions = {
+    console.log('request():url =', url);
+    console.log('request():method =', method);
+    const initConfig = {
       method,
       url,
       headers: {},
-      withCredentials: isUseCredentials(url)
-    };
-    console.log('request():url =', url);
-    console.log('request():method =', method);
-    if (data) {
-      requestOptions.headers['Content-Type'] = 'application/json'
-      requestOptions.data = data;
+      withCredentials: isRequireCredentials(url)
     }
+    if (data) {
+      initConfig.headers['Content-Type'] = 'application/json'
+      initConfig.data = data;
+    }
+    console.log('request():initConfig =', initConfig);
+    // const instance = axios.create(initConfig);
+    /** Request interceptor */
     // instance.interceptors.request.use(
       // config => {
         // console.log('Request Interceptor ...');
@@ -88,10 +58,8 @@ function request(method) {
         // config.headers = initConfig.headers;
         // config.data = initConfig.data;
         // console.log('config.method:config.url =', config.method + ':' + config.url);
-        // console.log('isUseCredentials(url)?', isUseCredentials(url));
-        // if (isUseCredentials(url)) {
-          // config.withCredentials = true;
-        // }
+        // console.log('isRequireCredentials(url)?', isRequireCredentials(url));
+        // config.withCredentials = isRequireCredentials(url);
         // console.log('!!data?', !!data);
         // if (data) {
           // config.headers['Content-Type'] = 'application/json';
@@ -99,16 +67,69 @@ function request(method) {
         // }
         // console.log('request interceptor:config =', config);
         // return config;
+      // },
+      // error => {
+        // console.log('request interceptor:error =', error);
+        // return Promise.reject(error);
       // }
     // );
+    /** Response interceptor, used to catch 401 (unauthorized) responses and renew access_tokens*/
+    axios.interceptors.response.use(
+    // instance.interceptors.response.use(
+      (response) => {
+        console.log('response interceptor:response =', response);
+        return response;
+      },
+      async (error) => {
+        const originalConfig = error.config;
+        if (originalConfig) {
+          console.log('originalConfig.url =', originalConfig.url);
+          console.log('isRequireCredentials(originalConfig.url)?', isRequireCredentials(originalConfig.url));
+          console.log('error.response =', error.response);
+          console.log('error.response?', !!error.response);
+          console.log('error.response.status === 401?', error.response.status === 401);
+          console.log('originalConfig._retry?', originalConfig._retry);
+          console.log('!originalConfig._retry?', !originalConfig._retry);
+          if (isRequireCredentials(originalConfig.url) && error.response) {
+            /** Access token has expired */
+            if (error.response.status === 401 && !originalConfig._retry) {
+              originalConfig._retry = true;
+              Cookies.remove('access_token');
+              Cookies.remove('logged_in');
+              console.log('originalConfig._retry?', originalConfig._retry);
+              console.log('!originalConfig._retry?', !originalConfig._retry);
+              try {
+                const response = await axios.request({
+                // const response = instance.request({
+                  method: 'GET',
+                  url: `${authPath}/refresh`,
+                  withCredentials: true
+                });
+                console.log('response interceptor:result =', response);
+                return axios(originalConfig);
+              } catch (err) {
+                console.log('err.response?', !!err.response);
+                return Promise.reject(err);
+              }
+            }
+          }
+        }
+        return Promise.reject(error);
+      }
+    );
+    // const requestOptions = {
+      // method,
+      // url,
+      // headers: {},
+      // withCredentials: isRequireCredentials(url)
+    // };
     // instance.interceptors.response.use(
     // );
     // return instance.request()
       // .then(handleSuccess ? handleSuccess : handleResponse)
       // .catch(handleError ? handleError : handleResponse);
     // // console.log('request():requestOptions =', requestOptions);
-    console.log('request():requestOptions =', requestOptions);
-    return axios(requestOptions)
+    return axios(initConfig)
       .then(handleSuccess ? handleSuccess : handleResponse)
       .catch(handleError ? handleError : handleResponse);
   }
@@ -140,12 +161,17 @@ function authToken() {
 
 async function handleResponse(response) {
   console.log('handleResponse():response =', response);
-  console.log('handleResponse():response.data =', response.data);
-  console.log('handleResponse():response.statusText =', response.statusText);
-  const data = response.data;
-  /** check for error response */
-  if (response.statusCode >= 200 && response.statusCode < 300) {
-    if ([401, 403].includes(response.statusCode) && authToken()) {
+  if (response) {
+    console.log('handleResponse():response.data =', response.data);
+    console.log('handleResponse():response.statusText =', response.statusText);
+    const data = response.data;
+    /** Check for success */
+    if (response.status >= 200 && response.status < 300) {
+      console.log('All good! handleResponse():data =', data);
+      return data;
+    }
+    /** check for error response */
+    if ([401, 403].includes(response.status) && authToken()) {
       /** auto logout if 401 Unauthorized or 403 Forbidden response from api */
       const logout = () => store.dispatch(authActions.logout());
       logout();
@@ -154,6 +180,5 @@ async function handleResponse(response) {
     const error = (data && data.message) || response.status;
     return Promise.reject(error);
   }
-  console.log('All good! handleResponse():data =', data);
-  return data;
+  return Promise.reject('No response');
 }

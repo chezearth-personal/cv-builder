@@ -159,6 +159,7 @@ function Home({ setResult }) {
           name='fullName'
           id='fullName'
           value={fullName}
+          placeholder={!auth ? '' : `${auth?.firstname} ${auth?.lastname}`}
           onChange={(e) => setFullName(e.target.value)}
         />
         <label htmlFor='jobTitle'>Enter your occupation <span className='req'>*</span></label>
@@ -194,6 +195,7 @@ function Home({ setResult }) {
           name='email'
           id='email'
           value={email}
+          placeholder={!auth ? '' : auth?.email}
           autoComplete='email'
           onChange={e => setEmail(e.target.value)}
         />

@@ -7,7 +7,7 @@ import { VerifyEmail } from '_components/placeholders/VerifyEmail';
 import { history } from '_helpers/history';
 import { Home } from 'home/Home';
 import { AccountLayout } from 'account/AccountLayout';
-import { UsersLayout } from 'users/UsersLayout';
+import { AddEdit } from 'users/AddEdit';
 import { Cv } from 'screens/Cv';
 import 'App.css';
 
@@ -28,7 +28,7 @@ function App() {
         <Routes>
           {/** Private */}
           <Route element={<PrivateRoute />} >
-            <Route path='users/*' element={<UsersLayout />} />
+            <Route path='users/*' element={<AddEdit />} />
             <Route path='/cv' element={<Cv result={result} />} />
           </Route>
           {/** Public */}

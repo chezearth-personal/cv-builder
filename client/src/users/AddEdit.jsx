@@ -3,16 +3,20 @@ import { Link, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
+// import { useSelector, useDispatch } from 'react-redux';
 import { history } from '_helpers/history';
 import { alertActions } from '_store/alert.slice';
 import { userActions } from '_store/users.slice';
 
 export function AddEdit() {
-  const { id } = useParams();
+  // const { id } = useParams();
   const [ title, setTitle ] = useState();
   const dispatch = useDispatch();
-  const user = localStorage.getItem('user');
+  const userJson = localStorage.getItem('auth');
+  const user = userJson && JSON.parse(userJson);
+  console.log('user =', user);
+  const id = user?.id;
   // const user = useSelector(x => x.users?.item);
   /** Form validation rules */
   const validationSchema = yup.object().shape({
@@ -33,13 +37,11 @@ export function AddEdit() {
   const { errors, isSubmitting } = formState;
   useEffect(() => {
     if (id) {
-      setTitle('Edit User');
+      setTitle('Edit Profile');
       /** Fetch user details into Redux state and */
       /** populate form fields with reset() */
       dispatch(userActions.getById(id)).unwrap()
         .then(user => reset(user));
-    } else {
-      setTitle('Add User');
     }
   }, []);
   async function onSubmit(data) {
@@ -67,8 +69,8 @@ export function AddEdit() {
       <h1>{title}</h1>
       {!(user?.loading || user?.error) &&
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className='row'>
-        {/*<div className='mb__3 col'>*/}
+        {/*<div className='row'>*/}
+          {/*<div className='mb__3 col'>*/}
               <label className='form__label'>
                 First Name <span className='req'>*</span>
               </label>
@@ -79,8 +81,8 @@ export function AddEdit() {
                 className={`form__input ${errors.firstname ? 'is-invalid' : ''}`}
               />
               <div className='invalid-feedback'>{errors.firstname?.message}</div>
-        {/*</div>*/}
-        {/*<div className='mb__3 col'>*/}
+          {/*</div>*/}
+          {/*<div className='mb__3 col'>*/}
               <label className='form__label'>
                 Last Name <span className='req'>*</span>
               </label>
@@ -91,10 +93,10 @@ export function AddEdit() {
                 className={`form__input ${errors.lastname ? 'is-invalid' : ''}`}
               />
               <div className='invalid-feedback'>{errors.lastname?.message}</div>
+          {/*</div>*/}
         {/*</div>*/}
-        {/*</div>*/}
-          <div className='row'>
-            <div className='mb__3 col'>
+        {/*<div className='row'>*/}
+          {/*<div className='mb__3 col'>*/}
               <label className='form__label'>
                 Email <span className='req'>*</span>
               </label>
@@ -105,8 +107,8 @@ export function AddEdit() {
                 className={`form__input ${errors.email ? 'is-invalid' : ''}`}
               />
               <div className='invalid-feedback'>{errors.email?.message}</div>
-        {/*</div>*/}
-        {/*<div className='mb__3 col'>*/
+          {/*</div>*/}
+          {/*<div className='mb__3 col'>*/}
               <label className='form__label'>
                 Password
                 {id && <em className='ml__1'>(leave blank to keep the same password)</em>}
@@ -118,9 +120,19 @@ export function AddEdit() {
                 className={`form__input ${errors.password ? 'is-invalid' : ''}`}
               />
               <div className='invalid-feedback'>{errors.password?.message}</div>
+              <label className='form__label'>
+                Confirm Password
+                {id && <em className='ml__1'>(leave blank to keep the same password)</em>}
+              </label>
+              <input
+                name='confirmPassword'
+                type='password'
+                {...register('confirmPassword')}
+                className={`form__input ${errors.confirmPassword ? 'is-invalid' : ''}`}
+              />
+          {/*</div>*/}
         {/*</div>*/}
-          </div>
-          <div className='mb__3'>
+        {/*<div className='mb__3'>*/}
             <button
               type='submit'
               disabled={isSubmitting}
@@ -138,7 +150,7 @@ export function AddEdit() {
               Reset
             </button>
             <Link to='/users' className='btn btn__link'>Cancel</Link>
-          </div>
+        {/*</div>*/}
         </form>
       }
       {user?.loading &&
