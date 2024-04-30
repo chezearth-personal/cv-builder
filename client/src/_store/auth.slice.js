@@ -50,33 +50,8 @@ function createExtraActions() {
           );
           console.log(`login = ${login}`);
           console.log(`login = ${JSON.stringify(login)}`);
-// NO LONGER VALID!          /** Store access token in auth object of local store */
-          /** Store access token in Cookies */
-          // Cookies.set(
-            // 'access_token',
-            // login.access_token,
-            // { expires: 1 }, 
-            // { httpOnly: true },
-            // { secure: true },
-            // { sameSite: 'strict' }
-          // );
-          // Cookies.set(
-            // 'refresh_token',
-            // login.refresh_token,
-            // { expires: 1 },
-            // { httpOnly: true },
-            // { secure: true },
-            // { sameSite: 'strict' }
-          // );
-          // Cookies.set(
-            // 'logged_in',
-            // login.logged_in,
-            // { expires: 1 },
-            // { httpOnly: false },
-            // { secure: true },
-            // { sameSite: 'strict' }
-          // );
-          // dispatch(authActions.setAuth({ access_token: accessToken, refresh_token: refreshToken}));
+          /** Consider storing access token in Store (but not in local storage) */
+          // dispatch(authActions.setAuth({ access_token: login.accessToken}));
           const userDetails = await fetchWrapper.get(`${BASE_URL}/users/me`);
           console.log(`userDetails = ${JSON.stringify(userDetails)}`);
           const user = userDetails
@@ -84,7 +59,6 @@ function createExtraActions() {
             && userDetails.data.user
             && {
               ...userDetails.data.user,
-              // ...{ access_token: accessToken, refresh_token: refreshToken }
             };
           console.log(`user = ${JSON.stringify(user)}`);
           /** Set auth user in Redux state */

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+// import { Link, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -37,7 +38,7 @@ export function AddEdit() {
   const { errors, isSubmitting } = formState;
   useEffect(() => {
     if (id) {
-      setTitle('Edit Profile');
+      setTitle('Edit Account Profile');
       /** Fetch user details into Redux state and */
       /** populate form fields with reset() */
       dispatch(userActions.getById(id)).unwrap()
@@ -69,70 +70,60 @@ export function AddEdit() {
       <h1>{title}</h1>
       {!(user?.loading || user?.error) &&
         <form onSubmit={handleSubmit(onSubmit)}>
-        {/*<div className='row'>*/}
-          {/*<div className='mb__3 col'>*/}
               <label className='form__label'>
                 First Name <span className='req'>*</span>
               </label>
               <input
                 name='firstname'
                 type='text'
+                placeholder={user?.firstname}
                 {...register('firstname')}
                 className={`form__input ${errors.firstname ? 'is-invalid' : ''}`}
               />
               <div className='invalid-feedback'>{errors.firstname?.message}</div>
-          {/*</div>*/}
-          {/*<div className='mb__3 col'>*/}
               <label className='form__label'>
                 Last Name <span className='req'>*</span>
               </label>
               <input
                 name='lastname'
                 type='text'
+                placeholder={user?.lastname}
                 {...register('lastname')}
                 className={`form__input ${errors.lastname ? 'is-invalid' : ''}`}
               />
               <div className='invalid-feedback'>{errors.lastname?.message}</div>
-          {/*</div>*/}
-        {/*</div>*/}
-        {/*<div className='row'>*/}
-          {/*<div className='mb__3 col'>*/}
               <label className='form__label'>
                 Email <span className='req'>*</span>
               </label>
               <input
                 name='email'
                 type='email'
+                placeholder={user?.email}
                 {...register('email')}
                 className={`form__input ${errors.email ? 'is-invalid' : ''}`}
               />
               <div className='invalid-feedback'>{errors.email?.message}</div>
-          {/*</div>*/}
-          {/*<div className='mb__3 col'>*/}
-              <label className='form__label'>
-                Password
-                {id && <em className='ml__1'>(leave blank to keep the same password)</em>}
-              </label>
-              <input
-                name='password'
-                type='password'
-                {...register('password')}
-                className={`form__input ${errors.password ? 'is-invalid' : ''}`}
-              />
-              <div className='invalid-feedback'>{errors.password?.message}</div>
-              <label className='form__label'>
-                Confirm Password
-                {id && <em className='ml__1'>(leave blank to keep the same password)</em>}
-              </label>
-              <input
-                name='confirmPassword'
-                type='password'
-                {...register('confirmPassword')}
-                className={`form__input ${errors.confirmPassword ? 'is-invalid' : ''}`}
-              />
-          {/*</div>*/}
-        {/*</div>*/}
-        {/*<div className='mb__3'>*/}
+            {/*<label className='form__label'>*/}
+              {/*Password*/}
+              {/*{id && <em className='ml__1'>(leave blank to keep the same password)</em>}*/}
+            {/*</label>*/}
+            {/*<input */}
+              {/*name='password'*/}
+              {/*type='password'*/}
+              {/*{...register('password')}*/}
+              {/*className={`form__input ${errors.password ? 'is-invalid' : ''}`}*/}
+            {/*}/>*/}
+            {/*<div className='invalid-feedback'>{errors.password?.message}</div>*/}
+            {/*<label className='form__label'>*/}
+              {/*Confirm Password*/}
+              {/*{id && <em className='ml__1'>(leave blank to keep the same password)</em>}*/}
+            {/*</label>*/}
+            {/*<input*/}
+              {/*name='confirmPassword'*/}
+              {/*type='password'*/}
+              {/*{...register('confirmPassword')}*/}
+              {/*className={`form__input ${errors.confirmPassword ? 'is-invalid' : ''}`}*/}
+            {/*}/>*/}
             <button
               type='submit'
               disabled={isSubmitting}
@@ -149,8 +140,7 @@ export function AddEdit() {
             >
               Reset
             </button>
-            <Link to='/users' className='btn btn__link'>Cancel</Link>
-        {/*</div>*/}
+            <Link to='/' className='btn btn__link'>Cancel</Link>
         </form>
       }
       {user?.loading &&

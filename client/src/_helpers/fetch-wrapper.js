@@ -11,25 +11,15 @@ export const fetchWrapper = {
 }
 
 
-// const initConfig = {
-  // url: null,
-  // method: null,
-  // headers: {
-    // 'Accept': 'application/json'
-  // },
-  // data: null
-// }
-
 function request(method) {
   return (url, data, handleSuccess, handleError) => {
     /** Path for auth endpoints */
     const authPath = `${process.env.REACT_APP_AUTH_API_BASE_URL}/api/v1/auth`;
-    /** function to check url is not a login, register or veirfy email auth path, */
+    /** function to check url is not a register or verify email auth path, */
     /** which do not require credentials (all other paths do) */
     const isRequireCredentials = url => !url.startsWith(authPath)
       || (!url.endsWith('/register')
         && !url.includes('/verifyemail/')
-        // && !url.endsWith('/login')
       );
     console.log('request():url =', url);
     console.log('request():method =', method);
@@ -44,38 +34,8 @@ function request(method) {
       initConfig.data = data;
     }
     console.log('request():initConfig =', initConfig);
-    // const instance = axios.create(initConfig);
-    /** Request interceptor */
-    // instance.interceptors.request.use(
-      // config => {
-        // console.log('Request Interceptor ...');
-        // console.log('method:url =', method + ':' + url);
-        // console.log('config.method:config.url =', config.method + ':' + config.url);
-        // config.url = url;
-        // // config.url = config.url || url;
-        // config.method = method;
-        // // config.method = config.method === 'GET' ? 'GET' : method;
-        // config.headers = initConfig.headers;
-        // config.data = initConfig.data;
-        // console.log('config.method:config.url =', config.method + ':' + config.url);
-        // console.log('isRequireCredentials(url)?', isRequireCredentials(url));
-        // config.withCredentials = isRequireCredentials(url);
-        // console.log('!!data?', !!data);
-        // if (data) {
-          // config.headers['Content-Type'] = 'application/json';
-          // config.data = data;
-        // }
-        // console.log('request interceptor:config =', config);
-        // return config;
-      // },
-      // error => {
-        // console.log('request interceptor:error =', error);
-        // return Promise.reject(error);
-      // }
-    // );
     /** Response interceptor, used to catch 401 (unauthorized) responses and renew access_tokens*/
     axios.interceptors.response.use(
-    // instance.interceptors.response.use(
       (response) => {
         console.log('response interceptor:response =', response);
         return response;
@@ -100,7 +60,6 @@ function request(method) {
               console.log('!originalConfig._retry?', !originalConfig._retry);
               try {
                 const response = await axios.request({
-                // const response = instance.request({
                   method: 'GET',
                   url: `${authPath}/refresh`,
                   withCredentials: true
@@ -117,39 +76,11 @@ function request(method) {
         return Promise.reject(error);
       }
     );
-    // const requestOptions = {
-      // method,
-      // url,
-      // headers: {},
-      // withCredentials: isRequireCredentials(url)
-    // };
-    // instance.interceptors.response.use(
-    // );
-    // return instance.request()
-      // .then(handleSuccess ? handleSuccess : handleResponse)
-      // .catch(handleError ? handleError : handleResponse);
-    // // console.log('request():requestOptions =', requestOptions);
     return axios(initConfig)
       .then(handleSuccess ? handleSuccess : handleResponse)
       .catch(handleError ? handleError : handleResponse);
   }
 }
-
-// function authHeader(url) {
-  /** return auth header with jwt if user is logged in and request is to the api url */
-  // const { access_token, refresh_token, logged_in } = authToken();
-  // console.log(`authHeader():access_token = ${access_token}`);
-  // console.log(`authHeader():refresh_token = ${refresh_token}`);
-  // console.log(`authHeader():logged_in = ${logged_in}`);
-  // const isLoggedIn = !!access_token;
-  // console.log(`authHeader():isLoggedIn = ${isLoggedIn}`);
-  // const isApiUrl = url.startsWith(process.env.REACT_APP_AUTH_API_BASE_URL);
-  // if (isLoggedIn && isApiUrl) {
-    // return { Authorization: `Bearer ${access_token}` };
-  // } else {
-    // return {};
-  // }
-// }
 
 function authToken() {
   return {
