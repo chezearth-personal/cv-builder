@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Login } from './Login';
 import { Register } from './Register';
+import { ForgotPassword } from './ForgotPassword';
 
 export function AccountLayout() {
   const auth = useSelector(x => x.auth.value);
@@ -14,6 +15,7 @@ export function AccountLayout() {
           <Routes>
             <Route path='login' element={<Login />} />
             <Route path='register' element={<Register />} />
+            <Route path='forgot-password' element={<ForgotPassword />} />
           </Routes>
         </div>
       </div>

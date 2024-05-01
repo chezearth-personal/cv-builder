@@ -10,7 +10,7 @@ import { history } from '_helpers/history';
 import { alertActions } from '_store/alert.slice';
 import { userActions } from '_store/users.slice';
 
-export function AddEdit() {
+export function EditAccount() {
   // const { id } = useParams();
   const [ title, setTitle ] = useState();
   const dispatch = useDispatch();

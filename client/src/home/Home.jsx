@@ -138,7 +138,7 @@ function Home({ setResult }) {
       <div className='nav'>
         <h3>{!auth ? `Not logged in` : `Hi ${auth?.firstname}!`}</h3>
         {/**<p>You're logged in with React 18 + Redux & JWT</p>*/}
-        <p>{auth && <Link to='/users'>My account</Link>}</p>
+        <p>{auth && <Link to='/account'>My account</Link>}</p>
         <p>Idle timer: current state - {state} | Action events - {count} | {remainingTime} seconds remaining</p>
       </div>
       {loading ? <Loading /> : null}

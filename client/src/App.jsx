@@ -7,7 +7,7 @@ import { VerifyEmail } from '_components/placeholders/VerifyEmail';
 import { history } from '_helpers/history';
 import { Home } from 'home/Home';
 import { AccountLayout } from 'account/AccountLayout';
-import { AddEdit } from 'users/AddEdit';
+import { EditAccount } from 'account/EditAccount';
 import { Cv } from 'screens/Cv';
 import 'App.css';
 
@@ -18,8 +18,6 @@ function App() {
   history.navigate = useNavigate();
   history.location = useLocation();
 
-  // const { token } = useParams();
-
   return (
     <div className='app__container bg__light'>
       <Nav />
@@ -28,7 +26,7 @@ function App() {
         <Routes>
           {/** Private */}
           <Route element={<PrivateRoute />} >
-            <Route path='users/*' element={<AddEdit />} />
+            <Route path='/account' element={<EditAccount />} />
             <Route path='/cv' element={<Cv result={result} />} />
           </Route>
           {/** Public */}

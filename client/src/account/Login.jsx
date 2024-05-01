@@ -50,15 +50,10 @@ export function Login() {
             {isSubmitting && <span className='spinner__border spinner__border__sm me__1'></span>}
             Login
           </button>
+          <Link to='../forgot-password' className='btn btn__link'>Forgot Password?</Link>
           <Link to='../register' className='btn btn__link'>Register</Link>
         </form>
       </div>
     </div>
   );
 }
-
-
-          // <div className='mb__3'>
-          // </div>
-          // <div className='mb__3'>
-          // </div>
