@@ -1,11 +1,11 @@
 import { Routes, Route, useParams } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
-import { fetchWrapper } from '../../_helpers/fetch-wrapper';
+import { fetchWrapper } from '../_helpers/fetch-wrapper';
 
 export const VerifyEmail = () => {
-  console.log('Loading the component ...');
+  console.log('Loading VerifyEmail ...');
   const { verificationcode } = useParams();
-  const url = `${process.env.REACT_APP_AUTH_API_BASE_URL}/api/v1/auth/verifyemail/${verificationcode}`;
+  const url = `${process.env.REACT_APP_AUTH_API_BASE_URL}/api/v1/auth/verify-email/${verificationcode}`;
   const initialResponse = {
     status: 'unknown',
     statusCode: 0,
@@ -66,7 +66,7 @@ export const VerifyEmail = () => {
           </div>
       }
       <Routes>
-        <Route path="/verifyemail/:verificationcode/*" />
+        <Route path="/verify-email/:verificationcode/*" />
       </Routes>
     </div>
   )

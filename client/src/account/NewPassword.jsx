@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useState, useRef } from 'react';
+import { Route, Routes, useParams } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 // import { Link, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -10,7 +11,10 @@ import { history } from '_helpers/history';
 import { alertActions } from '_store/alert.slice';
 import { userActions } from '_store/users.slice';
 
-export function EditAccount() {
+export function NewPassword() {
+  console.log('Loading NewPassword ...');
+  const { verificationcode } = useParams();
+  const url = `${process.env.REACT_APP_AUTH_API_BASE_URL}/api/v1/auth/verify-email/${verificationcode}`;
   // const { id } = useParams();
   const [ title, setTitle ] = useState();
   const dispatch = useDispatch();
@@ -21,12 +25,6 @@ export function EditAccount() {
   // const user = useSelector(x => x.users?.item);
   /** Form validation rules */
   const validationSchema = yup.object().shape({
-    firstname: yup.string()
-      .required('First Name is required'),
-    lastname: yup.string()
-      .required('Last Name is required'),
-    email: yup.string()
-      .required('Email is required'),
     password: yup.string()
       .transform(x => x === '' ? undefined : x)
       .concat(id ? null : yup.string().required('Password is required'))

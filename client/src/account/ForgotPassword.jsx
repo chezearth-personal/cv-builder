@@ -7,8 +7,10 @@ import * as yup from 'yup';
 import { useDispatch } from 'react-redux';
 // import { useSelector, useDispatch } from 'react-redux';
 import { history } from '_helpers/history';
+// import { post } from '_helpers/fetch-wrapper';
 import { alertActions } from '_store/alert.slice';
-import { userActions } from '_store/users.slice';
+import { authActions } from '_store/auth.slice';
+// import { userActions } from '_store/users.slice';
 
 export function ForgotPassword() {
   // const { id } = useParams();
@@ -50,14 +52,15 @@ export function ForgotPassword() {
     dispatch(alertActions.clear());
     try {
       /** Look up the user to confirm the email address given */
-      const user = await dispatch(userActions.getByEmail(data.email)).unwrap();
-      if (user) {
-        console.log('user =', user);
-        const response = await fetch('http://localhost:3000/api/v1/auth/forgot-password', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: data.email })
-        });
+      const response = await dispatch(authActions.confirmEmail(data)).unwrap();
+      // console.log('user =', user);
+      // if (user) {
+        // console.log('user =', user);
+        // const response = await post('http://localhost:3000/api/v1/auth/forgotpassword', {
+          // method: 'POST',
+          // headers: { 'Content-Type': 'application/json' },
+          // body: JSON.stringify({ email: data.email })
+        // });
         if (response.ok) {
           console.log('response =', response);
           const json = await response.json();
@@ -67,7 +70,7 @@ export function ForgotPassword() {
         const message = 'Please check your email for a confirmation link to reset your password';
         history.navigate('/login');
         dispatch(alertActions.success({ message, showAfterRedirect: true }));
-      }
+      // }
       /** Create or update user based on id param */
       // let message;
       // if (id) {
@@ -79,7 +82,8 @@ export function ForgotPassword() {
       // }
       /** Redirect to user list with success message */
     } catch (error) {
-      dispatch(alertActions.error(error));
+      console.log(error);
+      // dispatch(alertActions.error(error));
     }
     /** Redirect the user to the Home page */
     history.navigate('/');

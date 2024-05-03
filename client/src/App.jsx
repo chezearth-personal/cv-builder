@@ -3,11 +3,12 @@ import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-
 import { PrivateRoute } from '_components/placeholders/PrivateRoute';
 import { Nav } from '_components/placeholders/Nav';
 import { Alert } from '_components/placeholders/Alert';
-import { VerifyEmail } from '_components/placeholders/VerifyEmail';
+import { VerifyEmail } from 'account/VerifyEmail';
 import { history } from '_helpers/history';
 import { Home } from 'home/Home';
 import { AccountLayout } from 'account/AccountLayout';
 import { EditAccount } from 'account/EditAccount';
+import { NewPassword } from 'account/NewPassword';
 import { Cv } from 'screens/Cv';
 import 'App.css';
 
@@ -31,7 +32,8 @@ function App() {
           </Route>
           {/** Public */}
           <Route path='/' element={<Home setResult={setResult} />} />
-          <Route path='/verifyemail/:verificationcode/*' element={<VerifyEmail />} />
+          <Route path='/verify-email/:verificationcode/*' element={<VerifyEmail />} />
+          <Route path='/confirm-email/:verificationcode' element={<NewPassword />} />
           <Route path='account/*' element={<AccountLayout />} />
           <Route path='*' element={<Navigate to='/' />} />
         </Routes>

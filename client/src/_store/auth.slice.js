@@ -36,6 +36,7 @@ function createExtraActions() {
   const BASE_URL = `${process.env.REACT_APP_AUTH_API_BASE_URL}/api/v1`;
   return {
     login: login(),
+    confirmEmail: confirmEmail(),
     logout: logout()
   };
   function login() {
@@ -75,6 +76,23 @@ function createExtraActions() {
       } 
     );
   }
+  function confirmEmail() {
+    return createAsyncThunk(
+      `${name}/confirmEmail`,
+      async function ({ email }, { dispatch }) {
+        try {
+          const confirmEmail = await fetchWrapper.post(`${BASE_URL}/auth/confirm-email`, { email });
+          if (confirmEmail.status === 204) {
+            console.log(`Email confirmation successful.`);
+          }
+        } catch (error) {
+          dispatch(alertActions.error(error));
+        }
+        dispatch(authActions.setAuth(null));
+        history.navigate('/');
+      }
+    )
+  }
   function logout() {
     return createAsyncThunk(
       `${name}/logout`,
@@ -88,6 +106,8 @@ function createExtraActions() {
           dispatch(alertActions.error(error));
         }
         Cookies.remove('access_token');
+        Cookies.remove('refresh_token');
+        Cookies.remove('logged_in');
         dispatch(authActions.setAuth(null));
         localStorage.removeItem('auth');
         history.navigate('/');

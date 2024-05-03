@@ -19,7 +19,7 @@ function request(method) {
     /** which do not require credentials (all other paths do) */
     const isRequireCredentials = url => !url.startsWith(authPath)
       || (!url.endsWith('/register')
-        && !url.includes('/verifyemail/')
+        && !url.includes('/verify-email/')
       );
     console.log('request():url =', url);
     console.log('request():method =', method);
