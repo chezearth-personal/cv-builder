@@ -82,22 +82,14 @@ function createExtraActions() {
       `${name}/forgotPassword`,
       async function ({ email }, { dispatch }) {
         try {
-          const forgotPassword = await fetchWrapper.post(`${BASE_URL}/auth/forgot-password`, { email });
-          console.log('forgotPassword =', forgotPassword);
-          // if (forgotPassword.status === 'success') {
-            // console.log(`forgot password sent to email address.`);
-            // dispatch(authActions.setAuth(null));
-            // history.navigate('/login');
-            // dispatch(alertActions.success(forgotPassword.message, { showAfterRedirect: true }));
-          // } else {
-            // history.navigate('/');
-            // dispatch(alertActions.error(forgotPassword.message, { showAfterRedirect: true }));
-          // }
-          // dispatch(alertActions.error(forgotPassword.message));
-          return forgotPassword;
+          const response = await fetchWrapper.post(
+            `${BASE_URL}/auth/forgot-password`,
+            { email }
+          );
+          console.log('forgotPassword =', response);
+          return response;
         } catch (error) {
           dispatch(alertActions.error(error));
-          // history.navigate('/login');
         }
       }
     )
@@ -107,13 +99,12 @@ function createExtraActions() {
       `${name}/resetPassword`,
       async function({ verificationcode, password, passwordConfirm }, { dispatch }) {
         try {
-          const resetPassword = await fetchWrapper.post(
+          const response = await fetchWrapper.put(
             `${BASE_URL}/auth/reset-password/${verificationcode}`,
             { password, passwordConfirm }
           );
-          if (resetPassword.status === 200) {
-            console.log(`Password has been reset.`);
-          }
+          console.log('resetPassword =', response);
+          return response;
         } catch (error) {
           dispatch(alertActions.error(error));
         }

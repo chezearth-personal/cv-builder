@@ -2,7 +2,9 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Login } from './Login';
 import { Register } from './Register';
+import { VerifyEmail } from 'account/VerifyEmail';
 import { ForgotPassword } from './ForgotPassword';
+import { ResetPassword } from 'account/ResetPassword';
 
 export function AccountLayout() {
   const auth = useSelector(x => x.auth.value);
@@ -16,6 +18,8 @@ export function AccountLayout() {
             <Route path='login' element={<Login />} />
             <Route path='register' element={<Register />} />
             <Route path='forgot-password' element={<ForgotPassword />} />
+            <Route path='/verify-email/:verificationcode/*' element={<VerifyEmail />} />
+            <Route path='/reset-password/:verificationcode/*' element={<ResetPassword />} />
           </Routes>
         </div>
       </div>

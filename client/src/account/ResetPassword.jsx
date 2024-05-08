@@ -17,45 +17,39 @@ export function ResetPassword() {
     password: Yup.string()
       .required('Password is required')
       .min(6, 'Password must be at least 6 characters')
+      .max(32, 'Password must not exceed 32 characters')
   });
   const formOptions = { resolver: yupResolver(validationSchema) };
   const { register, handleSubmit, reset, formState } = useForm(formOptions);
   const { errors, isSubmitting } = formState;
-  /** State to handle useEffect() hook being called twice in render (for dev builds) */
-  /** persists inside render but gets reset on each render */
-  // const ref = useRef(false);
-  /** State to persist over a whole render */
-  /** Response from verification API call */ 
-  // const [ response, setResponse ] = useState(initialResponse);
   async function onSubmit(data) {
     dispatch(alertActions.clear());
     try {
-      // const message = 'Your password has been updated.';
-      /** Redirect to user list with success message */
-      // await dispatch(userActions.register(data)).unwrap();
       console.log('data =', data);
       const response = dispatch(authActions.resetPassword({ ...data, verificationcode })).unwrap();
-      // resetPassword(data);
+      console.log('response =', response);
+      if (response.status === 'success') {
+        /** Redirect to login with success message */
         history.navigate('/account/login');
         dispatch(alertActions.success({
           message: `${response.message} `,
           showAfterRedirect: true
         }));
-      // history.navigate('/login');
-      // dispatch(alertActions.success({ message, showAfterRedirect: true }));
+      } else {
+        /** Redirect to home with error message */
+        history.navigate('/');
+        dispatch(alertActions.error({
+          message: `${response.message} `,
+          showAfterRedirect: true
+        }));
+      }
     } catch (error) {
       console.error('error =', error);
+      history.navigate('/');
       dispatch(alertActions.error(error));
     }
   }
 
-  // const { id } = useParams();
-  // const [ title, setTitle ] = useState();
-  // const userJson = localStorage.getItem('auth');
-  // const user = userJson && JSON.parse(userJson);
-  // console.log('user =', user);
-  // const id = user?.id;
-  // const user = useSelector(x => x.users?.item);
   return (
     <>
       <h1>Enter your new password</h1>
