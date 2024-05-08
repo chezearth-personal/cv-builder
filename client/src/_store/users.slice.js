@@ -26,6 +26,8 @@ function createExtraActions() {
   // console.log(`createExtraActions():baseUrl: ${baseUrl}`);
   return {
     register: register(),
+    verifyEmail: verifyEmail(),
+    // updatePassword: updatePassword(),
     getAll: getAll(),
     getById: getById(),
     update: update(),
@@ -37,6 +39,15 @@ function createExtraActions() {
     return createAsyncThunk(
       `${name}/register`,
       async (user) => await fetchWrapper.post(`${baseUrl}/auth/register`, user)
+    );
+  }
+  function verifyEmail() {
+    return createAsyncThunk(
+      `${name}/verifyEmail`,
+      async (verificationcode) => {
+        console.log(`verifyEmail(): verificationcode = ${verificationcode}`);
+        return await fetchWrapper.get(`${baseUrl}/auth/verify-email/${verificationcode}`);
+      }
     );
   }
   function getAll() {

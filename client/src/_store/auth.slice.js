@@ -36,6 +36,7 @@ function createExtraActions() {
   const BASE_URL = `${process.env.REACT_APP_AUTH_API_BASE_URL}/api/v1`;
   return {
     login: login(),
+    forgotPassword: forgotPassword(),
     confirmEmail: confirmEmail(),
     logout: logout()
   };
@@ -76,22 +77,47 @@ function createExtraActions() {
       } 
     );
   }
+  function forgotPassword() {
+    return createAsyncThunk(
+      `${name}/forgotPassword`,
+      async function ({ email }, { dispatch }) {
+        try {
+          const forgotPassword = await fetchWrapper.post(`${BASE_URL}/auth/forgot-password`, { email });
+          console.log('forgotPassword =', forgotPassword);
+          if (forgotPassword.status === 'success') {
+            // console.log(`forgot password sent to email address.`);
+            // dispatch(authActions.setAuth(null));
+            history.navigate('/login');
+            dispatch(alertActions.success(forgotPassword.message, { showAfterRedirect: true }));
+          } else {
+            history.navigate('/');
+            dispatch(alertActions.error(forgotPassword.message, { showAfterRedirect: true }));
+          }
+          // dispatch(alertActions.error(forgotPassword.message));
+        } catch (error) {
+          dispatch(alertActions.error(error));
+          // history.navigate('/login');
+        }
+      }
+    )
+  }
   function confirmEmail() {
     return createAsyncThunk(
       `${name}/confirmEmail`,
-      async function ({ email }, { dispatch }) {
+      async function({ verificationcode, password, passwordConfirmation }, { dispatch }) {
         try {
-          const confirmEmail = await fetchWrapper.post(`${BASE_URL}/auth/confirm-email`, { email });
-          if (confirmEmail.status === 204) {
-            console.log(`Email confirmation successful.`);
+          await fetchWrapper.post(
+            `${BASE_URL}/auth/confirm-email/${verificationcode}`,
+            { password, passwordConfirmation }
+          );
+          if (confirmEmail.status === 200) {
+            console.log(`Password has been reset.`);
           }
         } catch (error) {
           dispatch(alertActions.error(error));
         }
-        dispatch(authActions.setAuth(null));
-        history.navigate('/');
       }
-    )
+    );
   }
   function logout() {
     return createAsyncThunk(

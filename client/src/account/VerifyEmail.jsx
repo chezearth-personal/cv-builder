@@ -1,11 +1,14 @@
 import { Routes, Route, useParams } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
-import { fetchWrapper } from '../_helpers/fetch-wrapper';
+import { useDispatch } from 'react-redux';
+// import { fetchWrapper } from '../_helpers/fetch-wrapper';
+import {userActions} from '_store/users.slice';
 
 export const VerifyEmail = () => {
   console.log('Loading VerifyEmail ...');
   const { verificationcode } = useParams();
-  const url = `${process.env.REACT_APP_AUTH_API_BASE_URL}/api/v1/auth/verify-email/${verificationcode}`;
+  const dispatch = useDispatch();
+  // const url = `${process.env.REACT_APP_AUTH_API_BASE_URL}/api/v1/auth/verify-email/${verificationcode}`;
   const initialResponse = {
     status: 'unknown',
     statusCode: 0,
@@ -26,7 +29,9 @@ export const VerifyEmail = () => {
       if (!ref.current) {
         ref.current = true;
         // console.log('3. ref.current =', ref.current);
-        const response = await fetchWrapper.get(url);
+        console.log('verifyEmail(): verificationcode =', verificationcode);
+        const response = await dispatch(userActions.verifyEmail(verificationcode)).unwrap();
+        // const response = await fetchWrapper.get(url);
         // console.log('API call completed.');
         console.log('response.status =', response && response.status);
         setResponse({ ...initialResponse, ...(response || {}) });

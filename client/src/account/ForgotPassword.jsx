@@ -52,7 +52,7 @@ export function ForgotPassword() {
     dispatch(alertActions.clear());
     try {
       /** Look up the user to confirm the email address given */
-      const response = await dispatch(authActions.confirmEmail(data)).unwrap();
+      await dispatch(authActions.forgotPassword(data)).unwrap();
       // console.log('user =', user);
       // if (user) {
         // console.log('user =', user);
@@ -61,15 +61,18 @@ export function ForgotPassword() {
           // headers: { 'Content-Type': 'application/json' },
           // body: JSON.stringify({ email: data.email })
         // });
-        if (response.ok) {
-          console.log('response =', response);
-          const json = await response.json();
-          console.log('json =', json);
-        }
+      // if (response.status === 'success') {
+        // history.navigate('/login');
+          // console.log('response =', response);
+          // const json = await response.json();
+          // console.log('json =', json);
+        // }
         /** Send a message to look for the confirmation email */
-        const message = 'Please check your email for a confirmation link to reset your password';
-        history.navigate('/login');
-        dispatch(alertActions.success({ message, showAfterRedirect: true }));
+        // const message = 'Please check your email for a confirmation link to reset your password';
+        // dispatch(alertActions.success({ message: response.message, showAfterRedirect: true }));
+      // } else {
+        // history.navigate('/');
+        // dispatch(alertActions.error({ message: response.message, showAfterRedirect: true }));
       // }
       /** Create or update user based on id param */
       // let message;
@@ -86,7 +89,7 @@ export function ForgotPassword() {
       // dispatch(alertActions.error(error));
     }
     /** Redirect the user to the Home page */
-    history.navigate('/');
+    // history.navigate('/');
   }
 
   return (
