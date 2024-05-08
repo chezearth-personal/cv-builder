@@ -14,12 +14,14 @@ export const fetchWrapper = {
 function request(method) {
   return (url, data, handleSuccess, handleError) => {
     /** Path for auth endpoints */
-    const authPath = `${process.env.REACT_APP_AUTH_API_BASE_URL}/api/v1/auth`;
+    const AUTH_PATH = `${process.env.REACT_APP_AUTH_API_BASE_URL}/api/v1/auth`;
     /** function to check url is not a register or verify email auth path, */
     /** which do not require credentials (all other paths do) */
-    const isRequireCredentials = url => !url.startsWith(authPath)
+    const isRequireCredentials = url => !url.startsWith(AUTH_PATH)
       || (!url.endsWith('/register')
         && !url.includes('/verify-email/')
+        && !url.endsWith('/forgot-password')
+        && !url.includes('/reset-password/')
       );
     console.log('request():url =', url);
     console.log('request():method =', method);
@@ -61,7 +63,7 @@ function request(method) {
               try {
                 const response = await axios.request({
                   method: 'GET',
-                  url: `${authPath}/refresh`,
+                  url: `${AUTH_PATH}/refresh`,
                   withCredentials: true
                 });
                 console.log('response interceptor:result =', response);

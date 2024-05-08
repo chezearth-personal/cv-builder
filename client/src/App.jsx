@@ -8,7 +8,7 @@ import { history } from '_helpers/history';
 import { Home } from 'home/Home';
 import { AccountLayout } from 'account/AccountLayout';
 import { EditAccount } from 'account/EditAccount';
-import { NewPassword } from 'account/NewPassword';
+import { ResetPassword } from 'account/ResetPassword';
 import { Cv } from 'screens/Cv';
 import 'App.css';
 
@@ -33,7 +33,7 @@ function App() {
           {/** Public */}
           <Route path='/' element={<Home setResult={setResult} />} />
           <Route path='/verify-email/:verificationcode/*' element={<VerifyEmail />} />
-          <Route path='/confirm-email/:verificationcode' element={<NewPassword />} />
+          <Route path='/reset-password/:verificationcode/*' element={<ResetPassword />} />
           <Route path='account/*' element={<AccountLayout />} />
           <Route path='*' element={<Navigate to='/' />} />
         </Routes>

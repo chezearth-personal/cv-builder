@@ -22,7 +22,7 @@ function createInitialState() {
 }
 
 function createExtraActions() {
-  const baseUrl = `${process.env.REACT_APP_AUTH_API_BASE_URL}/api/v1`;
+  const BASE_URL = `${process.env.REACT_APP_AUTH_API_BASE_URL}/api/v1`;
   // console.log(`createExtraActions():baseUrl: ${baseUrl}`);
   return {
     register: register(),
@@ -38,7 +38,7 @@ function createExtraActions() {
     // console.log(`createExtraActions():register(): baseUrl: ${baseUrl}`);
     return createAsyncThunk(
       `${name}/register`,
-      async (user) => await fetchWrapper.post(`${baseUrl}/auth/register`, user)
+      async (user) => await fetchWrapper.post(`${BASE_URL}/auth/register`, user)
     );
   }
   function verifyEmail() {
@@ -46,27 +46,27 @@ function createExtraActions() {
       `${name}/verifyEmail`,
       async (verificationcode) => {
         console.log(`verifyEmail(): verificationcode = ${verificationcode}`);
-        return await fetchWrapper.get(`${baseUrl}/auth/verify-email/${verificationcode}`);
+        return await fetchWrapper.get(`${BASE_URL}/auth/verify-email/${verificationcode}`);
       }
     );
   }
   function getAll() {
     return createAsyncThunk(
       `${name}/getAll`,
-      async () => await fetchWrapper.get(baseUrl)
+      async () => await fetchWrapper.get(BASE_URL)
     );
   }
   function getById() {
     return createAsyncThunk(
       `${name}/getById`,
-      async (id) => await fetchWrapper.get(`${baseUrl}/users/me`)
+      async (id) => await fetchWrapper.get(`${BASE_URL}/users/me`)
     );
   }
   function update() {
     return createAsyncThunk(
       `${name}/update`,
       async function({ id, data }, { getState, dispatch }) {
-        await fetchWrapper.put(`${baseUrl}/${id}`, data);
+        await fetchWrapper.put(`${BASE_URL}/${id}`, data);
         /** Update stored user if the logged in user updated their own record */
         const auth = getState().auth.value;
         if (id === auth?.id.toString()) {
@@ -84,7 +84,7 @@ function createExtraActions() {
     return createAsyncThunk(
       `${name}/delete`,
       async function(id, { getState, dispatch }) {
-        await fetchWrapper.delete(`${baseUrl}/${id}`);
+        await fetchWrapper.delete(`${BASE_URL}/${id}`);
         /** Auto logout if the logged in user deleted their own record */
         if (id === getState().auth.value?.id) {
           dispatch(authActions.logout());

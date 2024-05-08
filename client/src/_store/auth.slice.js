@@ -37,7 +37,7 @@ function createExtraActions() {
   return {
     login: login(),
     forgotPassword: forgotPassword(),
-    confirmEmail: confirmEmail(),
+    resetPassword: resetPassword(),
     logout: logout()
   };
   function login() {
@@ -84,16 +84,17 @@ function createExtraActions() {
         try {
           const forgotPassword = await fetchWrapper.post(`${BASE_URL}/auth/forgot-password`, { email });
           console.log('forgotPassword =', forgotPassword);
-          if (forgotPassword.status === 'success') {
+          // if (forgotPassword.status === 'success') {
             // console.log(`forgot password sent to email address.`);
             // dispatch(authActions.setAuth(null));
-            history.navigate('/login');
-            dispatch(alertActions.success(forgotPassword.message, { showAfterRedirect: true }));
-          } else {
-            history.navigate('/');
-            dispatch(alertActions.error(forgotPassword.message, { showAfterRedirect: true }));
-          }
+            // history.navigate('/login');
+            // dispatch(alertActions.success(forgotPassword.message, { showAfterRedirect: true }));
+          // } else {
+            // history.navigate('/');
+            // dispatch(alertActions.error(forgotPassword.message, { showAfterRedirect: true }));
+          // }
           // dispatch(alertActions.error(forgotPassword.message));
+          return forgotPassword;
         } catch (error) {
           dispatch(alertActions.error(error));
           // history.navigate('/login');
@@ -101,16 +102,16 @@ function createExtraActions() {
       }
     )
   }
-  function confirmEmail() {
+  function resetPassword() {
     return createAsyncThunk(
-      `${name}/confirmEmail`,
-      async function({ verificationcode, password, passwordConfirmation }, { dispatch }) {
+      `${name}/resetPassword`,
+      async function({ verificationcode, password, passwordConfirm }, { dispatch }) {
         try {
-          await fetchWrapper.post(
-            `${BASE_URL}/auth/confirm-email/${verificationcode}`,
-            { password, passwordConfirmation }
+          const resetPassword = await fetchWrapper.post(
+            `${BASE_URL}/auth/reset-password/${verificationcode}`,
+            { password, passwordConfirm }
           );
-          if (confirmEmail.status === 200) {
+          if (resetPassword.status === 200) {
             console.log(`Password has been reset.`);
           }
         } catch (error) {
