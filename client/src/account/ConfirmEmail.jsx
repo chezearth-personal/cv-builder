@@ -1,18 +1,15 @@
-// import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-// import { Link, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useDispatch } from 'react-redux';
-// import { useSelector, useDispatch } from 'react-redux';
 import { history } from '_helpers/history';
 // import { post } from '_helpers/fetch-wrapper';
 import { alertActions } from '_store/alert.slice';
 import { authActions } from '_store/auth.slice';
 // import { userActions } from '_store/users.slice';
 
-export function ForgotPassword() {
+export function ConfirmEmail() {
   const dispatch = useDispatch();
   /** Form validation rules */
   const validationSchema = yup.object().shape({

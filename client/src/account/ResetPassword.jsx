@@ -28,21 +28,6 @@ export function ResetPassword() {
       console.log('data =', data);
       const response = dispatch(authActions.resetPassword({ ...data, verificationcode })).unwrap();
       console.log('response =', response);
-      if (response.status === 'success') {
-        /** Redirect to login with success message */
-        history.navigate('/account/login');
-        dispatch(alertActions.success({
-          message: `${response.message} `,
-          showAfterRedirect: true
-        }));
-      } else {
-        /** Redirect to home with error message */
-        history.navigate('/');
-        dispatch(alertActions.error({
-          message: `${response.message} `,
-          showAfterRedirect: true
-        }));
-      }
     } catch (error) {
       console.error('error =', error);
       history.navigate('/');
