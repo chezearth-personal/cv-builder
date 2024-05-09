@@ -25,9 +25,9 @@ export function ResetPassword() {
   async function onSubmit(data) {
     dispatch(alertActions.clear());
     try {
-      console.log('data =', data);
+      // console.log('data =', data);
       const response = await dispatch(authActions.resetPassword({ ...data, verificationcode })).unwrap();
-      console.log('response =', response);
+      // console.log('response =', response);
       if (response.status === 'success') {
         /** Redirect to login with success message */
         history.navigate('/account/login');

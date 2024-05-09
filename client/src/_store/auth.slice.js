@@ -53,9 +53,8 @@ function createExtraActions() {
           console.log(`login = ${login}`);
           console.log(`login = ${JSON.stringify(login)}`);
           /** Consider storing access token in Store (but not in local storage) */
-          // dispatch(authActions.setAuth({ access_token: login.accessToken}));
           const userDetails = await fetchWrapper.get(`${BASE_URL}/users/me`);
-          console.log(`userDetails = ${JSON.stringify(userDetails)}`);
+          // console.log(`userDetails = ${JSON.stringify(userDetails)}`);
           const user = userDetails
             && userDetails.data
             && userDetails.data.user
@@ -86,7 +85,7 @@ function createExtraActions() {
             `${BASE_URL}/auth/confirm-email`,
             { email }
           );
-          console.log('confirmEmail =', response);
+          // console.log('confirmEmail =', response);
           return response;
         } catch (error) {
           if (error.response) {
@@ -107,7 +106,7 @@ function createExtraActions() {
             `${BASE_URL}/auth/reset-password/${verificationcode}`,
             { password, passwordConfirm }
           );
-          console.log('resetPassword =', response);
+          // console.log('resetPassword =', response);
           return response;
         } catch (error) {
           if (error.response) {

@@ -25,8 +25,8 @@ function request(method) {
         && !url.endsWith('/confirm-email')
         && !url.includes('/reset-password/')
       );
-    console.log('request():url =', url);
-    console.log('request():method =', method);
+    // console.log('request():url =', url);
+    // console.log('request():method =', method);
     const initConfig = {
       method,
       url,
@@ -47,13 +47,13 @@ function request(method) {
       async (error) => {
         const originalConfig = error.config;
         if (originalConfig) {
-          console.log('originalConfig.url =', originalConfig.url);
+          // console.log('originalConfig.url =', originalConfig.url);
           console.log('isRequireCredentials(originalConfig.url)?', isRequireCredentials(originalConfig.url));
           console.log('error.response =', error.response);
-          console.log('error.response?', !!error.response);
-          console.log('error.response.status === 401?', error.response.status === 401);
-          console.log('originalConfig._retry?', originalConfig._retry);
-          console.log('!originalConfig._retry?', !originalConfig._retry);
+          // console.log('error.response?', !!error.response);
+          // console.log('error.response.status === 401?', error.response.status === 401);
+          // console.log('originalConfig._retry?', originalConfig._retry);
+          // console.log('!originalConfig._retry?', !originalConfig._retry);
           if (isRequireCredentials(originalConfig.url) && error.response) {
             /** Access token has expired */
             if (error.response.status === 401 && !originalConfig._retry) {
