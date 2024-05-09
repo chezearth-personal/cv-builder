@@ -4,10 +4,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { history } from '_helpers/history';
-// import { post } from '_helpers/fetch-wrapper';
 import { alertActions } from '_store/alert.slice';
 import { authActions } from '_store/auth.slice';
-// import { userActions } from '_store/users.slice';
 
 export function ConfirmEmail() {
   const dispatch = useDispatch();
@@ -24,19 +22,21 @@ export function ConfirmEmail() {
     dispatch(alertActions.clear());
     try {
       /** Look up the user to confirm the email address given */
-      const response = await dispatch(authActions.forgotPassword(data)).unwrap();
+      // await dispatch(authActions.confirmEmail(data)).unwrap();
+      const response = await dispatch(authActions.confirmEmail(data)).unwrap();
       console.log('response =', response);
       if (response.status === 'success') {
         /** Redirect to user list with success message */
         history.navigate('/account/login');
-        /** Send a message to look for the confirmation email */
+        /** Show the alert with a message to look for the confirmation email */
         dispatch(alertActions.success({
           message: `${response.message} `,
           showAfterRedirect: true
         }));
       } else {
-    /** Redirect the user to the Home page */
+        /** Redirect the user to the Home page */
         history.navigate('/');
+        /** Show the error alert */
         dispatch(alertActions.error({
           message: `${response.message} `,
           showAfterRedirect: true 
@@ -52,7 +52,6 @@ export function ConfirmEmail() {
   return (
     <>
       <h1>Forgot Password: Confirm your Email Address</h1>
-      {/*{!(user?.loading || user?.error) &&*/}
         <form onSubmit={handleSubmit(onSubmit)}>
               <label className='form__label'>
                 Enter your email for confirmation <span className='req'>*</span>
@@ -72,27 +71,8 @@ export function ConfirmEmail() {
               {isSubmitting && <span className='spinner__border spinner__border__sm me__1' />}
               Send confirmation to reset password
             </button>
-          {/*<button*/}
-            {/*onClick={() => reset()}*/}
-            {/*type='button'*/}
-            {/*disabled={isSubmitting}*/}
-            {/*className='btn btn__secondary'*/}
-          {/*}>*/}
-            {/*Reset*/}
-          {/*</button>*/}
             <Link to='/' className='btn btn__link'>Cancel</Link>
         </form>
-      {/*}*/}
-      {/*{user?.loading &&*/}
-        {/*<div className='text__center m__5'>*/}
-          {/*<span className='spinner__border spinner__border__lg align-center'></span>*/}
-        {/*</div>*/}
-      {/*}*/}
-      {/*{user?.error &&*/}
-        {/*<div className='text__center m__5'>*/}
-          {/*<div className='text__danger'>Error loading user: {user.error}</div>*/}
-        {/*</div>*/}
-      {/*}*/}
     </>
   );
 }

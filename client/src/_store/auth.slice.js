@@ -36,7 +36,7 @@ function createExtraActions() {
   const BASE_URL = `${process.env.REACT_APP_AUTH_API_BASE_URL}/api/v1`;
   return {
     login: login(),
-    forgotPassword: forgotPassword(),
+    confirmEmail: confirmEmail(),
     resetPassword: resetPassword(),
     logout: logout()
   };
@@ -77,19 +77,23 @@ function createExtraActions() {
       } 
     );
   }
-  function forgotPassword() {
+  function confirmEmail() {
     return createAsyncThunk(
-      `${name}/forgotPassword`,
+      `${name}/confirmEmail`,
       async function ({ email }, { dispatch }) {
         try {
           const response = await fetchWrapper.post(
             `${BASE_URL}/auth/confirm-email`,
             { email }
           );
-          console.log('forgotPassword =', response);
+          console.log('confirmEmail =', response);
           return response;
         } catch (error) {
+          if (error.response) {
+            return error.response;
+          }
           dispatch(alertActions.error(error));
+          return error;
         }
       }
     );
@@ -104,24 +108,13 @@ function createExtraActions() {
             { password, passwordConfirm }
           );
           console.log('resetPassword =', response);
-          if (response.status === 'success') {
-            /** Redirect to login with success message */
-            history.navigate('/account/login');
-            dispatch(alertActions.success({
-              message: `${response.message} `,
-              showAfterRedirect: true
-            }));
-          } else {
-            /** Redirect to home with error message */
-            history.navigate('/');
-            dispatch(alertActions.error({
-              message: `${response.message} `,
-              showAfterRedirect: true
-            }));
-          }
           return response;
         } catch (error) {
+          if (error.response) {
+            return error.response;
+          }
           dispatch(alertActions.error(error));
+          return error;
         }
       }
     );

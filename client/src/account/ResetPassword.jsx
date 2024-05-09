@@ -26,8 +26,23 @@ export function ResetPassword() {
     dispatch(alertActions.clear());
     try {
       console.log('data =', data);
-      const response = dispatch(authActions.resetPassword({ ...data, verificationcode })).unwrap();
+      const response = await dispatch(authActions.resetPassword({ ...data, verificationcode })).unwrap();
       console.log('response =', response);
+      if (response.status === 'success') {
+        /** Redirect to login with success message */
+        history.navigate('/account/login');
+        dispatch(alertActions.success({
+          message: `${response.message} `,
+          showAfterRedirect: true
+        }));
+      } else {
+        /** Clear fields after error message */
+        reset();
+        dispatch(alertActions.error({
+          message: `${response.message} `,
+          showAfterRedirect: true
+        }));
+      }
     } catch (error) {
       console.error('error =', error);
       history.navigate('/');
@@ -37,7 +52,7 @@ export function ResetPassword() {
 
   return (
     <>
-      <h1>Enter your new password</h1>
+      <h1>Reset your password</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
             <label className='form__label'>
               Password
@@ -64,15 +79,7 @@ export function ResetPassword() {
               className='btn btn__primary me__2'
             >
               {isSubmitting && <span className='spinner__border spinner__border__sm me__1' />}
-              Save
-            </button>
-            <button
-              onClick={() => reset()}
-              type='button'
-              disabled={isSubmitting}
-              className='btn btn__secondary'
-            >
-              Reset
+              Reset Password
             </button>
             <Link to='/login' className='btn btn__link'>Cancel</Link>
         </form>

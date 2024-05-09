@@ -13,6 +13,8 @@ export const fetchWrapper = {
 
 function request(method) {
   return (url, data, handleSuccess, handleError) => {
+    console.log('request(): handleSuccess =', handleSuccess);
+    console.log('request(): handleError =', handleError);
     /** Path for auth endpoints */
     const AUTH_PATH = `${process.env.REACT_APP_AUTH_API_BASE_URL}/api/v1/auth`;
     /** function to check url is not a register or verify email auth path, */
@@ -20,7 +22,7 @@ function request(method) {
     const isRequireCredentials = url => !url.startsWith(AUTH_PATH)
       || (!url.endsWith('/register')
         && !url.includes('/verify-email/')
-        && !url.endsWith('/forgot-password')
+        && !url.endsWith('/confirm-email')
         && !url.includes('/reset-password/')
       );
     console.log('request():url =', url);
@@ -79,8 +81,8 @@ function request(method) {
       }
     );
     return axios(initConfig)
-      .then(handleSuccess ? handleSuccess : handleResponse)
-      .catch(handleError ? handleError : handleResponse);
+      .then(handleSuccess ? handleSuccess : handleSuccessResponse)
+      .catch(handleError ? handleError : handleErrorResponse);
   }
 }
 
@@ -92,19 +94,20 @@ function authToken() {
   };
 }
 
-async function handleResponse(response) {
-  console.log('handleResponse():response =', response);
+async function handleSuccessResponse(response) {
+  console.log('handleSuccessResponse():response =', response);
   if (response) {
-    console.log('handleResponse():response.data =', response.data);
-    console.log('handleResponse():response.statusText =', response.statusText);
+    console.log('handleSuccessResponse():response.data =', response.data);
+    console.log('handleSuccessResponse():response.statusText =', response.statusText);
+    console.log('handleSuccessResponse():response.status =', response.status);
     const data = response.data;
     /** Check for success */
     if (response.status >= 200 && response.status < 300) {
-      console.log('All good! handleResponse():data =', data);
+      console.log('All good! handleSuccessResponse():data =', data);
       return data;
     }
     /** check for error response */
-    if ([401, 403].includes(response.status) && authToken()) {
+    if ([401, 403].includes(response.response.status) && authToken()) {
       /** auto logout if 401 Unauthorized or 403 Forbidden response from api */
       const logout = () => store.dispatch(authActions.logout());
       logout();
@@ -112,6 +115,22 @@ async function handleResponse(response) {
     /** get error message from body or default to response status */
     const error = (data && data.message) || response.status;
     return Promise.reject(error);
+  }
+  return Promise.reject('No response');
+}
+
+async function handleErrorResponse(error) {
+  console.log('handleErrorResponse():error =', error);
+  if (error && error.response) {
+    console.log('handleErrorResponse():error.response =', error.response);
+    console.log('handleErrorResponse():error.response.statusText =', error.response.statusText);
+    console.log('handleErrorResponse():error.response.status =', error.response.status);
+    if ([401, 403].includes(error.response.status) && authToken()) {
+      /** auto logout if 401 Unauthorized or 403 Forbidden response from api */
+      const logout = () => store.dispatch(authActions.logout());
+      logout();
+    }
+    return Promise.reject(error.response.data);
   }
   return Promise.reject('No response');
 }
