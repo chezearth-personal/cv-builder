@@ -5,7 +5,6 @@ import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { history } from '_helpers/history';
 import { alertActions } from '_store/alert.slice';
-// import { userActions } from '_store/users.slice';
 import { authActions } from '_store/auth.slice';
 
 export function ResetPassword() {
@@ -25,9 +24,7 @@ export function ResetPassword() {
   async function onSubmit(data) {
     dispatch(alertActions.clear());
     try {
-      // console.log('data =', data);
       const response = await dispatch(authActions.resetPassword({ ...data, verificationcode })).unwrap();
-      // console.log('response =', response);
       if (response.status === 'success') {
         /** Redirect to login with success message */
         history.navigate('/account/login');

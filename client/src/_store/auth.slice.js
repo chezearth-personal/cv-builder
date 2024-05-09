@@ -54,14 +54,13 @@ function createExtraActions() {
           console.log(`login = ${JSON.stringify(login)}`);
           /** Consider storing access token in Store (but not in local storage) */
           const userDetails = await fetchWrapper.get(`${BASE_URL}/users/me`);
-          // console.log(`userDetails = ${JSON.stringify(userDetails)}`);
           const user = userDetails
             && userDetails.data
             && userDetails.data.user
             && {
               ...userDetails.data.user,
             };
-          console.log(`user = ${JSON.stringify(user)}`);
+          // console.log(`user = ${JSON.stringify(user)}`);
           /** Set auth user in Redux state */
           dispatch(authActions.setAuth(user));
           /** Store user details and jwt token in local storage  to keep user logged */
@@ -85,7 +84,6 @@ function createExtraActions() {
             `${BASE_URL}/auth/confirm-email`,
             { email }
           );
-          // console.log('confirmEmail =', response);
           return response;
         } catch (error) {
           if (error.response) {
@@ -106,7 +104,6 @@ function createExtraActions() {
             `${BASE_URL}/auth/reset-password/${verificationcode}`,
             { password, passwordConfirm }
           );
-          // console.log('resetPassword =', response);
           return response;
         } catch (error) {
           if (error.response) {

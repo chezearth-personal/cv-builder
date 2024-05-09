@@ -25,8 +25,6 @@ function request(method) {
         && !url.endsWith('/confirm-email')
         && !url.includes('/reset-password/')
       );
-    // console.log('request():url =', url);
-    // console.log('request():method =', method);
     const initConfig = {
       method,
       url,
@@ -37,38 +35,33 @@ function request(method) {
       initConfig.headers['Content-Type'] = 'application/json'
       initConfig.data = data;
     }
-    console.log('request():initConfig =', initConfig);
+    // console.log('request():initConfig =', initConfig);
     /** Response interceptor, used to catch 401 (unauthorized) responses and renew access_tokens*/
     axios.interceptors.response.use(
       (response) => {
-        console.log('response interceptor:response =', response);
+        // console.log('response interceptor:response =', response);
         return response;
       },
       async (error) => {
         const originalConfig = error.config;
         if (originalConfig) {
-          // console.log('originalConfig.url =', originalConfig.url);
           console.log('isRequireCredentials(originalConfig.url)?', isRequireCredentials(originalConfig.url));
-          console.log('error.response =', error.response);
-          // console.log('error.response?', !!error.response);
-          // console.log('error.response.status === 401?', error.response.status === 401);
-          // console.log('originalConfig._retry?', originalConfig._retry);
-          // console.log('!originalConfig._retry?', !originalConfig._retry);
+          // console.log('error.response =', error.response);
           if (isRequireCredentials(originalConfig.url) && error.response) {
             /** Access token has expired */
             if (error.response.status === 401 && !originalConfig._retry) {
               originalConfig._retry = true;
               Cookies.remove('access_token');
               Cookies.remove('logged_in');
-              console.log('originalConfig._retry?', originalConfig._retry);
+              // console.log('originalConfig._retry?', originalConfig._retry);
               console.log('!originalConfig._retry?', !originalConfig._retry);
               try {
-                const response = await axios.request({
+                await axios.request({
                   method: 'GET',
                   url: `${AUTH_PATH}/refresh`,
                   withCredentials: true
                 });
-                console.log('response interceptor:result =', response);
+                // console.log('response interceptor:result =', response);
                 return axios(originalConfig);
               } catch (err) {
                 console.log('err.response?', !!err.response);
@@ -97,8 +90,8 @@ function authToken() {
 async function handleSuccessResponse(response) {
   console.log('handleSuccessResponse():response =', response);
   if (response) {
-    console.log('handleSuccessResponse():response.data =', response.data);
-    console.log('handleSuccessResponse():response.statusText =', response.statusText);
+    // console.log('handleSuccessResponse():response.data =', response.data);
+    // console.log('handleSuccessResponse():response.statusText =', response.statusText);
     console.log('handleSuccessResponse():response.status =', response.status);
     const data = response.data;
     /** Check for success */
@@ -123,7 +116,7 @@ async function handleErrorResponse(error) {
   console.log('handleErrorResponse():error =', error);
   if (error && error.response) {
     console.log('handleErrorResponse():error.response =', error.response);
-    console.log('handleErrorResponse():error.response.statusText =', error.response.statusText);
+    // console.log('handleErrorResponse():error.response.statusText =', error.response.statusText);
     console.log('handleErrorResponse():error.response.status =', error.response.status);
     if ([401, 403].includes(error.response.status) && authToken()) {
       /** auto logout if 401 Unauthorized or 403 Forbidden response from api */

@@ -23,7 +23,6 @@ export function ConfirmEmail() {
     try {
       /** Look up the user to confirm the email address given */
       const response = await dispatch(authActions.confirmEmail(data)).unwrap();
-      // console.log('response =', response);
       if (response.status === 'success') {
         /** Redirect to user list with success message */
         history.navigate('/account/login');
