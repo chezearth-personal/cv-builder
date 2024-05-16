@@ -43,7 +43,10 @@ export function ConfirmEmail() {
     } catch (error) {
       console.log(error);
       history.navigate('/');
-      dispatch(alertActions.error(error), { showAfterRedirect: true });
+      dispatch(alertActions.error({
+        message: `${error} `, 
+        showAfterRedirect: true 
+      }));
     }
   }
 

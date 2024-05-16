@@ -43,7 +43,10 @@ export function ResetPassword() {
     } catch (error) {
       console.error('error =', error);
       history.navigate('/');
-      dispatch(alertActions.error(error));
+      dispatch(alertActions.error({
+        message: `${error} `,
+        showAfterRedirect: true
+      }));
     }
   }
 

@@ -18,7 +18,7 @@ function createInitialState() {
 function createReducers() {
   return { success, error, clear };
   /** Payload can be a string message ('alert message') or */
-  /** an object ({ message: 'alert message', showAfterRedirect: treu }) */
+  /** an object ({ message: 'alert message', showAfterRedirect: true }) */
   function success(state, action) {
     state.value = {
       type: 'alert-success',
