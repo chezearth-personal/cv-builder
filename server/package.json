@@ -1,5 +1,5 @@
 {
-  "name": "server",
+  "name": "CV Builder server",
   "version": "1.0.0",
   "description": "You enter some basic info on a web form and ChatGPT (OpenAI) creates your CV for you.",
   "main": "index.js",
