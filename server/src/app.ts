@@ -1,4 +1,5 @@
 import 'dotenv/config';
+import config from 'config';
 import express, { NextFunction, Request, Response } from 'express';
 // import express from 'express';
 import cors from 'cors';
@@ -50,6 +51,19 @@ AppDataSource.initialize()
         message: `Welcome to the CV-Builder backend!`
       });
     });
+    const imageFileSize = 1024 * 1024 * Number(config.get<string>('imageFileSizeMb') || 5);
+    const storage = multer.diskStorage({
+      destination: (req, file, cb) => {
+        cb(null, 'uploads');
+      },
+      filename: (req, file, cb) => {
+        cb(null, Date.now() + path.extname(file.originalname));
+      }
+    });
+    const upload = multer({
+      storage: storage,
+      limits: { fileSize: imageFileSize }
+    });
   });
 
 /** Environment: host and port have defaults */
@@ -58,7 +72,6 @@ const port = process.env.PORT || 'localhost';
 const openAI = new OpenAI({
   apiKey: process.env.OPENAI_API_SECRET_KEY
 });
-const imageFileSize = 1024 * 1024 * Number(process.env.IMAGE_FILE_SIZE_MB || 5);
 
 
 /** Database. For now, just an array*/
@@ -90,18 +103,6 @@ const gptFunction = async (text) => {
   }
 }
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'uploads');
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname));
-  }
-});
-const upload = multer({
-  storage: storage,
-  limits: { fileSize: imageFileSize }
-});
 
 /** Create strings from arrays for returning as lists to document */
 const commaSep = (t) => !t.length ? '' : ', ';
