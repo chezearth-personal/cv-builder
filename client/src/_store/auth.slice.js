@@ -116,24 +116,27 @@ function createExtraActions() {
     );
   }
   function logout() {
-    return createAsyncThunk(
-      `${name}/logout`,
-      async function (arg, { dispatch }) {
-        try {
-          const logout = await fetchWrapper.post(`${BASE_URL}/auth/logout`, {});
-          if (logout.status === 204) {
-            console.log(`Log out successful.`);
+    if (!Cookies.get('access_token')) {
+      return createAsyncThunk(
+        `${name}/logout`,
+        async function (arg, { dispatch }) {
+          try {
+            const logout = await fetchWrapper.post(`${BASE_URL}/auth/logout`, {});
+            if (logout.status === 204) {
+              console.log(`Log out successful.`);
+            }
+          } catch (error) {
+            dispatch(alertActions.error(error));
           }
-        } catch (error) {
-          dispatch(alertActions.error(error));
+          Cookies.remove('access_token');
+          Cookies.remove('refresh_token');
+          Cookies.remove('logged_in');
+          dispatch(authActions.setAuth(null));
+          localStorage.removeItem('auth');
+          history.navigate('/');
         }
-        Cookies.remove('access_token');
-        Cookies.remove('refresh_token');
-        Cookies.remove('logged_in');
-        dispatch(authActions.setAuth(null));
-        localStorage.removeItem('auth');
-        history.navigate('/');
-      }
-    );
+      );
+    }
+    return;
   }
 }
