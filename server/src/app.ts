@@ -5,16 +5,52 @@ import cors from 'cors';
 import multer from 'multer';
 import OpenAI from 'openai';
 import { randomUUID } from 'crypto';
-import { exit } from 'process';
+// import { exit } from 'process';
+import { AppDataSource } from './utils/data-source';
+import { validateEnv } from './utils/validate-env';
 import { logger, successHandler, errorHandler } from './utils/logger';
 
-/** OpenAI won't work without a secret key so
-  * don't start the server without it 
-  */
-if (!process.env.OPENAI_API_SECRET_KEY) {
-  console.log('No OpenAI secret key found');
-  exit(1);
-}
+/** Useful text function */
+const plurals = (
+  n: number,
+  singular: string,
+  plural: string
+) => n === 1 ? singular : plural;
+
+AppDataSource.initialize()
+  .then(() => {
+    logger.log('INFO', 'Database initialized');
+    /** Validate environment variables */
+    validateEnv();
+    /** Start express */
+    const app = express();
+    /** MIDDLEWARE */
+    /** 1. Body parser */
+    app.use(express.json({ limit: '100kb' }));
+    app.use(express.urlencoded({ extended: true }));
+    /** 2. Logger */
+    app.use(successHandler);
+    app.use(errorHandler);
+    /** 3. Cookie parser */
+    // app.use(cookieParser());
+    /** 4. CORS */
+    app.use(
+      // cors()
+      cors({
+        origin: config.get<string>('origin'),
+        credentials: true
+      })
+    );
+    /** ROUTES */
+    /** 5. file uploads for images */
+    app.use('/uploads', express.static('uploads'));
+    /** 6. Main GET request */
+    app.get('/api', (req, res) => {
+      res.json({
+        message: `Welcome to the CV-Builder backend!`
+      });
+    });
+  });
 
 /** Environment: host and port have defaults */
 const host = process.env.HOST || 4000;
@@ -24,28 +60,16 @@ const openAI = new OpenAI({
 });
 const imageFileSize = 1024 * 1024 * Number(process.env.IMAGE_FILE_SIZE_MB || 5);
 
-/** Useful text function */
-const plurals: string = (n, singular, plural) => n === 1 ? singular : plural;
 
 /** Database. For now, just an array*/
-let database = [];
+// let database = [];
 
-const app = express();
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-app.use(cors());
+// const app = express();
+// app.use(express.json());
+// app.use(cors());
 /** Set up http logging */
-app.use(successHandler);
-app.use(errorHandler);
-/** file uploads for images */
-app.use('/uploads', express.static('uploads'));
-
-app.get('/api', (req, res) => {
-  res.json({
-    message: `Welcome to the CV-Builder backend!`
-  });
-});
-
+// app.use(successHandler);
+// app.use(errorHandler);
 const gptFunction = async (text) => {
   try {
     const response = await openAI.completions.create({

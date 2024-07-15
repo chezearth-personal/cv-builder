@@ -250,6 +250,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/multer@npm:^1.4.11":
+  version: 1.4.11
+  resolution: "@types/multer@npm:1.4.11"
+  dependencies:
+    "@types/express": "npm:*"
+  checksum: 10c0/ace8e9f5ac7d2d7f6e0c35b790504f582a2f82a84cc06a7b90315527599b95256595bc0bb5bba60220c20a558554f0c21b96b94848b885987ab69512a3a9865e
+  languageName: node
+  linkType: hard
+
 "@types/node-fetch@npm:^2.6.4":
   version: 2.6.11
   resolution: "@types/node-fetch@npm:2.6.11"
@@ -340,38 +349,6 @@ __metadata:
   checksum: 10c0/d5d7f25da612f6d79266f4f1bb9c1ef8f1684e9f60abab251e1261170631062b656ba26ff22631f2760caeafd372abc41e64867cde27fba54fafb73a35b9056a
   languageName: node
   linkType: hard
-
-"CV Builder server@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "CV Builder server@workspace:."
-  dependencies:
-    "@types/config": "npm:^3.3.4"
-    "@types/cookie-parser": "npm:^1.4.7"
-    "@types/cors": "npm:^2.8.17"
-    "@types/dotenv": "npm:^8.2.0"
-    "@types/express": "npm:^4.17.21"
-    "@types/html-to-text": "npm:^9.0.4"
-    "@types/jsonwebtoken": "npm:^9.0.6"
-    "@types/morgan": "npm:^1.9.9"
-    "@types/node": "npm:^16.11.10"
-    config: "npm:^3.3.11"
-    cors: "npm:^2.8.5"
-    dotenv: "npm:^16.4.5"
-    express: "npm:^4.19.2"
-    morgan: "npm:^1.10.0"
-    multer: "npm:^1.4.5-lts.1"
-    nodemon: "npm:^3.1.0"
-    openai: "npm:^4.33.1"
-    pg: "npm:^8.4.0"
-    reflect-metadata: "npm:^0.1.13"
-    ts-node: "npm:10.9.1"
-    ts-node-dev: "npm:^2.0.0"
-    typeorm: "npm:0.3.20"
-    typescript: "npm:4.5.2"
-    winston: "npm:^3.13.0"
-    zod: "npm:^3.22.4"
-  languageName: unknown
-  linkType: soft
 
 "abbrev@npm:1":
   version: 1.1.1
@@ -930,6 +907,40 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cv-builder@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "cv-builder@workspace:."
+  dependencies:
+    "@types/config": "npm:^3.3.4"
+    "@types/cookie-parser": "npm:^1.4.7"
+    "@types/cors": "npm:^2.8.17"
+    "@types/dotenv": "npm:^8.2.0"
+    "@types/express": "npm:^4.17.21"
+    "@types/html-to-text": "npm:^9.0.4"
+    "@types/jsonwebtoken": "npm:^9.0.6"
+    "@types/morgan": "npm:^1.9.9"
+    "@types/multer": "npm:^1.4.11"
+    "@types/node": "npm:^16.11.10"
+    config: "npm:^3.3.11"
+    cors: "npm:^2.8.5"
+    dotenv: "npm:^16.4.5"
+    envalid: "npm:^8.0.0"
+    express: "npm:^4.19.2"
+    morgan: "npm:^1.10.0"
+    multer: "npm:^1.4.5-lts.1"
+    nodemon: "npm:^3.1.0"
+    openai: "npm:^4.33.1"
+    pg: "npm:^8.4.0"
+    reflect-metadata: "npm:^0.1.13"
+    ts-node: "npm:10.9.1"
+    ts-node-dev: "npm:^2.0.0"
+    typeorm: "npm:0.3.20"
+    typescript: "npm:4.5.2"
+    winston: "npm:^3.13.0"
+    zod: "npm:^3.22.4"
+  languageName: unknown
+  linkType: soft
+
 "dayjs@npm:^1.11.9":
   version: 1.11.11
   resolution: "dayjs@npm:1.11.11"
@@ -1068,6 +1079,15 @@ __metadata:
   version: 2.2.1
   resolution: "env-paths@npm:2.2.1"
   checksum: 10c0/285325677bf00e30845e330eec32894f5105529db97496ee3f598478e50f008c5352a41a30e5e72ec9de8a542b5a570b85699cd63bd2bc646dbcb9f311d83bc4
+  languageName: node
+  linkType: hard
+
+"envalid@npm:^8.0.0":
+  version: 8.0.0
+  resolution: "envalid@npm:8.0.0"
+  dependencies:
+    tslib: "npm:2.6.2"
+  checksum: 10c0/8a12cdce071f54d780b2efa68ed77c1c1f397e44e47b2e23d9ec2130d7decc7502ffabff962760371e4eecf696a40a79188fdbd7bfc080d7283d484a8798c6e4
   languageName: node
   linkType: hard
 
@@ -3072,6 +3092,13 @@ __metadata:
     strip-bom: "npm:^3.0.0"
     strip-json-comments: "npm:^2.0.0"
   checksum: 10c0/7a5dec94b9e42017d93041b1962c174afde00fd8f3066eea81a5e5b743065e95f3bedebff0edbe215b2517f8cdace8c9f15651a78d5eb7409cad2fc107e5eb98
+  languageName: node
+  linkType: hard
+
+"tslib@npm:2.6.2":
+  version: 2.6.2
+  resolution: "tslib@npm:2.6.2"
+  checksum: 10c0/e03a8a4271152c8b26604ed45535954c0a45296e32445b4b87f8a5abdb2421f40b59b4ca437c4346af0f28179780d604094eb64546bee2019d903d01c6c19bdb
   languageName: node
   linkType: hard
 

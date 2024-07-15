@@ -11,4 +11,16 @@ export class Cv extends Model {
 
   @Column()
   headshot: string;
+
+  @Column()
+  mobile: string;
+
+  @Column()
+  tel: string;
+
+  @Column()
+  website: string;
+
+  @Column()
+  skills: json;
 }
