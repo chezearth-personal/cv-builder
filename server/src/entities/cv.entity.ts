@@ -1,26 +1,34 @@
-import { Entity, Column, Index, BeforeInsert, BeforeUpdate } from 'typeorm';
+import { Entity, Column, Index, BeforeInsert, BeforeUpdate, OneToMany, ManyToOne } from 'typeorm';
 import { Model } from './model.entity'
+import { CompanyDetail } from './company-detail.entity';
 
-@Entity('cvs')
+@Entity('cv')
 export class Cv extends Model {
-  @Column()
-  name: string;
+  @Column({ type: 'text' })
+  fullName: string;
 
-  @Column()
+  @Column({ type: 'text' })
   occupation: string;
 
-  @Column()
+  @Column({ type: 'text' })
   headshot: string;
 
-  @Column()
-  mobile: string;
+  // @Column()
+  // mobile: string;
 
-  @Column()
+  @Column({ type: 'varchar', length: 18 })
   tel: string;
 
-  @Column()
+  @Column({ type: 'varchar', length: 40 })
+  email: string;
+
+  @Column({ type: 'text'})
   website: string;
 
-  @Column()
-  skills: json;
+  @Column({ type: 'json'})
+  skillTopics: JSON;
+
+  // @ManyToOne(typeFunctionOrTarget, inverseSide)
+  @ManyToOne(() => CompanyDetail, companyDetails => companyDetails.cv)
+  companyDetails: CompanyDetail[];
 }

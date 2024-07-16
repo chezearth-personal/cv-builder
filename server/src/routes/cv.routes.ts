@@ -48,7 +48,7 @@ const plurals = (
 const commaSep = (t: string): string => !t.length ? '' : ', ';
 const testArray = (
   arr: Array<string>,
-  trueStr: string, 
+  trueStr: string,
   falseStr: string
 ): string => arr  && arr.length > 0 ? trueStr : falseStr;
 const getStringFromArray = (
