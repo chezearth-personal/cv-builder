@@ -1,17 +1,21 @@
-import { Entity, Column, Index, BeforeInsert, BeforeUpdate, OneToMany, ManyToOne } from 'typeorm';
+import { Entity, Column, Index, OneToMany } from 'typeorm';
 import { Model } from './model.entity'
-import { CompanyDetail } from './company-detail.entity';
+import { Company } from './company.entity';
+// import { CompanyDetail } from './company-detail.entity';
 
 @Entity('cv', { schema: 'cv_builder' })
 export class Cv extends Model {
+  @Index('fullname_index')
   @Column({ type: 'text' })
   fullName: string;
 
+  @Index('occupation_index')
   @Column({ type: 'text' })
   occupation: string;
 
+  @Index('location_index')
   @Column({ type: 'text' })
-  headshot: string;
+  image_url: string;
 
   // @Column()
   // mobile: string;
@@ -26,9 +30,8 @@ export class Cv extends Model {
   website: string;
 
   @Column({ type: 'json'})
-  skillTopics: JSON;
+  skill_topics: JSON;
 
-  // @ManyToOne(typeFunctionOrTarget, inverseSide)
-  @ManyToOne(() => CompanyDetail, companyDetails => companyDetails.cv)
-  companyDetails: CompanyDetail[];
+  @OneToMany(() => Company, companies => companies.cv, { cascade: true })
+  companies: Company[];
 }
