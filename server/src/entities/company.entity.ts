@@ -2,7 +2,7 @@ import { Entity, Column, Index, BeforeInsert, BeforeUpdate, ManyToOne } from 'ty
 import { Model } from './model.entity'
 import {CompanyDetail} from './company-detail.entity';
 
-@Entity('company')
+@Entity('company', { schema: 'cv_builder' })
 export class Company extends Model {
   @Column({ type: 'text' })
   name: string;
