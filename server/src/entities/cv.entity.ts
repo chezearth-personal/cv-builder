@@ -1,7 +1,6 @@
 import { Entity, Column, Index, OneToMany } from 'typeorm';
 import { Model } from './model.entity'
-import { Company } from './company.entity';
-// import { CompanyDetail } from './company-detail.entity';
+import { CompanyDetail } from './company-detail.entity';
 
 @Entity('cv', { schema: 'cv_builder' })
 export class Cv extends Model {
@@ -13,25 +12,27 @@ export class Cv extends Model {
   @Column({ type: 'text' })
   occupation: string;
 
-  @Index('location_index')
   @Column({ type: 'text' })
   image_url: string;
 
   // @Column()
   // mobile: string;
 
+  @Index('tel_index')
   @Column({ type: 'varchar', length: 18 })
   tel: string;
 
+  @Index('email_index')
   @Column({ type: 'varchar', length: 40 })
   email: string;
 
+  @Index('website_index')
   @Column({ type: 'text'})
   website: string;
 
   @Column({ type: 'json'})
   skill_topics: JSON;
 
-  @OneToMany(() => Company, companies => companies.cv, { cascade: true })
-  companies: Company[];
+  @OneToMany(() => CompanyDetail, companyDetail => companyDetail.companyDetailCv, { cascade: true })
+  companyDetails: CompanyDetail[];
 }

@@ -1,41 +1,21 @@
-import { Entity, Column, Index, BeforeInsert, ManyToOne } from 'typeorm';
-import { Model } from './model.entity'
-import { Cv } from './cv.entity';
-// import {CompanyDetail} from './company-detail.entity';
+import { Entity, Column, OneToMany } from 'typeorm';
+import { Model } from './model.entity';
+import { CompanyDetail } from './company-detail.entity';
 
 @Entity('company', { schema: 'cv_builder' })
 export class Company extends Model {
-  @Index('companyname_index')
-  @Column({ type: 'text' })
+  @Column('text')
   name: string;
 
-  @Index('position_index')
-  @Column({ type: 'text' })
-  position: string;
+  @Column('varchar', { length: 18 })
+  tel: string;
 
-  @Column({ type: 'date' })
-  start_date: Date;
+  @Column('text')
+  email: string;
 
-  @Column({ type: 'date', nullable: true})
-  end_date: Date | null;
+  @Column('text')
+  website: string;
 
-  @Column({ type: 'boolean', default: false, nullable: false })
-  is_current: boolean;
-
-  @Column({ type: 'text' })
-  work_prompt: string;
-
-  @Column({ type: 'text' })
-  key_phrase_text: string;
-
-  @Column({ type: 'json' })
-  key_phrase_topics: JSON;
-
-  @ManyToOne(() => Cv, cv => cv.companies, { cascade: true })
-  cv: Cv;
-
-  @BeforeInsert()
-  async updateEndDate() {
-    this.end_date = this.is_current ? null : this.end_date;
-  }
+  @OneToMany(() => CompanyDetail, companyDetail => companyDetail.companyDetailCompany)
+  companyDetails: CompanyDetail[];
 }
