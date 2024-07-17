@@ -18,8 +18,8 @@ export function AccountLayout() {
             <Route path='login' element={<Login />} />
             <Route path='register' element={<Register />} />
             <Route path='forgot-password' element={<ConfirmEmail />} />
-            <Route path='/verify-email/:verificationcode/*' element={<VerifyEmail />} />
-            <Route path='/reset-password/:verificationcode/*' element={<ResetPassword />} />
+            <Route path='/verify-email/:verificationCode/*' element={<VerifyEmail />} />
+            <Route path='/reset-password/:verificationCode/*' element={<ResetPassword />} />
           </Routes>
         </div>
       </div>

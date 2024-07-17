@@ -136,7 +136,7 @@ function Home({ setResult }) {
   return (
     <div className='App'>
       <div className='nav'>
-        <h3>{!auth ? `Not logged in` : `Hi ${auth?.firstname}!`}</h3>
+        <h3>{!auth ? `Not logged in` : `Hi ${auth?.firstName}!`}</h3>
         {/**<p>You're logged in with React 18 + Redux & JWT</p>*/}
         <p>{auth && <Link to='/account'>My account</Link>}</p>
         <p>Idle timer: current state - {state} | Action events - {count} | {remainingTime} seconds remaining</p>
@@ -159,7 +159,7 @@ function Home({ setResult }) {
           name='fullName'
           id='fullName'
           value={fullName}
-          placeholder={!auth ? '' : `${auth?.firstname} ${auth?.lastname}`}
+          placeholder={!auth ? '' : `${auth?.firstName} ${auth?.lastName}`}
           onChange={(e) => setFullName(e.target.value)}
         />
         <label htmlFor='jobTitle'>Enter your occupation <span className='req'>*</span></label>

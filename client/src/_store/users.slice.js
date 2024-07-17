@@ -44,9 +44,9 @@ function createExtraActions() {
   function verifyEmail() {
     return createAsyncThunk(
       `${name}/verifyEmail`,
-      async (verificationcode) => {
-        console.log(`verifyEmail(): verificationcode = ${verificationcode}`);
-        return await fetchWrapper.get(`${BASE_URL}/auth/verify-email/${verificationcode}`);
+      async (verificationCode) => {
+        console.log(`verifyEmail(): verificationCode = ${verificationCode}`);
+        return await fetchWrapper.get(`${BASE_URL}/auth/verify-email/${verificationCode}`);
       }
     );
   }

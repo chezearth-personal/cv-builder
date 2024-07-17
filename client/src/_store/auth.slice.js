@@ -98,10 +98,10 @@ function createExtraActions() {
   function resetPassword() {
     return createAsyncThunk(
       `${name}/resetPassword`,
-      async function({ verificationcode, password, passwordConfirm }, { dispatch }) {
+      async function({ verificationCode, password, passwordConfirm }, { dispatch }) {
         try {
           const response = await fetchWrapper.put(
-            `${BASE_URL}/auth/reset-password/${verificationcode}`,
+            `${BASE_URL}/auth/reset-password/${verificationCode}`,
             { password, passwordConfirm }
           );
           return response;

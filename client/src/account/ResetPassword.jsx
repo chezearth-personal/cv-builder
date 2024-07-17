@@ -10,7 +10,7 @@ import { authActions } from '_store/auth.slice';
 export function ResetPassword() {
   console.log('Loading ResetPassword ...');
   const dispatch = useDispatch();
-  const { verificationcode } = useParams();
+  const { verificationCode } = useParams();
   /** Form validation rules */
   const validationSchema = Yup.object().shape({
     password: Yup.string()
@@ -24,7 +24,7 @@ export function ResetPassword() {
   async function onSubmit(data) {
     dispatch(alertActions.clear());
     try {
-      const response = await dispatch(authActions.resetPassword({ ...data, verificationcode })).unwrap();
+      const response = await dispatch(authActions.resetPassword({ ...data, verificationCode })).unwrap();
       if (response.status === 'success') {
         /** Redirect to login with success message */
         history.navigate('/account/login');
@@ -84,7 +84,7 @@ export function ResetPassword() {
             <Link to='/login' className='btn btn__link'>Cancel</Link>
         </form>
       <Routes>
-        <Route path="/confirm-email/:verificationcode" />
+        <Route path="/confirm-email/:verificationCode" />
       </Routes>
     </>
   );

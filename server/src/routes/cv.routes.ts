@@ -38,13 +38,13 @@ type CompanyKeyPhrase = {
   keyPhraseText: string
 };
 
-/** Useful text function */
+/** ? Useful text function */
 const plurals = (
   n: number,
   singular: string,
   plural: string
 ): string => n === 1 ? singular : plural;
-/** Create strings from arrays for returning as lists to document */
+/** ? Create strings from arrays for returning as lists to document */
 const commaSep = (t: string): string => !t.length ? '' : ', ';
 const testArray = (
   arr: Array<string>,
@@ -65,11 +65,11 @@ const getStringFromArray = (
       }`,
     ''
   );
-/** File size constants and text organisation */
+/** ? File size constants and text organisation */
 const imageFileSize = 1024 * 1024 * Number(
   config.get<string>('imageFileSizeMb') || 5
 );
-/** File upload */
+/** ? File upload */
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, 'uploads');
@@ -161,6 +161,7 @@ Router.post('/create', upload.single('headshotImage'), async (req, res) => {
       }. My work involved the following points: ${
         companyKeyPhrase.keyPhraseText
       }. Can you write 50 to 300 words for this company, using paragraphs and in an exciting, interesting tone (first person writing)?` } }));
+  logger.log('DEBUG', 'companyPrompts = ' + companyPrompts);
   // console.log('companyPrompts =', companyPrompts);
   /** Generate the GPT-3 results: 1 - The Profile  */
   const profile = await gptFunction(profilePrompt);

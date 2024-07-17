@@ -21,9 +21,9 @@ export function EditAccount() {
   // const user = useSelector(x => x.users?.item);
   /** Form validation rules */
   const validationSchema = yup.object().shape({
-    firstname: yup.string()
+    firstName: yup.string()
       .required('First Name is required'),
-    lastname: yup.string()
+    lastName: yup.string()
       .required('Last Name is required'),
     email: yup.string()
       .required('Email is required'),
@@ -74,24 +74,24 @@ export function EditAccount() {
                 First Name <span className='req'>*</span>
               </label>
               <input
-                name='firstname'
+                name='firstName'
                 type='text'
-                placeholder={user?.firstname}
-                {...register('firstname')}
-                className={`form__input ${errors.firstname ? 'is-invalid' : ''}`}
+                placeholder={user?.firstName}
+                {...register('firstName')}
+                className={`form__input ${errors.firstName ? 'is-invalid' : ''}`}
               />
-              <div className='invalid-feedback'>{errors.firstname?.message}</div>
+              <div className='invalid-feedback'>{errors.firstName?.message}</div>
               <label className='form__label'>
                 Last Name <span className='req'>*</span>
               </label>
               <input
-                name='lastname'
+                name='lastName'
                 type='text'
-                placeholder={user?.lastname}
-                {...register('lastname')}
-                className={`form__input ${errors.lastname ? 'is-invalid' : ''}`}
+                placeholder={user?.lastName}
+                {...register('lastName')}
+                className={`form__input ${errors.lastName ? 'is-invalid' : ''}`}
               />
-              <div className='invalid-feedback'>{errors.lastname?.message}</div>
+              <div className='invalid-feedback'>{errors.lastName?.message}</div>
               <label className='form__label'>
                 Email <span className='req'>*</span>
               </label>

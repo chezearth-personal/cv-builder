@@ -5,15 +5,15 @@ import { CompanyDetail } from './company-detail.entity';
 @Entity('cv', { schema: 'cv_builder' })
 export class Cv extends Model {
   @Index('fullname_index')
-  @Column({ type: 'text' })
+  @Column({name: 'full_name', type: 'text' })
   fullName: string;
 
   @Index('occupation_index')
   @Column({ type: 'text' })
   occupation: string;
 
-  @Column({ type: 'text' })
-  image_url: string;
+  @Column({name: 'image_url', type: 'text' })
+  imageUrl: string;
 
   // @Column()
   // mobile: string;
@@ -30,8 +30,8 @@ export class Cv extends Model {
   @Column({ type: 'text'})
   website: string;
 
-  @Column({ type: 'json'})
-  skill_topics: JSON;
+  @Column({ name: 'skill_topics', type: 'json'})
+  skillTopics: JSON;
 
   @OneToMany(() => CompanyDetail, companyDetail => companyDetail.companyDetailCv, { cascade: true })
   companyDetails: CompanyDetail[];
