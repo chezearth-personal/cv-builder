@@ -54,12 +54,14 @@ export function ConfirmEmail() {
     <>
       <h1>Forgot Password: Confirm your Email Address</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
-              <label className='form__label'>
+              <label htmlFor='email' className='form__label'>
                 Enter your email for confirmation <span className='req'>*</span>
               </label>
               <input
+                id='email'
                 name='email'
                 type='email'
+                autoComplete='email work home'
                 {...register('email')}
                 className={`form__input ${errors.email ? 'is-invalid' : ''}`}
               />

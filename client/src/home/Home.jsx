@@ -39,7 +39,7 @@ function Home({ setResult }) {
   const dispatch = useDispatch();
   /** Idle timer functions */
   const onIdle = () => {
-    console.log('user is idle');
+    console.log('user is idle and user logged in?', auth ? 'yes' : 'no', auth);
     setState('Idle');
     if (auth) {
       console.log('logging out');
@@ -54,6 +54,7 @@ function Home({ setResult }) {
   const onAction = () => {
     setCount(count + 1);
   }
+  // console.log('timeout =', process.env.REACT_APP_IDLE_TIMEOUT_MINUTES);
   const { getRemainingTime } = useIdleTimer({
     onIdle,
     onActive,
@@ -104,25 +105,7 @@ function Home({ setResult }) {
         handleFormSuccess,
         handleFormError
       );
-      // axios
-        // .post('http://localhost:4000/cv/create', formData, {})
-        // .then(res => {
-          // if (res.data.message) {
-            // /** Update the result object */
-            // setResult(res.data.data);
-            // navigate('/cv');
-          // }
-        // })
-        // .catch(err => {
-          // if (err && err.response && /<pre>MulterError: File too large<br>/.test(err.response.data.toString())) {
-            // console.error('navigate to \'ErrorPage/\'');
-          // } else {
-            // console.error(err);
-          // }
-        // });
-      // setLoading(true);
     }
-    // return;
     return <div></div>;
   }
 
@@ -162,7 +145,7 @@ function Home({ setResult }) {
           placeholder={!auth ? '' : `${auth?.firstName} ${auth?.lastName}`}
           onChange={(e) => setFullName(e.target.value)}
         />
-        <label htmlFor='jobTitle'>Enter your occupation <span className='req'>*</span></label>
+        <label htmlFor='occupation'>Enter your occupation <span className='req'>*</span></label>
         <input
           type='text'
           required
@@ -180,7 +163,7 @@ function Home({ setResult }) {
           onChange={e => setHeadShot(e.target.files[0])}
         />
         <h3>Contact Information</h3>
-        <label htmlFor='{telNumber}'>Tel <span className='req'>*</span></label>
+        <label htmlFor='telNumber'>Tel <span className='req'>*</span></label>
         <input
           type='tel'
           required
@@ -196,7 +179,7 @@ function Home({ setResult }) {
           id='email'
           value={email}
           placeholder={!auth ? '' : auth?.email}
-          autoComplete='email'
+          autoComplete='email work home'
           onChange={e => setEmail(e.target.value)}
         />
         <label htmlFor='website'>Website or online portfolio</label>

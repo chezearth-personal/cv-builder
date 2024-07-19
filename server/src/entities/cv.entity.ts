@@ -4,7 +4,7 @@ import { CompanyDetail } from './company-detail.entity';
 
 @Entity('cv', { schema: 'cv_builder' })
 export class Cv extends Model {
-  @Index('fullname_index')
+  @Index('full_name_index')
   @Column({name: 'full_name', type: 'text' })
   fullName: string;
 

@@ -50,6 +50,7 @@ export const Register = () => {
             First Name <span className='req'>*</span>
           </label>
           <input
+            id='firstName'
             name='firstName'
             type='text'
             { ...register('firstName') }
@@ -60,6 +61,7 @@ export const Register = () => {
             Last Name <span className='req'>*</span>
           </label>
           <input
+            id='lastName'
             name='lastName'
             type='text'
             { ...register('lastName') }
@@ -70,8 +72,10 @@ export const Register = () => {
             email <span className='req'>*</span>
           </label>
           <input
+            id='email'
             name='email'
             type='email'
+            autoComplete='email work home'
             { ...register('email') }
             className={`form__control ${errors.email ? 'is-invalid' : ''}`}
           />
@@ -80,6 +84,7 @@ export const Register = () => {
             Password <span className='req'>*</span>
           </label>
           <input
+            id='password'
             name='password'
             type='password'
             { ...register('password') }
@@ -90,6 +95,7 @@ export const Register = () => {
             Confirm Password <span className='req'>*</span>
           </label>
           <input
+            id='passwordConfirm'
             name='passwordConfirm'
             type='password'
             { ...register('passwordConfirm') }

@@ -15,6 +15,8 @@ function request(method) {
   return (url, data, handleSuccess, handleError) => {
     console.log('request(): handleSuccess =', handleSuccess);
     console.log('request(): handleError =', handleError);
+    console.log('request(): url =', url);
+    console.log('request(): data =', data);
     /** Path for auth endpoints */
     const AUTH_PATH = `${process.env.REACT_APP_AUTH_API_BASE_URL}/api/v1/auth`;
     /** function to check url is not a register or verify email auth path, */
@@ -32,9 +34,12 @@ function request(method) {
       withCredentials: isRequireCredentials(url)
     }
     if (data) {
+      // const jsonData = JSON.isRawJSON(data) 
+        // ? JSON.parse(JSON.stringify(data));
       initConfig.headers['Content-Type'] = 'application/json'
-      initConfig.data = data;
+      initConfig.data = JSON.parse(JSON.stringify(data));
     }
+    console.log('request():initConfig =', initConfig);
     // console.log('request():initConfig =', initConfig);
     /** Response interceptor, used to catch 401 (unauthorized) responses and renew access_tokens*/
     axios.interceptors.response.use(

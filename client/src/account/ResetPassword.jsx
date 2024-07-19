@@ -54,20 +54,22 @@ export function ResetPassword() {
     <>
       <h1>Reset your password</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
-            <label className='form__label'>
+            <label htmlFor='password' className='form__label'>
               Password
             </label>
             <input
+              id='password'
               name='password'
               type='password'
               {...register('password')}
               className={`form__input ${errors.password ? 'is-invalid' : ''}`}
             />
             <div className='invalid-feedback'>{errors.password?.message}</div>
-            <label className='form__label'>
+            <label htmlFor='passwordConfirm' className='form__label'>
               Confirm Password
             </label>
             <input
+              id='passwordConfirm'
               name='passwordConfirm'
               type='password'
               {...register('passwordConfirm')}
