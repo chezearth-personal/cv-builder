@@ -34,10 +34,8 @@ function request(method) {
       withCredentials: isRequireCredentials(url)
     }
     if (data) {
-      // const jsonData = JSON.isRawJSON(data) 
-        // ? JSON.parse(JSON.stringify(data));
       initConfig.headers['Content-Type'] = 'application/json'
-      initConfig.data = JSON.parse(JSON.stringify(data));
+      initConfig.data = data;
     }
     console.log('request():initConfig =', initConfig);
     // console.log('request():initConfig =', initConfig);
