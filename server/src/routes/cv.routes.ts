@@ -9,10 +9,10 @@ import { buildPrompts, gptFunction } from '../controllers/open-ai';
 type ItemList = {
   name: string
 };
-type SkillTopic = {
-  name: string,
-  itemList: Array<ItemList>
-};
+// type SkillTopic = {
+  // name: string,
+  // itemList: Array<ItemList>
+// };
 type keyPhraseTopic = {
   name: string,
   itemList: Array<ItemList>

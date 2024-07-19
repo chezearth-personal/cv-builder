@@ -27,7 +27,6 @@ function createExtraActions() {
   return {
     register: register(),
     verifyEmail: verifyEmail(),
-    // updatePassword: updatePassword(),
     getAll: getAll(),
     getById: getById(),
     update: update(),
