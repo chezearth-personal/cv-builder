@@ -22,6 +22,9 @@ function Home({ setResult }) {
   const [ state, setState ] = useState('Active');
   const [ count, setCount ] = useState(0);
   const [ remainingTime, setRemainingTime ] = useState(0);
+  const [ skillTopics, setSkillTopics ] = useState([{ name: '', itemList: [] }]);
+  const navigate = useNavigate();
+  const auth = useSelector(x => x.auth.value);
   const dispatch = useDispatch();
   const validationSchema = Yup.object().shape({
     fullName: Yup.string()
@@ -31,7 +34,13 @@ function Home({ setResult }) {
     tel: Yup.string()
       .required('Telephone number is required'),
     email: Yup.string()
-      .required('Email is required')
+      .required('Email is required'),
+    skillTopics: Yup.array().of(Yup.object().shape({
+      name: Yup.string(),
+      itemList: Yup.array().of(Yup.object().shape({
+        name: Yup.string()
+      })).min(1, 'At least one skill is required')
+    })).min(1, 'At least one skill topic is required')
   });
   const formOptions = { resolver: yupResolver(validationSchema) };
   /** Get functions to build form with useForm() hook */
@@ -42,6 +51,8 @@ function Home({ setResult }) {
     dispatch(alertActions.clear());
     try {
       const response = await dispatch(cvActions.create(data)).unwrap();
+      /** Redirect to cv page and display success alert */
+      navigate('/cv');
       dispatch(alertActions.success({
         message: `${response.message} `,
         showAfterRedirect: true
@@ -64,11 +75,8 @@ function Home({ setResult }) {
   // const [ tel, setTel ] = useState('');
   // const [ email, setEmail ] = useState('');
   // const [ website, setWebsite ] = useState('');
-  const [ skillTopics, setSkillTopics ] = useState([{ name: '', itemList: [] }]);
-  const [ loading, setLoading ] = useState(false);
+  // const [ loading, setLoading ] = useState(false);
   const [ companies, setCompanies ] = useState([initCompany]);
-  const navigate = useNavigate();
-  const auth = useSelector(x => x.auth.value);
   /** Idle timer functions */
   const onIdle = () => {
     console.log('user is idle and user logged in?', auth ? 'yes' : 'no', auth);
@@ -95,22 +103,22 @@ function Home({ setResult }) {
     throttle: 500
   });
   /** Handle Form Success & Errors, Submit the form */
-  const handleFormSuccess = res => {
-    if (res.data.message) {
+  // const handleFormSuccess = res => {
+    // if (res.data.message) {
       /** Update the result object */
-      setResult(res.data.data);
-      navigate('/cv');
-    }
-    setLoading(true);
-  }
-  const handleFormError = err => {
-    if (err && err.response && /<pre>MulterError: File too large<br>/.test(err.response.data.toString())) {
-      console.error('navigate to \'ErrorPage/\'');
-    } else {
-      console.error(err);
-    }
-    setLoading(true);
-  }
+      // setResult(res.data.data);
+      // navigate('/cv');
+    // }
+    // setLoading(true);
+  // }
+  // const handleFormError = err => {
+    // if (err && err.response && /<pre>MulterError: File too large<br>/.test(err.response.data.toString())) {
+      // console.error('navigate to \'ErrorPage/\'');
+    // } else {
+      // console.error(err);
+    // }
+    // setLoading(true);
+  // }
   const handleFormSubmit = (event) => {
     event.preventDefault();
     /** Check the text input for adding pill items have all been cleared */
@@ -122,7 +130,7 @@ function Home({ setResult }) {
       return acc && item.value === '';
     }, true)
     if (sendForm) {
-      const formData = new FormData();
+      // const formData = new FormData();
       // headShot && formData.append('headshotImage', headShot, headShot.name);
       // formData.append('fullName', fullName);
       // formData.append('occupation', occupation);
@@ -133,9 +141,9 @@ function Home({ setResult }) {
       // formData.append('companyDetails', JSON.stringify(companies));
       fetchWrapper.post(
         'http://localhost:4000/cv/create',
-        formData,
-        handleFormSuccess,
-        handleFormError
+        // formData,
+        // handleFormSuccess,
+        // handleFormError
       );
     }
     return <div></div>;
@@ -156,7 +164,7 @@ function Home({ setResult }) {
         <p>{auth && <Link to='/account'>My account</Link>}</p>
         <p>Idle timer: current state - {state} | Action events - {count} | {remainingTime} seconds remaining</p>
       </div>
-      {loading ? <Loading /> : null}
+      {{isSubmitting} ? null : <Loading />}
       <div className='App-header'>
         <img src={logo} className="App-logo" alt="logo" />
       </div>
@@ -248,7 +256,7 @@ function Home({ setResult }) {
           initCompany={initCompany}
           { ...register('companyDetails') }
         />
-        <button type='submit'>Create Your CV!</button>
+        <button disabled={isSubmitting} type='submit'>Create Your CV!</button>
       </form>
     </div>
   );
