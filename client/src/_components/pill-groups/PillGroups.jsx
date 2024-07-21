@@ -1,6 +1,6 @@
 import { useState } from 'react';
 // import { useForm } from 'react-hook-form';
-// import { HomeTopic } from './HomeTopic';
+// import { PillGroup } from './PillGroup';
 import { ItemPills } from './ItemPills';
 // import { yupResolver } from '@hookform/resolvers/yup';
 // import * as Yup from 'yup';
@@ -12,7 +12,7 @@ export function PillGroups({
   ...props
 }) {
   // const validationSchema = Yup.object().shape({
-    // homeTopics: Yup.array().of(Yup.object().shape({
+    // pillGroups: Yup.array().of(Yup.object().shape({
       // name: Yup.string(),
       // itemList: Yup.array().of(Yup.object().shape({
         // name: Yup.string()
@@ -39,14 +39,14 @@ export function PillGroups({
   }
   /** Removes a selected item from the list */
   const handleRemovePillGroup = (index) => {
-    console.log('HomeTopic index =', index);
+    console.log('PillGroup index =', index);
     setPillGroups(pillGroupsList => {
       console.log('list =', pillGroupsList);
       const newPillGroupsList = pillGroupsList.filter((e, i) => i !== index)
       console.log('list after splice =', newPillGroupsList);
       return newPillGroupsList;;
     });
-    console.log('homeTopics after set =', pillGroups);
+    console.log('pillGroups after set =', pillGroups);
   }
 
   /** ? Individual topic, contains a name field and an array of items pills  */
@@ -93,7 +93,7 @@ export function PillGroups({
                 <input
                   type='text'
                   required
-                  name='homeTopic'
+                  name='pillGroup'
                   id={`${props.name}_${props.index}`}
                   value={pillGroup.name}
                   onChange={e => updatePillGroup(e, props.index)}
@@ -101,12 +101,12 @@ export function PillGroups({
               </div>
             </div>
             <div className='btn__group'>
-              {props.numHomeTopics - 1 === props.index && props.numHomeTopics < 20 && (
+              {props.numPillGroups - 1 === props.index && props.numPillGroups < 20 && (
                 <button type='button' className='btn__add' onClick={addPillGroup}>
                   Add
                 </button>
               )}
-              {props.numHomeTopics > 1 && (
+              {props.numPillGroups > 1 && (
                 <button type='button' className='deleteBtn' onClick={() => removePillGroup(props.index)}>
                   Delete
                 </button>
@@ -142,12 +142,12 @@ export function PillGroups({
       <p>{props.description}</p>
       {pillGroups.map((pillGroup, index) => (
         <PillGroup key={index}
-          homeTopic={pillGroup}
-          addHomeTopic={handleAddPillGroup}
-          updateHomeTopic={handleUpdatePillGroup}
-          removeHomeTopic={handleRemovePillGroup}
+          pillGroup={pillGroup}
+          addPillGroup={handleAddPillGroup}
+          updatePillGroup={handleUpdatePillGroup}
+          removePillGroup={handleRemovePillGroup}
           index={index}
-          numHomeTopics={pillGroups.length}
+          numPillGroups={pillGroups.length}
           name={props.name}
           pillGroupLabel={props.pillGroupLabel}
           pillItemLabel={props.pillItemLabel}

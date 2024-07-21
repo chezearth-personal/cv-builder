@@ -52,10 +52,10 @@ const testArray = (
   falseStr: string
 ): string => arr  && arr.length > 0 ? trueStr : falseStr;
 const getStringFromArray = (
-  homeTopics: Array<any>
-): string => !homeTopics || !Array.isArray(homeTopics)
+  pillGroups: Array<any>
+): string => !pillGroups || !Array.isArray(pillGroups)
   ? ''
-  : homeTopics.reduce(
+  : pillGroups.reduce(
     (res: string, itemGroup) => `${res}${commaSep(res)}${itemGroup.name}${
         testArray(itemGroup.itemList, ' (', '')
       }${

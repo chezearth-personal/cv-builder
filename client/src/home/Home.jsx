@@ -8,7 +8,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { Loading } from '_components/placeholders/Loading';
 import { PillGroups } from '_components/pill-groups/PillGroups';
-// import { HomeTopic } from '_components/home-topics/HomeTopic';
+// import { PillGroup } from '_components/home-topics/PillGroup';
 import { Companies } from '_components/companies/Companies';
 // import { fetchWrapper } from '_helpers/fetch-wrapper';
 import { alertActions } from '_store/alert.slice';
@@ -93,10 +93,10 @@ function Home() {
     }
   }
   /** Updates the state with user's input */
-  // const handleAddHomeTopic = () =>
+  // const handleAddPillGroup = () =>
     // setSkillTopics([ ...skillTopics, { name: '', itemList: []}]);
   /** Updates an item within the list */
-  // const handleUpdateHomeTopic = (e, index) => {
+  // const handleUpdatePillGroup = (e, index) => {
     // if (e && e.target) {
       // const { value } = e.target;
       // const list = [ ...skillTopics ];
@@ -108,16 +108,16 @@ function Home() {
     // }
   // }
   /** Removes a selected item from the list */
-  // const handleRemoveHomeTopic = (index) => {
-    // console.log('HomeTopic index =', index);
+  // const handleRemovePillGroup = (index) => {
+    // console.log('PillGroup index =', index);
     // const list = [...skillTopics];
-    // setSkillTopics(homeTopics => {
-      // console.log('list =', homeTopics);
-      // const newHomeTopics = homeTopics.filter((homeTopic, i) => i !== index)
-      // console.log('list after splice =', newHomeTopics);
-      // return newHomeTopics;
+    // setSkillTopics(pillGroups => {
+      // console.log('list =', pillGroups);
+      // const newPillGroups = pillGroups.filter((pillGroup, i) => i !== index)
+      // console.log('list after splice =', newPillGroups);
+      // return newPillGroups;
     // });
-    // console.log('homeTopics after set =', skillTopics);
+    // console.log('pillGroups after set =', skillTopics);
   // }
   // const [ fullName, setFullName ] = useState('');
   // const [ occupation, setOccupation ] = useState('');

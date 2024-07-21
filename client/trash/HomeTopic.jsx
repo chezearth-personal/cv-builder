@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { ItemPills } from './ItemPills';
 
-export function HomeTopic ({
-  homeTopic,
-  addHomeTopic,
-  updateHomeTopic,
-  removeHomeTopic,
+export function PillGroup ({
+  pillGroup,
+  addPillGroup,
+  updatePillGroup,
+  removePillGroup,
   ...props
 }) {
   const [items, setItems] = useState([]);
@@ -25,7 +25,7 @@ export function HomeTopic ({
       setItems(items => [ ...items, { name: newItem } ]);
       // console.log('after update items =', items);
       // const newItemsList = [...items, { name: newItem }];
-      updateHomeTopic(Object.assign(homeTopic, { itemList: [ ...items, { name: newItem } ] }));
+      updatePillGroup(Object.assign(pillGroup, { itemList: [ ...items, { name: newItem } ] }));
     } else {
       if (numSame > 0) {
         alert('Item already exists');
@@ -36,7 +36,7 @@ export function HomeTopic ({
   const handleRemovePill = (index) => {
     const newItems = [ ...items ];
     newItems.splice(index, 1);
-    updateHomeTopic(Object.assign(homeTopic, { itemList: newItems }));
+    updatePillGroup(Object.assign(pillGroup, { itemList: newItems }));
     setItems(newItems);
   };
 
@@ -50,21 +50,21 @@ export function HomeTopic ({
               <input
                 type='text'
                 required
-                name='homeTopic'
+                name='pillGroup'
                 id={`${props.name}_${props.index}`}
-                value={homeTopic.name}
-                onChange={e => updateHomeTopic(e, props.index)}
+                value={pillGroup.name}
+                onChange={e => updatePillGroup(e, props.index)}
               />
             </div>
           </div>
           <div className='btn__group'>
-            {props.numHomeTopics - 1 === props.index && props.numHomeTopics < 20 && (
-              <button type='button' className='btn__add' onClick={addHomeTopic}>
+            {props.numPillGroups - 1 === props.index && props.numPillGroups < 20 && (
+              <button type='button' className='btn__add' onClick={addPillGroup}>
                 Add
               </button>
             )}
-            {props.numHomeTopics > 1 && (
-              <button type='button' className='deleteBtn' onClick={() => removeHomeTopic(props.index)}>
+            {props.numPillGroups > 1 && (
+              <button type='button' className='deleteBtn' onClick={() => removePillGroup(props.index)}>
                 Delete
               </button>
             )}
@@ -88,7 +88,7 @@ export function HomeTopic ({
       </div>
       <ItemPills
         removePill={handleRemovePill}
-        items={homeTopic.itemList}
+        items={pillGroup.itemList}
       />
     </div>
   );

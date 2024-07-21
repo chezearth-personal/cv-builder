@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { HomeTopics } from '_components/pill-groups/PillGroups';
+import { PillGroups } from '_components/pill-groups/PillGroups';
 
 export function Company({
   addCompany,
@@ -9,7 +9,7 @@ export function Company({
   ...props
 }) {
   const [ keyPhraseTopics, setkeyPhraseTopics ] = useState([{ name: '', itemList: [] }]);
-  const handleUpdateHomeTopics = (list) => company.keyPhraseTopics = list;
+  const handleUpdatePillGroups = (list) => company.keyPhraseTopics = list;
   return (
     <div className='compositeContainer'>
       <div className='company'>
@@ -86,10 +86,10 @@ export function Company({
             )}
           </div>
         </div>
-        <HomeTopics
-          homeTopics={keyPhraseTopics}
-          setHomeTopics={setkeyPhraseTopics}
-          updateParent={handleUpdateHomeTopics}
+        <PillGroups
+          pillGroups={keyPhraseTopics}
+          setPillGroups={setkeyPhraseTopics}
+          updateParent={handleUpdatePillGroups}
           name='keyPhraseTopics'
           description='Topics (e.g. "company background", "situation", "task", "action", "result", "learning") and key phrases'
           pillGroupLabel='Enter a key phrase topic'

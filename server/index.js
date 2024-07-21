@@ -80,9 +80,9 @@ const upload = multer({
 /** Create strings from arrays for returning as lists to document */
 const commaSep = (t) => !t.length ? '' : ', ';
 const testArray = (arr, trueStr, falseStr) => { return arr  && arr.length > 0 ? trueStr : falseStr; }
-const getStringFromArray = (homeTopics) => !homeTopics || !Array.isArray(homeTopics)
+const getStringFromArray = (pillGroups) => !pillGroups || !Array.isArray(pillGroups)
   ? ''
-  : homeTopics.reduce(
+  : pillGroups.reduce(
       (res, itemGroup) => `${res}${commaSep(res)}${itemGroup.name}${
           testArray(itemGroup.itemList, ' (', '')
         }${
