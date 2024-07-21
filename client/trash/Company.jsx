@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { HomeTopics } from '_components/home-topics/HomeTopics';
+import { HomeTopics } from '_components/pill-groups/PillGroups';
 
 export function Company({
   addCompany,

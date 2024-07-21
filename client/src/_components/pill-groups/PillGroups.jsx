@@ -5,9 +5,9 @@ import { ItemPills } from './ItemPills';
 // import { yupResolver } from '@hookform/resolvers/yup';
 // import * as Yup from 'yup';
 
-export function HomeTopics({
-  homeTopics,
-  setHomeTopics,
+export function PillGroups({
+  pillGroups,
+  setPillGroups,
   updateParent,
   ...props
 }) {
@@ -23,39 +23,38 @@ export function HomeTopics({
   /** Get functions to build form with useForm() hook */
   // const { register, handleSubmit, formState } = useForm(formOptions);
   /** Updates the state with user's input */
-  const handleAddHomeTopic = () =>
-    setHomeTopics([ ...homeTopics, { name: '', itemList: []}]);
+  const handleAddPillGroup = () =>
+    setPillGroups([ ...pillGroups, { name: '', itemList: []}]);
   /** Updates an item within the list */
-  const handleUpdateHomeTopic = (e, index) => {
+  const handleUpdatePillGroup = (e, index) => {
     if (e && e.target) {
       const { value } = e.target;
-      const list = [ ...homeTopics ];
+      const list = [ ...pillGroups ];
       list[index]['name'] = value;
-      setHomeTopics(list);
+      setPillGroups(list);
       if (updateParent) {
         updateParent(list);
       }
     }
   }
   /** Removes a selected item from the list */
-  const handleRemoveHomeTopic = (index) => {
+  const handleRemovePillGroup = (index) => {
     console.log('HomeTopic index =', index);
-    // const list = [...homeTopics];
-    setHomeTopics(homeTopics => {
-      console.log('list =', homeTopics);
-      const newHomeTopics = homeTopics.filter((homeTopic, i) => i !== index)
-      console.log('list after splice =', newHomeTopics);
-      return newHomeTopics;
+    setPillGroups(pillGroupsList => {
+      console.log('list =', pillGroupsList);
+      const newPillGroupsList = pillGroupsList.filter((e, i) => i !== index)
+      console.log('list after splice =', newPillGroupsList);
+      return newPillGroupsList;;
     });
-    console.log('homeTopics after set =', homeTopics);
+    console.log('homeTopics after set =', pillGroups);
   }
 
   /** ? Individual topic, contains a name field and an array of items pills  */
-  const HomeTopic = ({
-    homeTopic,
-    addHomeTopic,
-    updateHomeTopic,
-    removeHomeTopic,
+  const PillGroup = ({
+    pillGroup,
+    addPillGroup,
+    updatePillGroup,
+    removePillGroup,
     ...props
   }) => {
     const [items, setItems] = useState([]);
@@ -70,7 +69,7 @@ export function HomeTopics({
       setItem('');
       if (newItem !== '' && numSame === 0) {
         setItems(items => [ ...items, { name: newItem } ]);
-        updateHomeTopic(Object.assign(homeTopic, { itemList: [ ...items, { name: newItem } ] }));
+        updatePillGroup(Object.assign(pillGroup, { itemList: [ ...items, { name: newItem } ] }));
       } else {
         if (numSame > 0) {
           alert('Item already exists');
@@ -81,7 +80,7 @@ export function HomeTopics({
     const handleRemovePill = (index) => {
       const newItems = [ ...items ];
       newItems.splice(index, 1);
-      updateHomeTopic(Object.assign(homeTopic, { itemList: newItems }));
+      updatePillGroup(Object.assign(pillGroup, { itemList: newItems }));
       setItems(newItems);
     }
     return (
@@ -96,19 +95,19 @@ export function HomeTopics({
                   required
                   name='homeTopic'
                   id={`${props.name}_${props.index}`}
-                  value={homeTopic.name}
-                  onChange={e => updateHomeTopic(e, props.index)}
+                  value={pillGroup.name}
+                  onChange={e => updatePillGroup(e, props.index)}
                 />
               </div>
             </div>
             <div className='btn__group'>
               {props.numHomeTopics - 1 === props.index && props.numHomeTopics < 20 && (
-                <button type='button' className='btn__add' onClick={addHomeTopic}>
+                <button type='button' className='btn__add' onClick={addPillGroup}>
                   Add
                 </button>
               )}
               {props.numHomeTopics > 1 && (
-                <button type='button' className='deleteBtn' onClick={() => removeHomeTopic(props.index)}>
+                <button type='button' className='deleteBtn' onClick={() => removePillGroup(props.index)}>
                   Delete
                 </button>
               )}
@@ -132,7 +131,7 @@ export function HomeTopics({
         </div>
         <ItemPills
           removePill={handleRemovePill}
-          items={homeTopic.itemList}
+          items={pillGroup.itemList}
         />
       </div>
     );
@@ -141,14 +140,14 @@ export function HomeTopics({
   return (
     <div>
       <p>{props.description}</p>
-      {homeTopics.map((homeTopic, index) => (
-        <HomeTopic key={index}
-          homeTopic={homeTopic}
-          addHomeTopic={handleAddHomeTopic}
-          updateHomeTopic={handleUpdateHomeTopic}
-          removeHomeTopic={handleRemoveHomeTopic}
+      {pillGroups.map((pillGroup, index) => (
+        <PillGroup key={index}
+          homeTopic={pillGroup}
+          addHomeTopic={handleAddPillGroup}
+          updateHomeTopic={handleUpdatePillGroup}
+          removeHomeTopic={handleRemovePillGroup}
           index={index}
-          numHomeTopics={homeTopics.length}
+          numHomeTopics={pillGroups.length}
           name={props.name}
           pillGroupLabel={props.pillGroupLabel}
           pillItemLabel={props.pillItemLabel}

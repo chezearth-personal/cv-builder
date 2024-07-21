@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { Loading } from '_components/placeholders/Loading';
-import { HomeTopics } from '_components/home-topics/HomeTopics';
+import { PillGroups } from '_components/pill-groups/PillGroups';
 // import { HomeTopic } from '_components/home-topics/HomeTopic';
 import { Companies } from '_components/companies/Companies';
 // import { fetchWrapper } from '_helpers/fetch-wrapper';
@@ -289,9 +289,9 @@ function Home() {
           // onChange={(e) => setWebsite(e.target.value)}
         />
         <h3 className='listItems'>General skills (across whole work history)</h3>
-        <HomeTopics
-          homeTopics={skillTopics}
-          setHomeTopics={setSkillTopics}
+        <PillGroups
+          pillGroups={skillTopics}
+          setPillGroups={setSkillTopics}
           description=''
           name='skillTopic'
           pillGroupLabel='Enter a skill topic'
