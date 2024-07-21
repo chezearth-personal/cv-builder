@@ -1,7 +1,7 @@
 {
-  "name": "CV Builder server",
+  "name": "cv-builder-server",
   "version": "1.0.0",
-  "description": "You enter some basic info on a web form and ChatGPT (OpenAI) creates your CV for you.",
+  "description": "CV Builder server application. You enter some basic info on a web form and ChatGPT (OpenAI) creates your CV for you.",
   "main": "index.js",
   "type": "module",
   "license": "MIT",
