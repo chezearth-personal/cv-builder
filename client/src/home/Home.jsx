@@ -19,7 +19,8 @@ import 'App.css';
 
 export { Home };
 
-function Home({ setResult }) {
+// function Home({ setResult }) {
+function Home() {
   const initCompany = {
     name: '',
     position: '',
@@ -295,14 +296,14 @@ function Home({ setResult }) {
           name='skillTopic'
           pillGroupLabel='Enter a skill topic'
           pillItemLabel='Skill to be added'
-          { ...register('skillTopics') }
+          // { ...register('skillTopics') }
         />
         <h3>{`Companies you've worked at`}</h3>
         <Companies
           companies={companies}
           setCompanies={setCompanies}
           initCompany={initCompany}
-          { ...register('companyDetails') }
+          // { ...register('companyDetails') }
         />
         <button disabled={isSubmitting} type='submit'>Create Your CV!</button>
       </form>

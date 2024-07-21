@@ -9,8 +9,8 @@ import './index.css';
 import '@csstools/normalize.css'
 
 /** Set up fake backend */
-import { fakeBackend } from './_helpers/fake-backend';
-fakeBackend();
+// import { fakeBackend } from './_helpers/fake-backend';
+// fakeBackend();
 
 const container = document.getElementById('root');
 const root = createRoot(container);

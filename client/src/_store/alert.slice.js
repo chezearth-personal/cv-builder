@@ -1,24 +1,24 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-/** Create slice */
+/** ? Create slice */
 const name='alert';
 const initialState = createInitialState();
 const reducers = createReducers();
 const slice = createSlice({ name, initialState, reducers });
 
-/** Exports */
+/** ? Exports */
 export const alertActions = { ...slice.actions };
 export const alertReducer = slice.reducer;
 
-/** Implementation*/
+/** ? Implementation*/
 function createInitialState() {
   return { value: null };
 }
 
 function createReducers() {
   return { success, error, clear };
-  /** Payload can be a string message ('alert message') or */
-  /** an object ({ message: 'alert message', showAfterRedirect: true }) */
+  /** ? Payload can be a string message ('alert message') or */
+  /** ? an object ({ message: 'alert message', showAfterRedirect: true }) */
   function success(state, action) {
     state.value = {
       type: 'alert-success',
@@ -34,8 +34,8 @@ function createReducers() {
     };
   }
   function clear(state) {
-    /** If showAfterRedirect flag is true the alert is not cleared */
-    /** for one route change (e.g. after successful registration ) */
+    /** ? If showAfterRedirect flag is true the alert is not cleared */
+    /** ? for one route change (e.g. after successful registration ) */
     if (state.value?.showAfterRedirect) {
       state.value.showAfterRedirect = false;
     } else {

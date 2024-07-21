@@ -8,10 +8,7 @@ export function ItemPills({ removePill, items }) {
         {items.map((item, index) => (
           <div key={index} className='pill'>
             <p className='pillText'>{item.name}</p>
-            <div
-              className='pillRemove'
-              onClick={() => removePill(index)}
-            >
+            <div className='pillRemove' onClick={() => removePill(index)}>
               {'\u00D7'}
             </div>
           </div>

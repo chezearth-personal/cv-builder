@@ -5,10 +5,15 @@ import { fetchWrapper } from '_helpers/fetch-wrapper';
 const name = 'cv';
 const initialState = createInitialState();
 const extraActions = createExtraActions();
-const slice = createSlice({ name, initialState });
+const cvSlice = createSlice({ name, initialState });
+const keyTopicsSlice = createSlice({
+  name: 'keyTopics',
+  initialState: { list: null }
+});
 
 /** Exports */
-export const cvActions = { ...slice.actions, ...extraActions };
+export const cvActions = { ...cvSlice.actions, ...extraActions };
+export const cvReducer = cvSlice.reducer;
 
 /** Implementation */
 function createInitialState() {
@@ -27,7 +32,10 @@ function createExtraActions() {
   function create() {
     return createAsyncThunk(
       `${name}/create`,
-      async (cvInput) => await fetchWrapper.post(`${BASE_URL}/cv/create`, cvInput)
+      async (cvInput) => await fetchWrapper.post(
+        `${BASE_URL}/cv/create`,
+        cvInput
+      )
     );
   }
 }
