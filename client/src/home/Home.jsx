@@ -1,15 +1,16 @@
 // import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, connect } from 'react-redux';
 import { useIdleTimer } from 'react-idle-timer';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { Loading } from '_components/placeholders/Loading';
 import { HomeTopics } from '_components/home-topics/HomeTopics';
+// import { HomeTopic } from '_components/home-topics/HomeTopic';
 import { Companies } from '_components/companies/Companies';
-import { fetchWrapper } from '_helpers/fetch-wrapper';
+// import { fetchWrapper } from '_helpers/fetch-wrapper';
 import { alertActions } from '_store/alert.slice';
 import { cvActions } from '_store/cv.slice';
 import { authActions } from '_store/auth.slice';
@@ -19,10 +20,19 @@ import 'App.css';
 export { Home };
 
 function Home({ setResult }) {
+  const initCompany = {
+    name: '',
+    position: '',
+    startDate: '',
+    endDate: '',
+    isCurrent: false,
+    keyPhraseTopics: []
+  };
   const [ state, setState ] = useState('Active');
   const [ count, setCount ] = useState(0);
   const [ remainingTime, setRemainingTime ] = useState(0);
   const [ skillTopics, setSkillTopics ] = useState([{ name: '', itemList: [] }]);
+  const [ companies, setCompanies ] = useState([initCompany]);
   const navigate = useNavigate();
   const auth = useSelector(x => x.auth.value);
   const dispatch = useDispatch();
@@ -40,7 +50,27 @@ function Home({ setResult }) {
       itemList: Yup.array().of(Yup.object().shape({
         name: Yup.string()
       })).min(1, 'At least one skill is required')
-    })).min(1, 'At least one skill topic is required')
+    })).min(1, 'At least one skill topic is required'),
+    companyDetails: Yup.array().of(Yup.object().shape({
+      name: Yup.string()
+        .required('Company name is required'),
+      position: Yup.string()
+        .required('Position held is required'),
+      startDate: Yup.string()
+        .required('Start date is required'),
+      endDate: Yup.string()
+        .when('isCurrent', {
+          is: false,
+          then: Yup.string().required('End date is required')
+        }),
+      isCurrent: Yup.boolean(),
+      keyPhraseTopics: Yup.array().of(Yup.object().shape({
+        name: Yup.string(),
+        itemList: Yup.array().of(Yup.object().shape({
+          name: Yup.string()
+        })).min(1, 'At least one key phrase is required')
+      })).min(1, 'At least one key phrase topic is required')
+    })).min(1, 'At least one company is required')
   });
   const formOptions = { resolver: yupResolver(validationSchema) };
   /** Get functions to build form with useForm() hook */
@@ -61,14 +91,33 @@ function Home({ setResult }) {
       dispatch(alertActions.error(error));
     }
   }
-  const initCompany = {
-    name: '',
-    position: '',
-    startDate: '',
-    endDate: '',
-    isCurrent: false,
-    keyPhraseTopics: []
-  };
+  /** Updates the state with user's input */
+  // const handleAddHomeTopic = () =>
+    // setSkillTopics([ ...skillTopics, { name: '', itemList: []}]);
+  /** Updates an item within the list */
+  // const handleUpdateHomeTopic = (e, index) => {
+    // if (e && e.target) {
+      // const { value } = e.target;
+      // const list = [ ...skillTopics ];
+      // list[index]['name'] = value;
+      // setSkillTopics(list);
+      // if (updateParent) {
+        // updateParent(list);
+      // }
+    // }
+  // }
+  /** Removes a selected item from the list */
+  // const handleRemoveHomeTopic = (index) => {
+    // console.log('HomeTopic index =', index);
+    // const list = [...skillTopics];
+    // setSkillTopics(homeTopics => {
+      // console.log('list =', homeTopics);
+      // const newHomeTopics = homeTopics.filter((homeTopic, i) => i !== index)
+      // console.log('list after splice =', newHomeTopics);
+      // return newHomeTopics;
+    // });
+    // console.log('homeTopics after set =', skillTopics);
+  // }
   // const [ fullName, setFullName ] = useState('');
   // const [ occupation, setOccupation ] = useState('');
   // const [ headShot, setHeadShot ] = useState(null);
@@ -76,7 +125,6 @@ function Home({ setResult }) {
   // const [ email, setEmail ] = useState('');
   // const [ website, setWebsite ] = useState('');
   // const [ loading, setLoading ] = useState(false);
-  const [ companies, setCompanies ] = useState([initCompany]);
   /** Idle timer functions */
   const onIdle = () => {
     console.log('user is idle and user logged in?', auth ? 'yes' : 'no', auth);
@@ -119,17 +167,17 @@ function Home({ setResult }) {
     // }
     // setLoading(true);
   // }
-  const handleFormSubmit = (event) => {
-    event.preventDefault();
+  // const handleFormSubmit = (event) => {
+    // event.preventDefault();
     /** Check the text input for adding pill items have all been cleared */
-    const inputItems = event.target.querySelectorAll('input[name="inputItem"]');
-    const sendForm = [ ...inputItems].reduce((acc, item) => {
-      if (item.value !== '') {
-        alert(`Please click the 'Add item' button next to '${item.value}' to add it to the list`);
-      }
-      return acc && item.value === '';
-    }, true)
-    if (sendForm) {
+    // const inputItems = event.target.querySelectorAll('input[name="inputItem"]');
+    // const sendForm = [ ...inputItems].reduce((acc, item) => {
+      // if (item.value !== '') {
+        // alert(`Please click the 'Add item' button next to '${item.value}' to add it to the list`);
+      // }
+      // return acc && item.value === '';
+    // }, true)
+    // if (sendForm) {
       // const formData = new FormData();
       // headShot && formData.append('headshotImage', headShot, headShot.name);
       // formData.append('fullName', fullName);
@@ -139,15 +187,15 @@ function Home({ setResult }) {
       // formData.append('website', website);
       // formData.append('skillTopics', JSON.stringify(skillTopics));
       // formData.append('companyDetails', JSON.stringify(companies));
-      fetchWrapper.post(
-        'http://localhost:4000/cv/create',
+      // fetchWrapper.post(
+        // 'http://localhost:4000/cv/create',
         // formData,
         // handleFormSuccess,
         // handleFormError
-      );
-    }
-    return <div></div>;
-  }
+      // );
+    // }
+    // return <div></div>;
+  // }
 
   useEffect(() => {
     const interval = setInterval(() => {
