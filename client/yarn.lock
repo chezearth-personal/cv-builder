@@ -3471,6 +3471,34 @@ __metadata:
   languageName: node
   linkType: hard
 
+"CV Builder@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "CV Builder@workspace:."
+  dependencies:
+    "@babel/plugin-proposal-private-property-in-object": "npm:^7.21.11"
+    "@hookform/resolvers": "npm:^3.3.4"
+    "@reduxjs/toolkit": "npm:^2.2.3"
+    "@testing-library/jest-dom": "npm:^5.17.0"
+    "@testing-library/react": "npm:^13.4.0"
+    "@testing-library/user-event": "npm:^13.5.0"
+    axios: "npm:^1.6.7"
+    eslint-plugin-react-hooks: "npm:^4.6.0"
+    js-cookie: "npm:^3.0.5"
+    normalize.css: "npm:^8.0.1"
+    react: "npm:^18.2.0"
+    react-app-rewired: "npm:^2.2.1"
+    react-dom: "npm:^18.2.0"
+    react-hook-form: "npm:^7.51.2"
+    react-idle-timer: "npm:^5.7.2"
+    react-redux: "npm:^9.1.0"
+    react-router-dom: "npm:^6.22.3"
+    react-scripts: "npm:^5.0.1"
+    react-to-print: "npm:^2.15.1"
+    web-vitals: "npm:^2.1.4"
+    yup: "npm:^1.4.0"
+  languageName: unknown
+  linkType: soft
+
 "abab@npm:^2.0.3, abab@npm:^2.0.5":
   version: 2.0.6
   resolution: "abab@npm:2.0.6"
@@ -4569,34 +4597,6 @@ __metadata:
   checksum: 10c0/1f90262d5f6230a17e27d0c190b09d47ebe7efdd76a03b5a1127863f7b3c9aec4c3e6c8bb3a7bbf81d553d56a1fd35728f5a8ef4c63f867ac8d690109742a8c1
   languageName: node
   linkType: hard
-
-"client@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "client@workspace:."
-  dependencies:
-    "@babel/plugin-proposal-private-property-in-object": "npm:^7.21.11"
-    "@hookform/resolvers": "npm:^3.3.4"
-    "@reduxjs/toolkit": "npm:^2.2.3"
-    "@testing-library/jest-dom": "npm:^5.17.0"
-    "@testing-library/react": "npm:^13.4.0"
-    "@testing-library/user-event": "npm:^13.5.0"
-    axios: "npm:^1.6.7"
-    eslint-plugin-react-hooks: "npm:^4.6.0"
-    js-cookie: "npm:^3.0.5"
-    normalize.css: "npm:^8.0.1"
-    react: "npm:^18.2.0"
-    react-app-rewired: "npm:^2.2.1"
-    react-dom: "npm:^18.2.0"
-    react-hook-form: "npm:^7.51.2"
-    react-idle-timer: "npm:^5.7.2"
-    react-redux: "npm:^9.1.0"
-    react-router-dom: "npm:^6.22.3"
-    react-scripts: "npm:^5.0.1"
-    react-to-print: "npm:^2.15.1"
-    web-vitals: "npm:^2.1.4"
-    yup: "npm:^1.4.0"
-  languageName: unknown
-  linkType: soft
 
 "cliui@npm:^7.0.2":
   version: 7.0.4

@@ -6,9 +6,9 @@ import {userActions} from '_store/users.slice';
 
 export const VerifyEmail = () => {
   console.log('Loading VerifyEmail ...');
-  const { verificationcode } = useParams();
+  const { verificationCode } = useParams();
   const dispatch = useDispatch();
-  // const url = `${process.env.REACT_APP_AUTH_API_BASE_URL}/api/v1/auth/verify-email/${verificationcode}`;
+  // const url = `${process.env.REACT_APP_AUTH_API_BASE_URL}/api/v1/auth/verify-email/${verificationCode}`;
   const initialResponse = {
     status: 'unknown',
     statusCode: 0,
@@ -29,8 +29,8 @@ export const VerifyEmail = () => {
       if (!ref.current) {
         ref.current = true;
         // console.log('3. ref.current =', ref.current);
-        console.log('verifyEmail(): verificationcode =', verificationcode);
-        const response = await dispatch(userActions.verifyEmail(verificationcode)).unwrap();
+        console.log('verifyEmail(): verificationCode =', verificationCode);
+        const response = await dispatch(userActions.verifyEmail(verificationCode)).unwrap();
         // const response = await fetchWrapper.get(url);
         // console.log('API call completed.');
         console.log('response.status =', response && response.status);
@@ -71,7 +71,7 @@ export const VerifyEmail = () => {
           </div>
       }
       <Routes>
-        <Route path="/verify-email/:verificationcode/*" />
+        <Route path="/verify-email/:verificationCode/*" />
       </Routes>
     </div>
   )

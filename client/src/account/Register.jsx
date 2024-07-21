@@ -11,9 +11,9 @@ export const Register = () => {
   const dispatch = useDispatch();
   /** Form validation rules */
   const validationSchema = Yup.object().shape({
-    firstname: Yup.string()
+    firstName: Yup.string()
       .required('First Name is required'),
-    lastname: Yup.string()
+    lastName: Yup.string()
       .required('Last Name is required'),
     email: Yup.string()
       .required('Email is required'),
@@ -46,32 +46,36 @@ export const Register = () => {
       <h3 className='card__header'>Register</h3>
       <div className='card__body'>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <label htmlFor='firstname'>
+          <label htmlFor='firstName'>
             First Name <span className='req'>*</span>
           </label>
           <input
-            name='firstname'
+            id='firstName'
+            name='firstName'
             type='text'
-            { ...register('firstname') }
-            className={`form__control ${errors.firstname ? 'is-invalid' : ''}`}
+            { ...register('firstName') }
+            className={`form__control ${errors.firstName ? 'is-invalid' : ''}`}
           />
-          <div className='invalid-feedback'>{errors.firstname?.message}</div>
-          <label htmlFor='lastname'>
+          <div className='invalid-feedback'>{errors.firstName?.message}</div>
+          <label htmlFor='lastName'>
             Last Name <span className='req'>*</span>
           </label>
           <input
-            name='lastname'
+            id='lastName'
+            name='lastName'
             type='text'
-            { ...register('lastname') }
-            className={`form__control ${errors.lastname ? 'is-invalid' : ''}`}
+            { ...register('lastName') }
+            className={`form__control ${errors.lastName ? 'is-invalid' : ''}`}
           />
-          <div className='invalid-feedback'>{errors.lastname?.message}</div>
+          <div className='invalid-feedback'>{errors.lastName?.message}</div>
           <label htmlFor='email'>
             email <span className='req'>*</span>
           </label>
           <input
+            id='email'
             name='email'
             type='email'
+            autoComplete='email work home'
             { ...register('email') }
             className={`form__control ${errors.email ? 'is-invalid' : ''}`}
           />
@@ -80,6 +84,7 @@ export const Register = () => {
             Password <span className='req'>*</span>
           </label>
           <input
+            id='password'
             name='password'
             type='password'
             { ...register('password') }
@@ -90,6 +95,7 @@ export const Register = () => {
             Confirm Password <span className='req'>*</span>
           </label>
           <input
+            id='passwordConfirm'
             name='passwordConfirm'
             type='password'
             { ...register('passwordConfirm') }

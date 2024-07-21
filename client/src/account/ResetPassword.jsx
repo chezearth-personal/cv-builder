@@ -10,7 +10,7 @@ import { authActions } from '_store/auth.slice';
 export function ResetPassword() {
   console.log('Loading ResetPassword ...');
   const dispatch = useDispatch();
-  const { verificationcode } = useParams();
+  const { verificationCode } = useParams();
   /** Form validation rules */
   const validationSchema = Yup.object().shape({
     password: Yup.string()
@@ -24,7 +24,7 @@ export function ResetPassword() {
   async function onSubmit(data) {
     dispatch(alertActions.clear());
     try {
-      const response = await dispatch(authActions.resetPassword({ ...data, verificationcode })).unwrap();
+      const response = await dispatch(authActions.resetPassword({ ...data, verificationCode })).unwrap();
       if (response.status === 'success') {
         /** Redirect to login with success message */
         history.navigate('/account/login');
@@ -54,20 +54,22 @@ export function ResetPassword() {
     <>
       <h1>Reset your password</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
-            <label className='form__label'>
+            <label htmlFor='password' className='form__label'>
               Password
             </label>
             <input
+              id='password'
               name='password'
               type='password'
               {...register('password')}
               className={`form__input ${errors.password ? 'is-invalid' : ''}`}
             />
             <div className='invalid-feedback'>{errors.password?.message}</div>
-            <label className='form__label'>
+            <label htmlFor='passwordConfirm' className='form__label'>
               Confirm Password
             </label>
             <input
+              id='passwordConfirm'
               name='passwordConfirm'
               type='password'
               {...register('passwordConfirm')}
@@ -84,7 +86,7 @@ export function ResetPassword() {
             <Link to='/login' className='btn btn__link'>Cancel</Link>
         </form>
       <Routes>
-        <Route path="/confirm-email/:verificationcode" />
+        <Route path="/confirm-email/:verificationCode" />
       </Routes>
     </>
   );

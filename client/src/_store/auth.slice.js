@@ -98,10 +98,10 @@ function createExtraActions() {
   function resetPassword() {
     return createAsyncThunk(
       `${name}/resetPassword`,
-      async function({ verificationcode, password, passwordConfirm }, { dispatch }) {
+      async function({ verificationCode, password, passwordConfirm }, { dispatch }) {
         try {
           const response = await fetchWrapper.put(
-            `${BASE_URL}/auth/reset-password/${verificationcode}`,
+            `${BASE_URL}/auth/reset-password/${verificationCode}`,
             { password, passwordConfirm }
           );
           return response;
@@ -116,24 +116,27 @@ function createExtraActions() {
     );
   }
   function logout() {
-    return createAsyncThunk(
-      `${name}/logout`,
-      async function (arg, { dispatch }) {
-        try {
-          const logout = await fetchWrapper.post(`${BASE_URL}/auth/logout`, {});
-          if (logout.status === 204) {
-            console.log(`Log out successful.`);
+    if (!Cookies.get('access_token')) {
+      return createAsyncThunk(
+        `${name}/logout`,
+        async function (arg, { dispatch }) {
+          try {
+            const logout = await fetchWrapper.post(`${BASE_URL}/auth/logout`, {});
+            if (logout.status === 204) {
+              console.log(`Log out successful.`);
+            }
+          } catch (error) {
+            dispatch(alertActions.error(error));
           }
-        } catch (error) {
-          dispatch(alertActions.error(error));
+          Cookies.remove('access_token');
+          Cookies.remove('refresh_token');
+          Cookies.remove('logged_in');
+          dispatch(authActions.setAuth(null));
+          localStorage.removeItem('auth');
+          history.navigate('/');
         }
-        Cookies.remove('access_token');
-        Cookies.remove('refresh_token');
-        Cookies.remove('logged_in');
-        dispatch(authActions.setAuth(null));
-        localStorage.removeItem('auth');
-        history.navigate('/');
-      }
-    );
+      );
+    }
+    return;
   }
 }

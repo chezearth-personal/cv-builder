@@ -30,8 +30,10 @@ export function Login() {
             Email <span className='req'>*</span>
           </label>
           <input
+            id='email'
             name='email'
             type='email'
+            autoComplete='email work home'
             {...register('email')}
             className={`form__control ${errors.email ? 'is__ivalid' : ''}`}
           />
@@ -40,6 +42,7 @@ export function Login() {
             Password <span className='req'>*</span>
           </label>
           <input
+            id='password'
             name='password'
             type='password'
             {...register('password')}
