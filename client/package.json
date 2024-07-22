@@ -1,5 +1,5 @@
 {
-  "name": "cv-builder-client",
+  "name": "cv-builder",
   "version": "0.1.0",
   "description": "CV Builder client application. You enter some basic info on a web form and ChatGPT (OpenAI) creates your CV for you.",
   "private": true,

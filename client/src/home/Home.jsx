@@ -1,7 +1,7 @@
 // import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useSelector, useDispatch, connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useIdleTimer } from 'react-idle-timer';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -288,11 +288,11 @@ function Home() {
           // value={website}
           // onChange={(e) => setWebsite(e.target.value)}
         />
-        <h3 className='listItems'>General skills (across whole work history)</h3>
+        <h3 className='listItems'>General skill topics (across whole work history)</h3>
         <PillGroups
           pillGroups={skillTopics}
           setPillGroups={setSkillTopics}
-          description=''
+          description='Skill topics are groups of overall skills and experience that you have'
           name='skillTopic'
           pillGroupLabel='Enter a skill topic'
           pillItemLabel='Skill to be added'

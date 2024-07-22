@@ -6,10 +6,10 @@ const name = 'cv';
 const initialState = createInitialState();
 const extraActions = createExtraActions();
 const cvSlice = createSlice({ name, initialState });
-const keyTopicsSlice = createSlice({
-  name: 'keyTopics',
-  initialState: { list: null }
-});
+// const keyTopicsSlice = createSlice({
+  // name: 'keyTopics',
+  // initialState: { list: null }
+// });
 
 /** Exports */
 export const cvActions = { ...cvSlice.actions, ...extraActions };
