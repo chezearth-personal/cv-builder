@@ -1,7 +1,7 @@
 {
   "name": "cv-builder",
   "version": "0.1.0",
-  "description": "CV Builder client application. You enter some basic info on a web form and ChatGPT (OpenAI) creates your CV for you.",
+  "description": "CV Builder client. You enter some basic info on a web form and ChatGPT (OpenAI) creates your CV for you.",
   "private": true,
   "license": "MIT",
   "packageManager": "yarn@4.1.1",

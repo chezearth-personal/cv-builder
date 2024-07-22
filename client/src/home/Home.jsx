@@ -151,6 +151,7 @@ function Home() {
     timeout: 60_000 * (process.env.REACT_APP_IDLE_TIMEOUT_MINUTES || 10),
     throttle: 500
   });
+  // const handleUpdatePillGroups = (list) => skillTopics = list;
   /** Handle Form Success & Errors, Submit the form */
   // const handleFormSuccess = res => {
     // if (res.data.message) {
