@@ -20,23 +20,23 @@ export class CompanyDetail extends Model {
   @Column({ type: 'text' })
   position: string;
 
-  @Column({ type: 'date' })
-  start_date: Date;
+  @Column({ name: 'start_date', type: 'date' })
+  startDate: Date;
 
-  @Column({ type: 'date', nullable: true})
-  end_date: Date | null;
+  @Column({ name: 'end_date', type: 'date', nullable: true})
+  endDate: Date | null;
 
-  @Column({ type: 'boolean', default: false, nullable: false })
-  is_current: boolean;
+  @Column({ name: 'is_current', type: 'boolean', default: false, nullable: false })
+  isCurrent: boolean;
 
-  @Column({ type: 'text' })
-  work_prompt: string;
+  @Column({ name: 'work_prompt', type: 'text' })
+  workPrompt: string;
 
-  @Column({ type: 'text' })
-  key_phrase_text: string;
+  @Column({ name: 'key_phrase_text', type: 'text' })
+  keyPhraseText: string;
 
-  @Column({ type: 'json' })
-  key_phrase_topics: JSON;
+  @Column({ name: 'key_phrase_topics', type: 'json' })
+  keyPhraseTopics: JSON;
 
   @ManyToOne(() => Cv)
   @JoinColumn({ name: 'company_detail_cv_fk' })
@@ -48,6 +48,6 @@ export class CompanyDetail extends Model {
 
   @BeforeInsert()
   async updateEndDate() {
-    this.end_date = this.is_current ? null : this.end_date;
+    this.endDate = this.isCurrent ? null : this.endDate;
   }
 }
