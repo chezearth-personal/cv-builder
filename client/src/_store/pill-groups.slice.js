@@ -30,3 +30,5 @@ export const {
 } = pillGroupSlice.actions;
 
 export const selectPillGroups = (state) => state.pillGroups.value;
+
+export const pillGroupsReducer = pillGroupSlice.reducer;

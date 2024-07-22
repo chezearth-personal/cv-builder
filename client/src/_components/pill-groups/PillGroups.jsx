@@ -7,7 +7,7 @@ import {
   updatePillGroup,
   removePillGroup,
   selectPillGroups
-} from '../../_store/pill-group.slice';
+} from '../../_store/pill-groups.slice';
 import { ItemPills } from './ItemPills';
 // import { yupResolver } from '@hookform/resolvers/yup';
 // import * as Yup from 'yup';
