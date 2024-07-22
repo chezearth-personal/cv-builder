@@ -1,6 +1,13 @@
 import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 // import { useForm } from 'react-hook-form';
 // import { PillGroup } from './PillGroup';
+import {
+  addPillGroup,
+  updatePillGroup,
+  removePillGroup,
+  selectPillGroups
+} from '../../_store/pill-group.slice';
 import { ItemPills } from './ItemPills';
 // import { yupResolver } from '@hookform/resolvers/yup';
 // import * as Yup from 'yup';
@@ -8,9 +15,9 @@ import { ItemPills } from './ItemPills';
 /** ? Individual topic, contains a name field and an array of items pills  */
 const PillGroup = ({
   pillGroup,
-  addPillGroup,
-  updatePillGroup,
-  removePillGroup,
+  // addPillGroup,
+  // updatePillGroup,
+  // removePillGroup,
   ...props
 }) => {
   const [items, setItems] = useState([]);
@@ -18,6 +25,8 @@ const PillGroup = ({
   const addToItem = (item) => {
     setItem(item);
   };
+  // const currentPillGroup = useSelector(pillGroup);
+  const dispatch = useDispatch();
 
   const handleAddPill = () => {
     const newItem = item.trim();
@@ -52,18 +61,28 @@ const PillGroup = ({
                 name='pillGroup'
                 id={`${props.name}_${props.index}`}
                 value={pillGroup.name}
-                onChange={e => updatePillGroup(e, props.index)}
+                onChange={() => dispatch(updatePillGroup)}
+                // onChange={e => updatePillGroup(e, props.index)}
               />
             </div>
           </div>
           <div className='btn__group'>
             {props.numPillGroups - 1 === props.index && props.numPillGroups < 20 && (
-              <button type='button' className='btn__add' onClick={addPillGroup}>
+              <button
+                type='button'
+                className='btn__add'
+                onClick={() => dispatch(addPillGroup)}
+              >
                 Add
               </button>
             )}
             {props.numPillGroups > 1 && (
-              <button type='button' className='deleteBtn' onClick={() => removePillGroup(props.index)}>
+              <button
+                type='button'
+                className='deleteBtn'
+                onClick={() => dispatch(removePillGroup)}
+                // onClick={() => removePillGroup(props.index)}
+              >
                 Delete
               </button>
             )}
@@ -94,11 +113,12 @@ const PillGroup = ({
 }
 
 export function PillGroups({
-  pillGroups,
-  setPillGroups,
-  updateParent,
+  // pillGroups,
+  // setPillGroups,
+  // updateParent,
   ...props
 }) {
+  const pillGroups = useSelector(selectPillGroups);
   // const validationSchema = Yup.object().shape({
     // pillGroups: Yup.array().of(Yup.object().shape({
       // name: Yup.string(),
@@ -111,31 +131,31 @@ export function PillGroups({
   /** Get functions to build form with useForm() hook */
   // const { register, handleSubmit, formState } = useForm(formOptions);
   /** Updates the state with user's input */
-  const handleAddPillGroup = () =>
-    setPillGroups([ ...pillGroups, { name: '', itemList: []}]);
+  // const handleAddPillGroup = () =>
+    // setPillGroups([ ...pillGroups, { name: '', itemList: []}]);
   /** Updates an item within the list */
-  const handleUpdatePillGroup = (e, index) => {
-    if (e && e.target) {
-      const { value } = e.target;
-      const list = [ ...pillGroups ];
-      list[index]['name'] = value;
-      setPillGroups(list);
-      if (updateParent) {
-        updateParent(list);
-      }
-    }
-  }
+  // const handleUpdatePillGroup = (e, index) => {
+    // if (e && e.target) {
+      // const { value } = e.target;
+      // const list = [ ...pillGroups ];
+      // list[index]['name'] = value;
+      // setPillGroups(list);
+      // if (updateParent) {
+        // updateParent(list);
+      // }
+    // }
+  // }
   /** Removes a selected item from the list */
-  const handleRemovePillGroup = (index) => {
-    console.log('PillGroup index =', index);
-    setPillGroups(pillGroupsList => {
-      console.log('list =', pillGroupsList);
-      const newPillGroupsList = pillGroupsList.filter((e, i) => i !== index)
-      console.log('list after splice =', newPillGroupsList);
-      return newPillGroupsList;;
-    });
-    console.log('pillGroups after set =', pillGroups);
-  }
+  // const handleRemovePillGroup = (index) => {
+    // console.log('PillGroup index =', index);
+    // setPillGroups(pillGroupsList => {
+      // console.log('list =', pillGroupsList);
+      // const newPillGroupsList = pillGroupsList.filter((e, i) => i !== index)
+      // console.log('list after splice =', newPillGroupsList);
+      // return newPillGroupsList;;
+    // });
+    // console.log('pillGroups after set =', pillGroups);
+  // }
 
   return (
     <div>
@@ -143,9 +163,9 @@ export function PillGroups({
       {pillGroups.map((pillGroup, index) => (
         <PillGroup key={index}
           pillGroup={pillGroup}
-          addPillGroup={handleAddPillGroup}
-          updatePillGroup={handleUpdatePillGroup}
-          removePillGroup={handleRemovePillGroup}
+          // addPillGroup={handleAddPillGroup}
+          // updatePillGroup={handleUpdatePillGroup}
+          // removePillGroup={handleRemovePillGroup}
           index={index}
           numPillGroups={pillGroups.length}
           name={props.name}
