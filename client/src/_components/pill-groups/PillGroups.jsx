@@ -61,7 +61,7 @@ const PillGroup = ({
                 name='pillGroup'
                 id={`${props.name}_${props.index}`}
                 value={pillGroup.name}
-                onChange={() => dispatch(updatePillGroup)}
+                onChange={() => dispatch(updatePillGroup())}
                 // onChange={e => updatePillGroup(e, props.index)}
               />
             </div>
@@ -71,7 +71,7 @@ const PillGroup = ({
               <button
                 type='button'
                 className='btn__add'
-                onClick={() => dispatch(addPillGroup)}
+                onClick={() => dispatch(addPillGroup())}
               >
                 Add
               </button>
@@ -80,7 +80,7 @@ const PillGroup = ({
               <button
                 type='button'
                 className='deleteBtn'
-                onClick={() => dispatch(removePillGroup)}
+                onClick={() => dispatch(removePillGroup())}
                 // onClick={() => removePillGroup(props.index)}
               >
                 Delete

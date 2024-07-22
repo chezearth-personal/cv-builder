@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 // import { PillGroups } from '../_components/pill-groups/PillGroups';
 
 const initialState = {
-  value: [],
+  value: [{ name: '', itemPills: [] }],
   status: 'idle'
 };
 
@@ -14,8 +14,9 @@ export const pillGroupSlice = createSlice({
       state.value.push(action.payload);
     },
     updatePillGroup: (state, action) => {
-      const index = state.value.findIndex((group) => group.id === action.payload.id);
-      state.value[index] = action.payload;
+      console.log('action.payload =', action.payload);
+      // const index = state.value.findIndex((group) => group.key === action.payload.key);
+      // state.value[index] = action.payload;
     },
     removePillGroup: (state, action) => {
       state.value = state.value.filter((group) => group.id !== action.payload);
