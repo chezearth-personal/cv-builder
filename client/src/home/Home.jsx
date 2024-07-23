@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useIdleTimer } from 'react-idle-timer';
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { Loading } from '_components/placeholders/Loading';
@@ -75,8 +75,9 @@ function Home() {
   });
   const formOptions = { resolver: yupResolver(validationSchema) };
   /** Get functions to build form with useForm() hook */
-  const { register, handleSubmit, formState } = useForm(formOptions);
-  const { errors, isSubmitting } = formState;
+  // const { register, handleSubmit, formState, methods } = useForm(formOptions);
+  const methods = useForm(formOptions);
+  const { errors, isSubmitting } = methods.formState;
 
   async function onSubmit(data) {
     dispatch(alertActions.clear());
@@ -220,94 +221,96 @@ function Home() {
       </div>
       <h1>CV Builder</h1>
       <p>Generate a CV with chatGPT in a few minutes</p>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor='fullName'>Enter your full name <span className='req'>*</span></label>
-        <input
-          type='text'
-          required
-          name='fullName'
-          id='fullName'
-          placeholder={!auth ? '' : `${auth?.firstName} ${auth?.lastName}`}
-          { ...register('fullName') }
-          className={`form__control ${errors.fullName ? 'is-invalid' : ''}`}
-          /*value={fullName}*/
-          /*onChange={(e) => setFullName(e.target.value)}*/
-        />
-        <label htmlFor='occupation'>Enter your occupation <span className='req'>*</span></label>
-        <input
-          type='text'
-          required
-          name='occupation'
-          id='occupation'
-          { ...register('occupation') }
-          className={`form__control ${errors.occupation ? 'is-invalid' : ''}`}
-          // value={occupation}
-          // onChange={(e) => setOccupation(e.target.value)}
-        />
-        <label htmlFor='photo'>Upload your headshot image</label>
-        <input
-          type='file'
-          name='photo'
-          id='photo'
-          accept='image/x-png, image/jpeg'
-          { ...register('headshotImage') }
-          // onChange={e => setHeadShot(e.target.files[0])}
-        />
-        <h3>Contact Information</h3>
-        <label htmlFor='tel'>Tel <span className='req'>*</span></label>
-        <input
-          type='tel'
-          required
-          name='tel'
-          id='tel'
-          { ...register('tel') }
-          className={`form__control ${errors.tel ? 'is-invalid' : ''}`}
-          // value={tel}
-          // onChange={(e) => setTel(e.target.value)}
-        />
-        <label htmlFor='email'>Email address <span className='req'>*</span></label>
-        <input
-          type='email'
-          required
-          name='email'
-          id='email'
-          placeholder={!auth ? '' : auth?.email}
-          autoComplete='email work home'
-          { ...register('email') }
-          className={`form__control ${errors.email ? 'is-invalid' : ''}`}
-          // value={email}
-          // onChange={e => setEmail(e.target.value)}
-        />
-        <label htmlFor='website'>Website or online portfolio</label>
-        <input
-          type='url'
-          name='website'
-          id='website'
-          placeholder='https://'
-          { ...register('website') }
-          className={`form__control ${errors.website ? 'is-invalid' : ''}`}
-          // value={website}
-          // onChange={(e) => setWebsite(e.target.value)}
-        />
-        <h3 className='listItems'>General skill topics (across whole work history)</h3>
-        <PillGroups
-          pillGroups={skillTopics}
-          setPillGroups={setSkillTopics}
-          description='Skill topics are groups of overall skills and experience that you have'
-          name='skillTopic'
-          pillGroupLabel='Enter a skill topic'
-          pillItemLabel='Skill to be added'
-          // { ...register('skillTopics') }
-        />
-        <h3>{`Companies you've worked at`}</h3>
-        <Companies
-          companies={companies}
-          setCompanies={setCompanies}
-          initCompany={initCompany}
-          // { ...register('companyDetails') }
-        />
-        <button disabled={isSubmitting} type='submit'>Create Your CV!</button>
-      </form>
+      <FormProvider { ...methods }>
+        <form onSubmit={methods.handleSubmit(onSubmit)}>
+          <label htmlFor='fullName'>Enter your full name <span className='req'>*</span></label>
+          <input
+            type='text'
+            required
+            name='fullName'
+            id='fullName'
+            placeholder={!auth ? '' : `${auth?.firstName} ${auth?.lastName}`}
+            { ...methods.register('fullName') }
+            className={`form__control ${errors.fullName ? 'is-invalid' : ''}`}
+            /*value={fullName}*/
+            /*onChange={(e) => setFullName(e.target.value)}*/
+          />
+          <label htmlFor='occupation'>Enter your occupation <span className='req'>*</span></label>
+          <input
+            type='text'
+            required
+            name='occupation'
+            id='occupation'
+            { ...methods.register('occupation') }
+            className={`form__control ${errors.occupation ? 'is-invalid' : ''}`}
+            // value={occupation}
+            // onChange={(e) => setOccupation(e.target.value)}
+          />
+          <label htmlFor='photo'>Upload your headshot image</label>
+          <input
+            type='file'
+            name='photo'
+            id='photo'
+            accept='image/x-png, image/jpeg'
+            { ...methods.register('headshotImage') }
+            // onChange={e => setHeadShot(e.target.files[0])}
+          />
+          <h3>Contact Information</h3>
+          <label htmlFor='tel'>Tel <span className='req'>*</span></label>
+          <input
+            type='tel'
+            required
+            name='tel'
+            id='tel'
+            { ...methods.register('tel') }
+            className={`form__control ${errors.tel ? 'is-invalid' : ''}`}
+            // value={tel}
+            // onChange={(e) => setTel(e.target.value)}
+          />
+          <label htmlFor='email'>Email address <span className='req'>*</span></label>
+          <input
+            type='email'
+            required
+            name='email'
+            id='email'
+            placeholder={!auth ? '' : auth?.email}
+            autoComplete='email work home'
+            { ...methods.register('email') }
+            className={`form__control ${errors.email ? 'is-invalid' : ''}`}
+            // value={email}
+            // onChange={e => setEmail(e.target.value)}
+          />
+          <label htmlFor='website'>Website or online portfolio</label>
+          <input
+            type='url'
+            name='website'
+            id='website'
+            placeholder='https://'
+            { ...methods.register('website') }
+            className={`form__control ${errors.website ? 'is-invalid' : ''}`}
+            // value={website}
+            // onChange={(e) => setWebsite(e.target.value)}
+          />
+          <h3 className='listItems'>General skill topics (across whole work history)</h3>
+          <PillGroups
+            pillGroups={skillTopics}
+            setPillGroups={setSkillTopics}
+            description='Skill topics are groups of overall skills and experience that you have'
+            name='skillTopic'
+            pillGroupLabel='Enter a skill topic'
+            pillItemLabel='Skill to be added'
+            // { ...register('skillTopics') }
+          />
+          <h3>{`Companies you've worked at`}</h3>
+          <Companies
+            companies={companies}
+            setCompanies={setCompanies}
+            initCompany={initCompany}
+            // { ...register('companyDetails') }
+          />
+          <button disabled={isSubmitting} type='submit'>Create Your CV!</button>
+        </form>
+      </FormProvider>
     </div>
   );
 }
