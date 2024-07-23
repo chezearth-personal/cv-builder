@@ -299,7 +299,7 @@ function Home() {
             name='skillTopic'
             pillGroupLabel='Enter a skill topic'
             pillItemLabel='Skill to be added'
-            // { ...register('skillTopics') }
+            // { ...methods.register('skillTopics') }
           />
           <h3>{`Companies you've worked at`}</h3>
           <Companies

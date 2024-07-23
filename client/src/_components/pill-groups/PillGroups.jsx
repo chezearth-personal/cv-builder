@@ -63,7 +63,7 @@ const PillGroup = ({
                       required
                       name='pillGroup'
                       id={`${props.name}_${props.index}`}
-                      { ...register('pillGroup.name') }
+                      { ...register('name') }
                       // value={pillGroup.name}
                       // onChange={() => dispatch(updatePillGroup())}
                       // onChange={e => updatePillGroup(e, props.index)}
@@ -128,8 +128,8 @@ export function PillGroups({
     // const methods = useFormContext();
     // return children({ ...methods });
   // };
-  const { register } = useFormContext();
-  console.log('register =', register);
+  // const { register } = useFormContext();
+  // console.log('register =', register);
   // const methods = useForm();
   // const pillGroups = useSelector(selectPillGroups);
   // const validationSchema = Yup.object().shape({
@@ -184,7 +184,7 @@ export function PillGroups({
               name={props.name}
               pillGroupLabel={props.pillGroupLabel}
               pillItemLabel={props.pillItemLabel}
-              {...register('pillGroups')}
+              // {...register('pillGroups')}
             />
           ))}
         </div>
