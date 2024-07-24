@@ -32,7 +32,7 @@ function Home() {
   const [ state, setState ] = useState('Active');
   const [ count, setCount ] = useState(0);
   const [ remainingTime, setRemainingTime ] = useState(0);
-  const [ skillTopics, setSkillTopics ] = useState([{ name: '', itemList: [] }]);
+  // const [ skillTopics, setSkillTopics ] = useState([{ name: '', itemList: [] }]);
   const [ companies, setCompanies ] = useState([initCompany]);
   const navigate = useNavigate();
   const auth = useSelector(x => x.auth.value);
@@ -128,8 +128,8 @@ function Home() {
   // const [ website, setWebsite ] = useState('');
   // const [ loading, setLoading ] = useState(false);
   /** Idle timer functions */
-  const onIdle = () => {
-    console.log('user is idle and user logged in?', auth ? 'yes' : 'no', auth);
+  const handleOnIdle = event => {
+    console.log('user is idle', event, ' and user logged in?', auth ? 'yes' : 'no', auth);
     setState('Idle');
     if (auth) {
       console.log('logging out');
@@ -138,7 +138,8 @@ function Home() {
       console.log('user not logged in');
     }
   }
-  const onActive = () => {
+  const handleOnActive = event => {
+    console.log('user is active', event);
     setState('Active');
   }
   const onAction = () => {
@@ -146,8 +147,8 @@ function Home() {
   }
   // console.log('timeout =', process.env.REACT_APP_IDLE_TIMEOUT_MINUTES);
   const { getRemainingTime } = useIdleTimer({
-    onIdle,
-    onActive,
+    handleOnIdle,
+    handleOnActive,
     onAction,
     timeout: 60_000 * (process.env.REACT_APP_IDLE_TIMEOUT_MINUTES || 10),
     throttle: 500
@@ -202,6 +203,7 @@ function Home() {
 
   useEffect(() => {
     const interval = setInterval(() => {
+      // Math.ceil(getRemainingTime() / 1000)
       setRemainingTime(Math.ceil(getRemainingTime() / 1000));
     }, 500);
     return () => clearInterval(interval);
@@ -221,7 +223,7 @@ function Home() {
       </div>
       <h1>CV Builder</h1>
       <p>Generate a CV with chatGPT in a few minutes</p>
-      <FormProvider { ...methods }>
+      <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)}>
           <label htmlFor='fullName'>Enter your full name <span className='req'>*</span></label>
           <input
@@ -293,8 +295,8 @@ function Home() {
           />
           <h3 className='listItems'>General skill topics (across whole work history)</h3>
           <PillGroups
-            pillGroups={skillTopics}
-            setPillGroups={setSkillTopics}
+            // pillGroups={skillTopics}
+            // setPillGroups={setSkillTopics}
             description='Skill topics are groups of overall skills and experience that you have'
             name='skillTopic'
             pillGroupLabel='Enter a skill topic'

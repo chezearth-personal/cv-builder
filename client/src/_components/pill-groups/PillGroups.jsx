@@ -51,6 +51,7 @@ const PillGroup = ({
     updatePillGroup(Object.assign(pillGroup, { itemList: newItems }));
     setItems(newItems);
   }
+  // console.log('pillGroup =', pillGroup);
   return (
           <div className='compositeContainer subContainer'>
             <div className='inputContainer'>
@@ -61,9 +62,9 @@ const PillGroup = ({
                     <input
                       type='text'
                       required
-                      name='pillGroup'
+                      name='name'
                       id={`${props.name}_${props.index}`}
-                      { ...register('name') }
+                      {...register('name')}
                       // value={pillGroup.name}
                       // onChange={() => dispatch(updatePillGroup())}
                       // onChange={e => updatePillGroup(e, props.index)}
@@ -118,12 +119,13 @@ const PillGroup = ({
 }
 
 export function PillGroups({
-  pillGroups,
-  setPillGroups,
+  // pillGroups,
+  // setPillGroups,
   updateParent,
   ...props
 }) {
   /** ? */
+  const [ pillGroups, setPillGroups ] = useState([{ name: '', itemList: [] }]);
   // export const ConnectForm = ({ children }) => {
     // const methods = useFormContext();
     // return children({ ...methods });
