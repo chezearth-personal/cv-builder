@@ -1,7 +1,7 @@
 # CV Builder
-## Use ChatGPT to write your CV for you and convert it to PDF format
+## Use ChatGPT to write your CV for you
 
-You enter some basic info on a web form and ChatGPT (OpenAI) creates your CV for you.
+You enter some basic info on a web form and ChatGPT (OpenAI) creates your CV, outputting it as a PDF file
 
 ### Prerequisites
 - The `.env` file. `npm start` will touch the `.env` file at the root of the server app, which is the `./server/` directory (it creates it if it is not there). Then, add an API key from [OpenAI's website](https://platform.openai.com/) to the `.env` file. The format is:
