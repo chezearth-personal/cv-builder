@@ -1,5 +1,5 @@
 # CV Builder
-## Use ChatGPT to write your CV up for you and convert it to PDF format
+## Use ChatGPT to write your CV for you and convert it to PDF format
 
 You enter some basic info on a web form and ChatGPT (OpenAI) creates your CV for you.
 
